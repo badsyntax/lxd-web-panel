@@ -1,19 +1,22 @@
 {
   "name": "lxd-panel",
   "version": "1.0.0",
+  "private": true,
   "description": "A web panel for LXD",
   "main": "index.js",
   "config": {
-    "srcPath": "./src",
     "buildPath": "./dist",
+    "defaultAPIHost": "192.168.50.4",
+    "defaultAPIPort": 3000,
     "devHost": "localhost",
-    "devPort": 9000
+    "devPort": 9000,
+    "srcPath": "./src"
   },
   "scripts": {
     "dev": "webpack-dev-server --devtool eval --progress --colors --hot",
     "lint": "eslint --ext .js --ext .jsx ./src && echo No linting errors.",
     "prestart": "npm install",
-    "start": "NODE_ENV=development npm run dev",
+    "start": "NODE_ENV=development API_HOST=$npm_package_config_defaultAPIHost API_PORT=$npm_package_config_defaultAPIPort npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -50,5 +53,55 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
+    "ecmaFeatures": {
+      "modules": true,
+      "jsx": true
+    },
+    "globals": {
+      "describe": true,
+      "it": true,
+      "sinon": true
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+      "react"
+    ],
+    "rules": {
+      "strict": [
+        2,
+        "global"
+      ],
+      "indent": [
+        2,
+        2
+      ],
+      "quotes": [
+        2,
+        "single"
+      ],
+      "no-alert": 0,
+      "no-underscore-dangle": 0,
+      "react/display-name": 0,
+      "react/jsx-quotes": 1,
+      "react/jsx-no-undef": 1,
+      "react/jsx-sort-props": 1,
+      "react/jsx-uses-react": 1,
+      "react/jsx-uses-vars": 1,
+      "react/no-did-mount-set-state": 1,
+      "react/no-did-update-set-state": 1,
+      "react/no-multi-comp": 1,
+      "react/no-unknown-property": 1,
+      "react/prop-types": 0,
+      "react/react-in-jsx-scope": 1,
+      "react/self-closing-comp": 1,
+      "react/wrap-multilines": 1
+    }
   }
 }

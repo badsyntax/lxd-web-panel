@@ -1,13 +1,14 @@
 import React from 'react';
+import Button from 'react-bootstrap/lib/Button';
 
 export default class Listing extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="starter-template">
-          <h1>Bootstrap starter template</h1>
-          <p className="lead">Use this document as a way to quickly start any new project.<br/> All you get is this text and a mostly barebones HTML document.</p>
-        </div>
+        <h1>LXD Web Panel - API Browser</h1>
+        <Button>Get LXD Apis</Button>
+        <Button>Get Server Info</Button>
+        <Button>Get containers</Button>
       </div>
     );
   }
