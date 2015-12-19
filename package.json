@@ -1,0 +1,25 @@
+{
+  "name": "lxd-web-panel",
+  "version": "1.0.0",
+  "description": "A web panel for LXD",
+  "main": "index.js",
+  "config": {
+    "srcPath": "./src",
+    "buildPath": "./dist",
+    "devHost": "localhost",
+    "devPort": 9000
+  },
+  "scripts": {
+    "start-server": "cd ./server && npm start",
+    "start-client": "cd ./client && npm start",
+    "lint": "eslint --ext .js && echo No linting errors."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1"
+  }
+}

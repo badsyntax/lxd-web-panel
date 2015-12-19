@@ -1,0 +1,28 @@
+{
+  "name": "lxd-panel",
+  "version": "1.0.0",
+  "description": "A secure HTTP REST API for LXD Web Panel",
+  "main": "index.js",
+  "config": {
+    "srcPath": "./src",
+    "buildPath": "./dist",
+    "devHost": "localhost",
+    "devPort": 9000
+  },
+  "scripts": {
+    "lint": "eslint --ext .js --ext .jsx ./src && echo No linting errors.",
+    "prestart": "npm install",
+    "start": "LXD_URI=https://127.0.0.1:8443/ LXD_CERT=$HOME/.config/lxc/client.crt LXD_KEY=$HOME/.config/lxc/client.key node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^11.1.2",
+    "lxd": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^2.1.1",
+    "eslint-plugin-react": "^3.11.3"
+  }
+}
