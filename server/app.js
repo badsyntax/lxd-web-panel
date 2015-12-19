@@ -2,11 +2,11 @@
 
 var SwaggerHapi = require('swagger-hapi');
 var Hapi = require('hapi');
-var app = new Hapi.Server();
+var server = new Hapi.Server();
 var lxd = require('lxd');
 var fs = require('fs');
 
-module.exports = app; // for testing
+module.exports = server; // for testing
 
 var swaggerConfig = {
   appRoot: __dirname // required config
@@ -17,16 +17,16 @@ var config = process.env;
 SwaggerHapi.create(swaggerConfig, function(err, swaggerHapi) {
   if (err) { throw err; }
 
-  app.connection({
+  server.connection({
     port: config.PORT,
     host: config.HOST
   });
 
-  app.register(swaggerHapi.plugin, onAppRegister);
+  server.register(swaggerHapi.plugin, onAppRegister);
 
   function onAppRegister(err) {
     if (err) { return console.error('Failed to load plugin:', err); }
-    app.start(onAppStart);
+    server.start(onAppStart);
   }
 
   function onAppStart() {

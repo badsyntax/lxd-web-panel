@@ -7,9 +7,9 @@
   "config": {
     "buildPath": "./dist",
     "defaultAPIHost": "192.168.50.4",
-    "defaultAPIPort": 3000,
+    "defaultAPIPort": 9000,
     "devHost": "localhost",
-    "devPort": 9000,
+    "devPort": 3000,
     "srcPath": "./src"
   },
   "scripts": {

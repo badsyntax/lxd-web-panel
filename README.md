@@ -15,7 +15,7 @@ cd /vagrant
 sudo npm start
 ```
 
-Navigate to http://192.168.50.4:3000
+Navigate to http://192.168.50.4:9000
 
 ## Start the API client:
 
@@ -26,4 +26,4 @@ cd ./client
 npm start
 ```
 
-Navigate to http://localhost:9000
+Navigate to http://localhost:3000

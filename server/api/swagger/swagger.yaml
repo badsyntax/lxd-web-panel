@@ -6,11 +6,14 @@ info:
 host: 192.168.50.4:9000
 # basePath prefixes all resource paths 
 basePath: /v1
-# 
 schemes:
-  # tip: remove http to make production-grade
   - http
   - https
+#securityDefinitions:
+#  apiKey:
+#    type: apiKey
+#    name: apiKey
+#    in: header
 # format of bodies a client can send (Content-Type)
 consumes:
   - application/json
@@ -18,37 +21,75 @@ consumes:
 produces:
   - application/json
 paths:
-  /hello:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
+  /authenticate:
+    x-swagger-router-controller: auth
+    post:
+      description: Authenticate a user session and return the API key
+      operationId: signin
+      parameters:
+        - name: user
+          in: body
+          description: User
+          required: true
+          schema:
+            $ref: '#/definitions/UserModel'
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/AuthResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /serverinfo:
+    x-swagger-router-controller: serverinfo
     get:
-      description: Returns 'Hello' to the caller
+      description: Returns server information
       # used as the method name of the controller
-      operationId: hello
+      operationId: get
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ServerInfoResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /container:
+    x-swagger-router-controller: container
+    get:
+      description: Returns container information
+      # used as the method name of the controller
+      operationId: get
       parameters:
         - name: name
           in: query
-          description: The name of the person to whom to say hello
-          required: false
+          description: Container name
+          required: true
           type: string
       responses:
         "200":
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
+            $ref: "#/definitions/ContainerResponse"
         # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
   /containers:
-    # binds a127 app logic to a route
     x-swagger-router-controller: containers
     get:
       description: Returns a list of containers
       # used as the method name of the controller
-      operationId: list
+      operationId: get
       responses:
         "200":
           description: Success
@@ -64,18 +105,33 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  Container: 
+  UserModel:
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  ContainerModel: 
     required:
       - name
     properties: 
       name:
         type: string
-  HelloWorldResponse:
+  AuthResponse:
     required:
-      - message
+      - apiKey
     properties:
-      message:
+      apiKey:
         type: string
+  ServerInfoResponse:
+    required:
+      - serverinfo
+    properties:
+      serverinfo:
+        type: object
   ContainersResponse:
     required:
       - containers
@@ -83,10 +139,16 @@ definitions:
       containers:
         type: array
         items:
-          $ref: "#/definitions/Container"
+          $ref: "#/definitions/ContainerModel"
+  ContainerResponse:
+    required: 
+      - container
+    properties: 
+      container:
+        $ref: "#/definitions/ContainerModel"
   ErrorResponse:
     required:
-      - message
+      - error
     properties:
-      message:
+      error:
         type: string
