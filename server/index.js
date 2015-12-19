@@ -6,12 +6,13 @@ var config = process.env;
 var Hapi = require('hapi');
 
 var server = new Hapi.Server();
+
 server.connection({
-  port: parseInt(config.PORT, 10) || 3000
+  port: parseInt(config.PORT, 10) || 3000,
+  host: '0.0.0.0'
 });
 
-
-var client = new lxd.LXD({
+var lxdClient = new lxd.LXD({
   uri: config.LXD_URI,
   client: {
     strictSSL: false,
@@ -22,12 +23,12 @@ var client = new lxd.LXD({
   }
 });
 
-// client.getApis().then(function(res) {
+// lxdClient.getApis().then(function(res) {
 //   console.log('api info', res);
-// 	return client.getServerInfo();
+// 	return lxdClient.getServerInfo();
 // }).then(function(res) {
 // 	console.log('server info', res);
-// 	return client.getContainers();
+// 	return lxdClient.getContainers();
 // }).then(function(res) {
 // 	console.log('containers', res);
 // });
@@ -37,7 +38,9 @@ server.route({
   method: 'GET',
   path: '/',
   handler: function (request, reply) {
-    reply('Hello, world!');
+    reply({
+      msg: 'Hello, world!'
+    }).code(200);
   }
 });
 
@@ -46,6 +49,14 @@ server.route({
   path: '/{name}',
   handler: function (request, reply) {
     reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
+  }
+});
+
+server.route({
+  method: 'GET',
+  path: '/containers',
+  handler: function (request, reply) {
+    reply('Hello, world!');
   }
 });
 

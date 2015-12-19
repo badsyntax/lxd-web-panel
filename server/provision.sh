@@ -23,12 +23,12 @@ sudo zpool set listsnapshots=on lxc
 
 sudo lxc config set storage.zfs_pool_name lxc
 sudo lxc config set core.https_address 127.0.0.1
-sudo lxc config trust add $HOME/.config/lxc/client.crt
 
-echo "Importing base image..."
-sudo lxd-images import ubuntu --alias ubuntu
+# echo "Importing base image..."
+# sudo lxd-images import ubuntu --alias ubuntu
 
 # Create and start container
-sudo lxc launch ubuntu my-ubuntu
+# sudo lxc launch ubuntu my-ubuntu
 
+# Nested container support
 # sudo lxc launch ubuntu lxd -c security.nesting=true -c security.privileged=true
