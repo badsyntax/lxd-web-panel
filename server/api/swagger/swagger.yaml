@@ -1,12 +1,14 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: LXD API
+  title: Hello World App
 # during dev, should point to your local machine
 host: 192.168.50.4:9000
-# basePath prefixes all resource paths
+# basePath prefixes all resource paths 
 basePath: /v1
+# 
 schemes:
+  # tip: remove http to make production-grade
   - http
   - https
 securityDefinitions:
@@ -22,22 +24,6 @@ consumes:
 produces:
   - application/json
 paths:
-  /testpost:
-    x-swagger-router-controller: auth
-    post:
-      description: Test post
-      operationId: post
-      responses:
-        "200":
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/AuthResponse"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /authenticate:
     x-swagger-router-controller: auth
     post:
@@ -79,7 +65,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: "#/definitions/ErrorResponse"            
   /containers/{name}:
     x-swagger-router-controller: containers
     post:
@@ -257,10 +243,10 @@ definitions:
       limits.memory.enforce:
         type: string
   AuthResponse:
-    required:
-      - token
     properties:
       token:
+        type: string
+      error:
         type: string
   ServerInfoResponse:
     required:
@@ -290,7 +276,7 @@ definitions:
         type: string
   ErrorResponse:
     required:
-      - error
+      - message
     properties:
-      error:
+      message:
         type: string

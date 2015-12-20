@@ -48,7 +48,7 @@ function getContainer(req, res) {
     if (container.error) {
       res.status(500);
       return res.json({
-        error: container.error
+        message: container.error
       });
     }
     res.json({

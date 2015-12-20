@@ -1,6 +1,7 @@
 var fs = require('fs');
 var lxd = require('lxd');
 var jwt = require('jsonwebtoken');
+var Promise = require('bluebird');
 
 var config = process.env;
 

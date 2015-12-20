@@ -1,43 +1,25 @@
 'use strict';
 
-var SwaggerHapi = require('swagger-hapi');
-var Hapi = require('hapi');
-var server = new Hapi.Server({
-  connections: {
-    routes: {
-      cors: true
-    }
-  }
-});
+var SwaggerExpress = require('swagger-express-mw');
 var helpers = require('./api/helpers');
+var app = require('express')();
+var env = process.env
+module.exports = app; // for testing
 
-var swaggerConfig = {
-  appRoot: __dirname
-  // swaggerSecurityHandlers: {
-  //   token: helpers.auth.tokenHandler
-  // }
+var config = {
+  appRoot: __dirname,
+  swaggerSecurityHandlers: {
+    token: helpers.auth.tokenHandler
+  }
 };
 
-var env = process.env;
-
-module.exports = server;
-
-SwaggerHapi.create(swaggerConfig, function(err, swaggerHapi) {
+SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
 
-  server.connection({
-    port: env.PORT,
-    host: env.HOST
+  // install middleware
+  swaggerExpress.register(app);
+
+  app.listen(env.PORT, env.HOST, function() {
+    console.log('App started on ' + env.HOST + ':' + env.PORT);
   });
-
-  server.register(swaggerHapi.plugin, onAppRegister);
-
-  function onAppRegister(err) {
-    if (err) { return console.error('Failed to load plugins:', err); }
-    server.start(onAppStart);
-  }
-
-  function onAppStart() {
-    console.log('API Server started at http://' + env.HOST + ':' + env.PORT);
-  }
 });

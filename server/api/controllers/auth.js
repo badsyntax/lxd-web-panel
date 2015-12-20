@@ -1,15 +1,10 @@
 'use strict';
 
-var util = require('util');
-var fs = require('fs');
-var lxd = require('lxd');
 var helpers = require('../helpers');
 
 module.exports = {
   signin: signin
 };
-
-var config = process.env;
 
 function signin(req, reply) {
   helpers.auth.authenticate({
@@ -17,12 +12,14 @@ function signin(req, reply) {
     password: req.body.password
   }, function(err, token) {
     if (err) {
-      return reply.json({
-        error: err
+      reply.status(500);
+      reply.json({
+        message: String(err)
+      });
+    } else {
+      reply.json({
+        token: token
       });
     }
-    reply.json({
-      token: token
-    });
   });
 }
