@@ -24,9 +24,9 @@ ReactDOM.render((
   <Router>
     <Route path="/" component={App}>
       <IndexRoute component={Home} onEnter={requireAuth} />
-      <Route path="home" component={Home} onEnter={requireAuth} />
+      <Route path="overview" component={Home} onEnter={requireAuth} />
       <Route path="containers" component={Containers} onEnter={requireAuth} />
-      <Route path="signin" component={SignIn} />
     </Route>
+    <Route path="signin" component={SignIn} />
   </Router>
 ), reactContainerElement);

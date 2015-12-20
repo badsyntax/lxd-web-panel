@@ -26,7 +26,13 @@ class AuthStore extends BaseStore {
     return token;
   }
 
+  setToken(newToken) {
+    token = newToken;
+    console.log('set token');
+  }
+
   loggedIn() {
+    console.log('is logged in');
     return Boolean(this.getToken());
   }
 }
