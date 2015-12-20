@@ -1,5 +1,3 @@
-'use strict';
-
 import './Profiles.scss';
 import React from 'react';
 

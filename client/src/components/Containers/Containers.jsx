@@ -1,5 +1,3 @@
-'use strict';
-
 import './containers.scss';
 import React from 'react';
 

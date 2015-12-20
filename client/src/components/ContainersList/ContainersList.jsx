@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import { Link } from 'react-router';
@@ -50,7 +48,10 @@ export default class ContainersList extends React.Component {
       <div className={'containers'}>
         <h1>
           Containers
-          <Link to={'containers/create'} className={'btn btn-default btn-new-container'}>
+          <Link
+            className={'btn btn-default btn-new-container'}
+            to={'containers/create'}
+          >
             New container
           </Link>
         </h1>

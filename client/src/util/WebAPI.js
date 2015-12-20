@@ -1,5 +1,3 @@
-'use strict';
-
 import 'whatwg-fetch';
 import _ from 'lodash';
 import AuthStore from '../stores/AuthStore';

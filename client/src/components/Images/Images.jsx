@@ -1,5 +1,3 @@
-'use strict';
-
 import './Images.scss';
 import React from 'react';
 

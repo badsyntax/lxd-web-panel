@@ -43,31 +43,34 @@ export default class SignIn extends React.Component {
           Please sign in
         </h2>
         <label
+          className={'sr-only'}
           htmlFor={'inputUsername'}
-          className={'sr-only'}>
+        >
           Username
         </label>
         <input
-          value={this.state.username}
-          required autoFocus
-          onChange={this.onChange}
-          type={'username'}
-          id={'inputUsername'}
+          autoFocus
           className={'form-control'}
-          placeholder={'Username'} />
+          id={'inputUsername'}
+          onChange={this.onChange}
+          required
+          type={'username'}
+          placeholder={'Username'}
+          value={this.state.username} />
         <label
+          className={'sr-only'}
           htmlFor={'inputPassword'}
-          className={'sr-only'}>
+        >
           Password
         </label>
         <input
-          value={this.state.password}
-          onChange={this.onChange}
-          type={'password'}
-          id={'inputPassword'}
           className={'form-control'}
+          id={'inputPassword'}
+          onChange={this.onChange}
           placeholder={'Password'}
-          required />
+          required
+          type={'password'}
+          value={this.state.password}/>
         <button
           className={'btn btn-lg btn-primary btn-block'}
           type={'submit'}>

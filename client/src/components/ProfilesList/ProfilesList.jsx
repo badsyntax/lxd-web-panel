@@ -1,5 +1,3 @@
-'use strict';
-
 import './ProfilesList.scss';
 import React from 'react';
 import Button from 'react-bootstrap/lib/Button';
@@ -36,7 +34,7 @@ export default class Profiles extends React.Component {
       <div className={'profiles'}>
         <h1>
           Profiles
-          <Link to={'profiles/create'} className={'btn btn-default btn-new-profile'}>
+          <Link className={'btn btn-default btn-new-profile'} to={'profiles/create'}>
             New profile
           </Link>
         </h1>

@@ -27,10 +27,11 @@ let store = new ProfilesStore();
 
 AppDispatcher.register((action) => {
   switch(action.actionType) {
-    case PROFILES__GET_SUCCESS:
-      store.setAll(action.profiles);
-      break;
-    default:
+  case PROFILES__GET_SUCCESS:
+    store.setAll(action.profiles);
+    break;
+  default:
+    break;
   }
 });
 

@@ -30,24 +30,24 @@ document.body.appendChild(reactContainerElement);
 
 ReactDOM.render((
   <Router>
-    <Route path="/" component={App}>
+    <Route component={App} path="/">
       <IndexRoute component={Home} onEnter={requireAuth} />
-      <Route path="overview" component={Home} onEnter={requireAuth} />
-      <Route path="containers" component={Containers} onEnter={requireAuth}>
+      <Route component={Home} onEnter={requireAuth} path="overview" />
+      <Route component={Containers} onEnter={requireAuth} path="containers">
         <IndexRoute component={ContainersList}  />
-        <Route path="/containers/list" component={ContainersList}/>
-        <Route path="/containers/create" component={ContainerCreate}/>
+        <Route component={ContainersList} path="/containers/list" />
+        <Route component={ContainerCreate} path="/containers/create" />
       </Route>
-      <Route path="profiles" component={Profiles} onEnter={requireAuth}>
+      <Route component={Profiles} onEnter={requireAuth} path="profiles">
         <IndexRoute component={ProfilesList}  />
-        <Route path="/profiles/list" component={ProfilesList}/>
+        <Route component={ProfilesList} path="/profiles/list" />
       </Route>
-      <Route path="images" component={Images} onEnter={requireAuth}>
+      <Route component={Images} onEnter={requireAuth} path="images">
         <IndexRoute component={ImagesList}  />
-        <Route path="/images/list" component={ImagesList}/>
+        <Route component={ImagesList} path="/images/list" />
       </Route>
     </Route>
-    <Route path="signin" component={SignIn} />
-    <Route path="signout" component={SignOut} />
+    <Route component={SignIn} path="signin" />
+    <Route component={SignOut} path="signout" />
   </Router>
 ), reactContainerElement);

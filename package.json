@@ -13,15 +13,15 @@
   "scripts": {
     "start-server": "cd ./server && npm start",
     "start-client": "cd ./client && npm start",
-    "lint": "eslint --ext .js && echo No linting errors."
+    "lint": "eslint --ext .json *.json && echo No linting errors."
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "babel-eslint": "^5.0.0-beta6",
     "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^2.1.1"
+    "eslint-plugin-json": "^1.1.0"
   },
   "eslintConfig": {
     "env": {
@@ -30,8 +30,7 @@
       "es6": true
     },
     "ecmaFeatures": {
-      "modules": true,
-      "jsx": true
+      "modules": true
     },
     "globals": {
       "describe": true,
@@ -40,7 +39,7 @@
     },
     "parser": "babel-eslint",
     "plugins": [
-      "react"
+        "json"
     ],
     "rules": {
       "strict": [
@@ -56,21 +55,7 @@
         "single"
       ],
       "no-alert": 0,
-      "no-underscore-dangle": 0,
-      "react/display-name": 0,
-      "react/jsx-quotes": 1,
-      "react/jsx-no-undef": 1,
-      "react/jsx-sort-props": 1,
-      "react/jsx-uses-react": 1,
-      "react/jsx-uses-vars": 1,
-      "react/no-did-mount-set-state": 1,
-      "react/no-did-update-set-state": 1,
-      "react/no-multi-comp": 1,
-      "react/no-unknown-property": 1,
-      "react/prop-types": 0,
-      "react/react-in-jsx-scope": 1,
-      "react/self-closing-comp": 1,
-      "react/wrap-multilines": 1
+      "no-underscore-dangle": 0
     }
   }
 }

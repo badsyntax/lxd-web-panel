@@ -8,22 +8,22 @@ export default class Navbar extends React.Component {
     return (
       <ul className="nav nav-sidebar">
        <li>
-        <Link to={'overview'} activeClassName={activeClassName}>
+        <Link activeClassName={activeClassName} to={'overview'}>
           Overview
         </Link>
       </li>
       <li>
-        <Link to={'containers'} activeClassName={activeClassName}>
+        <Link activeClassName={activeClassName} to={'containers'}>
           Containers
         </Link>
       </li>
       <li>
-        <Link to={'profiles'} activeClassName={activeClassName}>
+        <Link activeClassName={activeClassName} to={'profiles'}>
           Profiles
         </Link>
       </li>
       <li>
-        <Link to={'images'} activeClassName={activeClassName}>
+        <Link activeClassName={activeClassName} to={'images'}>
           Images
         </Link>
       </li>
