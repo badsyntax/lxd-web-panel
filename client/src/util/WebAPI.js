@@ -9,9 +9,24 @@ import {
 } from '../constants/AppConstants';
 
 function getJson(url) {
-  return fetch(url).then((response) => {
-    return response.json();
-  });
+
+  return fetch(url)
+    .then(checkStatus)
+    .then(parseJSON);
+
+  function parseJSON(response) {
+    return response.json()
+  }
+
+  function checkStatus(response) {
+    if (response.status >= 200 && response.status < 300) {
+      return response
+    } else {
+      var error = new Error(response.statusText)
+      error.response = response
+      throw error
+    }
+  }
 }
 
 function postJson(url, data) {
@@ -49,6 +64,13 @@ class API {
   getContainers() {
     let url = getURL(_.values({
       action: 'containers'
+    })) + '?token=' + AuthStore.getToken();
+    return getJson(url);
+  }
+
+  getProfiles() {
+    let url = getURL(_.values({
+      action: 'profiles'
     })) + '?token=' + AuthStore.getToken();
     return getJson(url);
   }

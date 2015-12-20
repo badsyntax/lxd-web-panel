@@ -4,10 +4,10 @@ var helpers = require('../helpers');
 var lxdClient = helpers.getLXDClient();
 
 module.exports = {
-  get: get
+  getServerInfo: getServerInfo
 };
 
-function get(req, res) {
+function getServerInfo(req, res) {
   lxdClient.getServerInfo()
   .then(function(serverinfo) {
     res.json({

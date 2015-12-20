@@ -34,12 +34,10 @@ var auth = (function() {
   };
 
   function tokenHandler(req, authOrSecDef, token, cb) {
-    console.log('Verify token', token);
     jwt.verify(token, privateKey, options, cb);
   }
 
   function authenticate(user, cb) {
-    console.log('Authenticating user', user);
     var foundUser = accounts.filter(function(account) {
       return user.username === account.username;
     })[0];

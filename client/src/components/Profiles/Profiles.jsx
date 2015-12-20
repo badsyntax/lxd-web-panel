@@ -1,12 +1,12 @@
 'use strict';
 
-import './containers.scss';
+import './Profiles.scss';
 import React from 'react';
 
-export default class Containers extends React.Component {
+export default class Profiles extends React.Component {
   render() {
     return (
-      <div className={'containers'}>
+      <div className={'profiles'}>
         {this.props.children}
       </div>
     );

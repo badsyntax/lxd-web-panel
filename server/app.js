@@ -16,10 +16,13 @@ var config = {
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
 
+  const port = env.PORT || 3000;
+  const host = env.HOST || '0.0.0.0';
+
   // install middleware
   swaggerExpress.register(app);
 
-  app.listen(env.PORT, env.HOST, function() {
-    console.log('App started on ' + env.HOST + ':' + env.PORT);
+  app.listen(port, host, function() {
+    console.log('App started on ' + host + ':' + port);
   });
 });

@@ -6,16 +6,16 @@ var lxdClient = helpers.getLXDClient();
 var ContainerModel = require('../models/Container');
 
 module.exports = {
-  get: get,
+  getAllContainers: getAllContainers,
   getContainer: getContainer,
   updateContainer: updateContainer,
   renameContainer: renameContainer,
-  post: post
+  createContainer: createContainer
 };
 
 var config = process.env;
 
-function get(req, res) {
+function getAllContainers(req, res) {
   lxdClient.getContainers()
   .then(function(containers) {
     return containers.metadata.map(function(name) {
@@ -103,7 +103,7 @@ function renameContainer(req, res) {
   });
 }
 
-function post(req, res) {
+function createContainer(req, res) {
   var containerName = req.body.name;
   var container = new ContainerModel({
     name: containerName

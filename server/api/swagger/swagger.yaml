@@ -54,7 +54,7 @@ paths:
         - token: []
       description: Returns server information
       # used as the method name of the controller
-      operationId: get
+      operationId: getServerInfo
       responses:
         "200":
           description: Success
@@ -151,7 +151,7 @@ paths:
     get:
       description: Returns a list of containers
       # used as the method name of the controller
-      operationId: get
+      operationId: getAllContainers
       security:
         - token: []
       responses:
@@ -168,7 +168,7 @@ paths:
     post:
       description: Creates a new container
       # used as the method name of the controller
-      operationId: post
+      operationId: createContainer
       security:
         - token: []
       parameters:
@@ -189,6 +189,25 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /profiles:
+    x-swagger-router-controller: profiles
+    get:
+      description: Returns a list of profiles
+      # used as the method name of the controller
+      operationId: getAllProfiles
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ProfilesResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger.json:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -203,6 +222,12 @@ definitions:
       password:
         type: string
   ContainerModel:
+    required:
+      - name
+    properties:
+      name:
+        type: string
+  ProfileModel:
     required:
       - name
     properties:
@@ -262,6 +287,14 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/ContainerModel"
+  ProfilesResponse:
+    required:
+      - profiles
+    properties:
+      profiles:
+        type: array
+        items:
+          $ref: "#/definitions/ProfileModel"
   ContainerResponse:
     required:
       - container
