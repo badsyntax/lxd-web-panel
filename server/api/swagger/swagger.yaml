@@ -208,6 +208,25 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /images:
+    x-swagger-router-controller: images
+    get:
+      description: Returns a list of images
+      # used as the method name of the controller
+      operationId: getAllImages
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ImagesResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger.json:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -228,6 +247,12 @@ definitions:
       name:
         type: string
   ProfileModel:
+    required:
+      - name
+    properties:
+      name:
+        type: string
+  ImageModel:
     required:
       - name
     properties:
@@ -295,6 +320,14 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/ProfileModel"
+  ImagesResponse:
+    required:
+      - images
+    properties:
+      images:
+        type: array
+        items:
+          $ref: "#/definitions/ImageModel"
   ContainerResponse:
     required:
       - container

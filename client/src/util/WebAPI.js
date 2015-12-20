@@ -74,6 +74,13 @@ class API {
     })) + '?token=' + AuthStore.getToken();
     return getJson(url);
   }
+
+  getImages() {
+    let url = getURL(_.values({
+      action: 'images'
+    })) + '?token=' + AuthStore.getToken();
+    return getJson(url);
+  }
 }
 
 export default new API();

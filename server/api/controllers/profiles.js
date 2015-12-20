@@ -21,16 +21,6 @@ function getAllProfiles(req, res) {
     });
   })
   .then(function(profiles) {
-    var promises = profiles.map(function(profile) {
-      return lxdClient.getContainer(profile.name)
-        .then(function(profileData) {
-          profile.setData(profileData.metadata);
-          return profile;
-        });
-    });
-    return Promise.all(promises);
-  })
-  .then(function(profiles) {
     res.json({
       profiles: profiles
     });

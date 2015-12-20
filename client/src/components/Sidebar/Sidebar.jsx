@@ -22,6 +22,11 @@ export default class Navbar extends React.Component {
           Profiles
         </Link>
       </li>
+      <li>
+        <Link to={'images'} activeClassName={activeClassName}>
+          Images
+        </Link>
+      </li>
     </ul>
     );
   }

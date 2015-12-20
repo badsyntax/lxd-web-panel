@@ -14,15 +14,3 @@ ProfileModel.factory = function(data) {
 };
 
 ProfileModel.prototype = Object.create(BaseModel.prototype);
-
-ProfileModel.prototype.save = function() {
-  return lxdClient.createProfile({
-    name: this.name,
-    architecture: 'x86_64',
-    profiles: ['default'],
-    source: {
-      type: 'image',
-      alias: 'ubuntu'
-    }
-  });
-};

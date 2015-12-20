@@ -7,6 +7,9 @@ import {
 
   CONTAINERS__GET_SUCCESS,
   CONTAINERS__GET_ERROR,
+
+  IMAGES__GET_SUCCESS,
+  IMAGES__GET_ERROR,
 } from '../constants/AppConstants';
 
 export default {
@@ -50,6 +53,28 @@ export default {
     .catch(() => {
       AppDispatcher.dispatch({
         actionType: CONTAINERS__GET_ERROR
+      });
+    });
+  },
+
+  getImages() {
+    WebAPI.getImages()
+    .then((response) => {
+      if (response.error) {
+        AppDispatcher.dispatch({
+          actionType: IMAGES__GET_ERROR
+        });
+      }
+      if (response.images) {
+        AppDispatcher.dispatch({
+          actionType: IMAGES__GET_SUCCESS,
+          images: response.images
+        });
+      }
+    })
+    .catch(() => {
+      AppDispatcher.dispatch({
+        actionType: IMAGES__GET_ERROR
       });
     });
   }

@@ -10,6 +10,8 @@ import ContainerCreate from './components/ContainerCreate/ContainerCreate.jsx';
 import ContainersList from './components/ContainersList/ContainersList.jsx';
 import Profiles from './components/Profiles/Profiles.jsx';
 import ProfilesList from './components/ProfilesList/ProfilesList.jsx';
+import Images from './components/Images/Images.jsx';
+import ImagesList from './components/ImagesList/ImagesList.jsx';
 
 import SignIn from './components/SignIn/SignIn.jsx';
 import SignOut from './components/SignOut/SignOut.jsx';
@@ -39,6 +41,10 @@ ReactDOM.render((
       <Route path="profiles" component={Profiles} onEnter={requireAuth}>
         <IndexRoute component={ProfilesList}  />
         <Route path="/profiles/list" component={ProfilesList}/>
+      </Route>
+      <Route path="images" component={Images} onEnter={requireAuth}>
+        <IndexRoute component={ImagesList}  />
+        <Route path="/images/list" component={ImagesList}/>
       </Route>
     </Route>
     <Route path="signin" component={SignIn} />
