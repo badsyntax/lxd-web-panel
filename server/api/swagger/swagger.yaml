@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
+  title: Authenticated LXD REST API
 # during dev, should point to your local machine
 host: 192.168.50.4:9000
 # basePath prefixes all resource paths 
@@ -189,7 +189,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /swagger:
+  /swagger.json:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
