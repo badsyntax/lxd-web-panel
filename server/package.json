@@ -19,10 +19,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.1.1",
     "hapi": "^11.1.2",
-    "hapi-auth-cookie": "^3.1.0",
+    "jsonwebtoken": "^5.4.1",
     "lxd": "^1.0.0",
-    "swagger-hapi": "^0.1.0"
+    "swagger-hapi": "^0.6.0"
   },
   "devDependencies": {
     "eslint": "^1.10.3",

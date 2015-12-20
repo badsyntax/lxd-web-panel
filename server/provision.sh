@@ -15,6 +15,7 @@ sudo apt-get install -y lxd ubuntu-zfs nginx nodejs build-essential
 
 sudo newgrp lxd
 sudo modprobe zfs
+sudo npm install -g npm@2
 
 echo "Setting up ZFS..."
 sudo dd if=/dev/zero of=/root/zfsdisk1.img bs=1024 count=10485760 # 10gb

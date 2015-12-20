@@ -9,12 +9,12 @@ basePath: /v1
 schemes:
   - http
   - https
-securityDefinitions:
-  token:
-    description: The web token required for authorization
-    type: apiKey
-    name: token
-    in: query
+# securityDefinitions:
+#   token:
+#     description: The web token required for authorization
+#     type: apiKey
+#     name: token
+#     in: query
 # format of bodies a client can send (Content-Type)
 consumes:
   - application/json
@@ -64,8 +64,8 @@ paths:
   /serverinfo:
     x-swagger-router-controller: serverinfo
     get:
-      security:
-        - token: []
+      # security:
+      #   - token: []
       description: Returns server information
       # used as the method name of the controller
       operationId: get
@@ -83,8 +83,6 @@ paths:
   /containers/{name}:
     x-swagger-router-controller: containers
     post:
-      security:
-        - token: []
       description: Updates a container config
       operationId: updateContainer
       parameters:
@@ -113,8 +111,6 @@ paths:
     put:
       description: Rename a container
       operationId: renameContainer
-      security:
-        - token: []
       parameters:
         - name: name
           in: path
@@ -141,8 +137,6 @@ paths:
     get:
       description: Returns container information
       operationId: getContainer
-      security:
-        - token: []
       parameters:
         - name: name
           in: path
@@ -166,8 +160,6 @@ paths:
       description: Returns a list of containers
       # used as the method name of the controller
       operationId: get
-      security:
-        - token: []
       responses:
         "200":
           description: Success
@@ -183,8 +175,6 @@ paths:
       description: Creates a new container
       # used as the method name of the controller
       operationId: post
-      security:
-        - token: []
       parameters:
         - name: container
           in: body
@@ -234,7 +224,7 @@ definitions:
         type: string
       limits.cpu.allowance:
         type: string
-      limits.cpu.priority :
+      limits.cpu.priority	:
         type: integer
       limits.memory:
         type: string

@@ -3,6 +3,7 @@
 var util = require('util');
 var fs = require('fs');
 var lxd = require('lxd');
+var helpers = require('../helpers');
 
 module.exports = {
   signin: signin
@@ -10,34 +11,18 @@ module.exports = {
 
 var config = process.env;
 
-var users = {
-  john: {
-    id: 'john',
-    password: 'password',
-    name: 'John Doe',
-    apiKey: '12345API_KEY'
-  }
-};
-
-function signin(req, res) {
-
-  if (
-    !req.body.username ||
-    !req.body.password
-  ) {
-    return res.json({
-      error: 'Invalid credentials'
-    }).code(500);
-  }
-
-  var account = users[req.body.username];
-  if (!account) {
-   return res.json({
-      error: 'Invalid credentials'
-    }).code(500);
-  }
-
-  res.json({
-    apiKey: account.apiKey
+function signin(req, reply) {
+  helpers.auth.authenticate({
+    username: req.body.username,
+    password: req.body.password
+  }, function(err, token) {
+    if (err) {
+      return reply.json({
+        error: err
+      });
+    }
+    reply.json({
+      token: token
+    });
   });
 }

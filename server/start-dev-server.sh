@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+lxc config set core.https_address 127.0.0.1
 lxc config trust add $HOME/.config/lxc/client.crt
 
 export NODE_ENV=development
