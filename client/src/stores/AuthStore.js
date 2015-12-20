@@ -31,6 +31,10 @@ class AuthStore extends BaseStore {
     console.log('set token');
   }
 
+  clearToken() {
+    token = null;
+  }
+
   loggedIn() {
     console.log('is logged in');
     return Boolean(this.getToken());

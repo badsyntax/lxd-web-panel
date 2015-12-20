@@ -15,6 +15,13 @@ export default class Navbar extends React.Component {
             </button>
             <a className="navbar-brand" href="#">LXD Web Panel</a>
           </div>
+          <div id="navbar" className="navbar-collapse collapse">
+            <ul className="nav navbar-nav navbar-right">
+              <li>
+                <Link to={'signout'}>Sign Out</Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     );

@@ -7,6 +7,7 @@ import { Router, Route, Link, IndexRoute } from 'react-router';
 import App from './components/App/App.jsx';
 import Containers from './components/Containers/Containers.jsx';
 import SignIn from './components/SignIn/SignIn.jsx';
+import SignOut from './components/SignOut/SignOut.jsx';
 import Home from './components/Home/Home.jsx';
 
 import AuthStore from './stores/AuthStore';
@@ -28,5 +29,6 @@ ReactDOM.render((
       <Route path="containers" component={Containers} onEnter={requireAuth} />
     </Route>
     <Route path="signin" component={SignIn} />
+    <Route path="signout" component={SignOut} />
   </Router>
 ), reactContainerElement);
