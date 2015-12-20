@@ -5,24 +5,32 @@ import React from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import { Link } from 'react-router';
 import WebAPI from '../../util/WebAPI';
+import ProfilesStore from '../../stores/ProfilesStore';
+import AppActions from '../../actions/AppActions';
+
+function getState() {
+  return {
+    profiles: ProfilesStore.getAll()
+  };
+}
 
 export default class Profiles extends React.Component {
 
-  state = {
-    profiles: []
-  }
+  state = getState()
 
   componentDidMount() {
-    WebAPI.getProfiles()
-    .then(function(response) {
-      if (response.profiles) {
-        console.log('GOT PROFILES', response.profiles);
-        this.setState({
-          profiles: response.profiles
-        });
-      }
-    }.bind(this));
+    ProfilesStore.addChangeListener(this.onChange);
+    AppActions.getProfiles();
   }
+
+  componentWillUnmount() {
+    ProfilesStore.removeChangeListener(this.onChange);
+  }
+
+  onChange = () => {
+    this.setState(getState());
+  }
+
   render() {
     return (
       <div className={'profiles'}>

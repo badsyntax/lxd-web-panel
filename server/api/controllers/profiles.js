@@ -21,11 +21,11 @@ function getAllProfiles(req, res) {
     });
   })
   .then(function(profiles) {
-    var promises = profiles.map(function(container) {
-      return lxdClient.getContainer(container.name)
-        .then(function(containerData) {
-          container.setData(containerData.metadata);
-          return container;
+    var promises = profiles.map(function(profile) {
+      return lxdClient.getContainer(profile.name)
+        .then(function(profileData) {
+          profile.setData(profileData.metadata);
+          return profile;
         });
     });
     return Promise.all(promises);

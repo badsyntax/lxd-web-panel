@@ -4,23 +4,32 @@ import React from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import { Link } from 'react-router';
 import WebAPI from '../../util/WebAPI';
+import ContainersStore from '../../stores/ContainersStore';
+import AppActions from '../../actions/AppActions';
+
+function getState() {
+  return {
+    containers: ContainersStore.getAll()
+  };
+}
 
 export default class ContainersList extends React.Component {
 
-  state = {
-    containers: []
-  }
+  state = getState()
 
   componentDidMount() {
-    WebAPI.getContainers()
-    .then(function(response) {
-      if (response.containers) {
-        this.setState({
-          containers: response.containers
-        });
-      }
-    }.bind(this));
+    ContainersStore.addChangeListener(this.onChange);
+    AppActions.getContainers();
   }
+
+  componentWillUnmount() {
+    ContainersStore.removeChangeListener(this.onChange);
+  }
+
+  onChange = () => {
+    this.setState(getState());
+  }
+
   render() {
 
     function getIPV4Address(container, protocol, intface) {

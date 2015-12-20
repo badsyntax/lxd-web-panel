@@ -17,10 +17,8 @@ export default class BaseStore extends EventEmitter {
   }
 
   set(item) {
-    if (!this.data.has(item)) {
-      this.data.add(item);
-      this.emitChange();
-    }
+    this.data.add(item);
+    this.emitChange();
   }
 
   remove(item) {
