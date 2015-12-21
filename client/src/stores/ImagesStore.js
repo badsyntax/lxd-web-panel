@@ -1,5 +1,6 @@
 import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatcher/AppDispatcher';
+import { ImageModel } from '../models';
 
 import {
   IMAGES__UPDATED,
@@ -8,9 +9,10 @@ import {
 
 var token = null;
 
-class ProfilesStore extends BaseStore {
+class ImagesStore extends BaseStore {
 
   emitChange() {
+    console.log('images store updated');
     this.emit(IMAGES__UPDATED);
   }
 
@@ -21,13 +23,23 @@ class ProfilesStore extends BaseStore {
   removeChangeListener(callback) {
     this.removeListener(IMAGES__UPDATED, callback);
   }
+
+  set(image) {
+    return super.set(new ImageModel(image));
+  }
+
+  setAll(images) {
+    console.log('image set all');
+    return super.setAll(images.map((image) => new ImageModel(image)));
+  }
 }
 
-let store = new ProfilesStore();
+let store = new ImagesStore();
 
 AppDispatcher.register((action) => {
   switch(action.actionType) {
     case IMAGES__GET_SUCCESS:
+      console.log('SETTINGS IMAGES', action.images);
       store.setAll(action.images);
       break;
     default:

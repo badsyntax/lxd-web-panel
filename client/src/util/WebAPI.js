@@ -6,7 +6,9 @@ import {
   API__ENDPOINT,
 } from '../constants/AppConstants';
 
-function getJson(url) {
+function getJson(urlData, secure) {
+
+  let url = getURL(urlData, secure);
 
   return fetch(url)
     .then(checkStatus)
@@ -27,7 +29,10 @@ function getJson(url) {
   }
 }
 
-function postJson(url, data) {
+function postJson(urlData, data, secure) {
+
+  let url = getURL(urlData, secure);
+
   return fetch(url, {
     headers: {
       'Content-Type': 'application/json'
@@ -39,45 +44,41 @@ function postJson(url, data) {
   });
 }
 
-function getURL(parts) {
-  return [ API__ENDPOINT ].concat(parts).join('/');
+function getURL(data, secure) {
+  secure = secure === undefined ? true : secure;
+  return [ API__ENDPOINT ].concat(_.values(data)).join('/') + (secure ? '?token=' + AuthStore.getToken() : '');
 }
 
 class API {
 
   authenticate(credentials) {
-    let url = getURL(_.values({
+    return postJson({
       action: 'authenticate'
-    }));
-    return postJson(url, credentials);
+    }, credentials, false);
   }
 
   getServerInfo() {
-    let url = getURL(_.values({
+    return getJson({
       action: 'serverinfo'
-    })) + '?token=' + AuthStore.getToken();
-    return getJson(url);
+    });
   }
 
   getContainers() {
-    let url = getURL(_.values({
-      action: 'containers'
-    })) + '?token=' + AuthStore.getToken();
-    return getJson(url);
+    return getJson({
+      action: 'containers/detailed'
+    });
   }
 
   getProfiles() {
-    let url = getURL(_.values({
-      action: 'profiles'
-    })) + '?token=' + AuthStore.getToken();
-    return getJson(url);
+    return getJson({
+      action: 'profiles/detailed'
+    });
   }
 
   getImages() {
-    let url = getURL(_.values({
-      action: 'images'
-    })) + '?token=' + AuthStore.getToken();
-    return getJson(url);
+    return getJson({
+      action: 'images/detailed'
+    });
   }
 }
 

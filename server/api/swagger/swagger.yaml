@@ -189,6 +189,25 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /containers/detailed:
+    x-swagger-router-controller: containers
+    get:
+      description: Returns a list of containers with extra information
+      # used as the method name of the controller
+      operationId: getAllContainersWithDetails
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ContainersResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /profiles:
     x-swagger-router-controller: profiles
     get:
@@ -208,12 +227,50 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /profiles/detailed:
+    x-swagger-router-controller: profiles
+    get:
+      description: Returns a list of profiles with extra information.
+      # used as the method name of the controller
+      operationId: getAllProfilesWithDetails
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ProfilesResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /images:
     x-swagger-router-controller: images
     get:
-      description: Returns a list of images
+      description: Returns a list of images.
       # used as the method name of the controller
       operationId: getAllImages
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ImagesResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /images/detailed:
+    x-swagger-router-controller: images
+    get:
+      description: Returns a list of images with extra information.
+      # used as the method name of the controller
+      operationId: getAllImagesWithDetails
       security:
         - token: []
       responses:
@@ -254,9 +311,9 @@ definitions:
         type: string
   ImageModel:
     required:
-      - name
+      - fingerprint
     properties:
-      name:
+      fingerprint:
         type: string
   ContainerConfigModel:
     properties:

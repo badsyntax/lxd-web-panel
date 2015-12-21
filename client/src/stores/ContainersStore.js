@@ -1,5 +1,6 @@
 import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatcher/AppDispatcher';
+import { ContainerModel } from '../models';
 
 import {
   CONTAINERS__UPDATED,
@@ -20,6 +21,14 @@ class ContainerStore extends BaseStore {
 
   removeChangeListener(callback) {
     this.removeListener(CONTAINERS__UPDATED, callback);
+  }
+
+  set(container) {
+    return super.set(new ContainerModel(container));
+  }
+
+  setAll(containers) {
+    return super.setAll(containers.map((container) => new ContainerModel(container)));
   }
 }
 

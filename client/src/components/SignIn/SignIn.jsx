@@ -22,8 +22,8 @@ export default class SignIn extends React.Component {
 
   onChange = (e) => {
     this.setState({
-      username: this.refs.form.inputUsername.value,
-      password: this.refs.form.inputPassword.value
+      username: this.refs.username.getDOMNode().value,
+      password: this.refs.password.getDOMNode().value
     });
   }
 
@@ -38,7 +38,7 @@ export default class SignIn extends React.Component {
 
   render() {
     return (
-      <form ref={'form'} className={'form-signin'} onSubmit={this.onSubmit}>
+      <form className={'form-signin'} onSubmit={this.onSubmit}>
         <h2 className={'form-signin-heading'}>
           Please sign in
         </h2>
@@ -49,6 +49,7 @@ export default class SignIn extends React.Component {
           Username
         </label>
         <input
+          ref={'username'}
           autoFocus
           className={'form-control'}
           id={'inputUsername'}
@@ -56,7 +57,7 @@ export default class SignIn extends React.Component {
           required
           type={'username'}
           placeholder={'Username'}
-          value={this.state.username} />
+          defaultValue={this.state.username} />
         <label
           className={'sr-only'}
           htmlFor={'inputPassword'}
@@ -65,12 +66,13 @@ export default class SignIn extends React.Component {
         </label>
         <input
           className={'form-control'}
+          ref={'password'}
           id={'inputPassword'}
           onChange={this.onChange}
           placeholder={'Password'}
           required
           type={'password'}
-          value={this.state.password}/>
+          defaultValue={this.state.password}/>
         <button
           className={'btn btn-lg btn-primary btn-block'}
           type={'submit'}>

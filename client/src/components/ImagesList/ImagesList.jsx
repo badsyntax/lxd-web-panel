@@ -39,7 +39,10 @@ export default class Images extends React.Component {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>Alias</th>
+                <th>OS</th>
+                <th>Size</th>
+                <th>Created</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -48,7 +51,10 @@ export default class Images extends React.Component {
               this.state.images.map((image, index) => {
                 return (
                   <tr key={'image-' + index}>
-                    <td>{ image.name }</td>
+                    <td>{ image.getAlias() }</td>
+                    <td>{ image.properties.os } ({ image.properties.release })</td>
+                    <td>{ image.sizeFriendly() }</td>
+                    <td>{ image.createdAtFriendly() }</td>
                     <td>
                       <button className="btn btn-default btn-xs">Edit</button>
                       <button className="btn btn-default btn-xs">Delete</button>

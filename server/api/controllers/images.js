@@ -3,25 +3,53 @@
 var Promise = require('bluebird');
 var helpers = require('../helpers');
 var lxdClient = helpers.getLXDClient();
-var ImageModel = require('../models/Image');
+var ImageModel = require('../models').ImageModel;
 
 module.exports = {
-  getAllImages: getAllImages
+  getAllImages: getAllImages,
+  getAllImagesWithDetails: getAllImagesWithDetails
 };
 
 var config = process.env;
 
-function getAllImages(req, res) {
-  lxdClient.getImages()
+function getImages() {
+  return lxdClient.getImages()
   .then(function(images) {
-    return images.metadata.map(function(name) {
+    var images = images.metadata.map(function(resource) {
       return new ImageModel({
-        name: name
+        resource: resource
       });
     });
+    return images;
+  });
+}
+
+function getAllImages(req, reply) {
+  return getImages()
+  .then(function(images) {
+    reply.json({
+      images: images
+    });
+  });
+}
+
+function getAllImagesWithDetails(req, reply) {
+  return getImages()
+  .then(function(images) {
+
+    var promises = images.map(function(image) {
+      return lxdClient.getImage(image.getFingerprint())
+        .then(function(imageData) {
+          if (!imageData.error) {
+            image.setData(imageData.metadata);
+          }
+          return image;
+        });
+    });
+    return Promise.all(promises);
   })
   .then(function(images) {
-    res.json({
+    reply.json({
       images: images
     });
   });

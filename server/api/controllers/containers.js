@@ -3,10 +3,11 @@
 var Promise = require('bluebird');
 var helpers = require('../helpers');
 var lxdClient = helpers.getLXDClient();
-var ContainerModel = require('../models/Container');
+var ContainerModel = require('../models').ContainerModel;
 
 module.exports = {
   getAllContainers: getAllContainers,
+  getAllContainersWithDetails: getAllContainersWithDetails,
   getContainer: getContainer,
   updateContainer: updateContainer,
   renameContainer: renameContainer,
@@ -15,20 +16,35 @@ module.exports = {
 
 var config = process.env;
 
-function getAllContainers(req, res) {
-  lxdClient.getContainers()
+function getContainers() {
+  return lxdClient.getContainers()
   .then(function(containers) {
-    return containers.metadata.map(function(name) {
+    return containers.metadata.map(function(resource) {
       return new ContainerModel({
-        name: name
+        resource: resource
       });
     });
   })
+}
+
+function getAllContainers(req, res) {
+  return getContainers()
+  .then(function(containers) {
+    res.json({
+      containers: containers
+    });
+  });
+}
+
+function getAllContainersWithDetails(req, res) {
+  return getContainers()
   .then(function(containers) {
     var promises = containers.map(function(container) {
-      return lxdClient.getContainer(container.name)
+      return lxdClient.getContainer(container.getName())
         .then(function(containerData) {
-          container.setData(containerData.metadata);
+          if (!containerData.error) {
+            container.setData(containerData.metadata);
+          }
           return container;
         });
     });

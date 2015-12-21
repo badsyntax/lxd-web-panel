@@ -66,6 +66,7 @@ export default {
         });
       }
       if (response.images) {
+        console.log('GOT IMAGES FROM RESPONSE', response.images);
         AppDispatcher.dispatch({
           actionType: IMAGES__GET_SUCCESS,
           images: response.images

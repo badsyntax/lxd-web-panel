@@ -26,19 +26,20 @@ export default class ContainersList extends React.Component {
 
   onChange = () => {
     this.setState(getState());
+    console.log(this.state.containers);
   }
 
   render() {
 
     function getIPV4Address(container, protocol, intface) {
-      var ip = container.data.status.ips.filter((ip) => {
+      var ip = container.status.ips.filter((ip) => {
         return ip.protocol === protocol && ip.interface === intface;
       })[0];
       return ip && ip.address && ip.address + ' (' + intface + ')';
     }
 
     function getProfiles(container) {
-      return container.data.profiles.map(function(profile) {
+      return container.profiles.map(function(profile) {
         return (
           <Link key={'profile-'+profile} to={'profile'}>{profile}</Link>
         );
@@ -70,10 +71,11 @@ export default class ContainersList extends React.Component {
             <tbody>
             {
               this.state.containers.map((container) => {
+                console.log(container);
                 return (
                   <tr key={'row-' + container.name}>
                     <td>{ container.name }</td>
-                    <td>{ container.data.status.status.toUpperCase() }</td>
+                    <td>{ container.status.status.toUpperCase() }</td>
                     <td>{ getIPV4Address(container, 'IPV4', 'eth0') }</td>
                     <td>{ getIPV4Address(container, 'IPV6', 'eth0') }</td>
                     <td>{ getProfiles(container) }</td>

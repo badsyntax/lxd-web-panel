@@ -1,11 +1,11 @@
 module.exports = BaseModel;
 
 function BaseModel(data) {
-  this.data = data;
+  this.setData(data || {});
 };
 
 BaseModel.prototype.setData = function(data) {
-  this.data = data;
+  Object.assign(this, data);
 };
 
 BaseModel.prototype.save = function() {};

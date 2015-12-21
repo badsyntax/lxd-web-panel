@@ -9,6 +9,7 @@ export default class BaseStore extends EventEmitter {
 
   setAll(items) {
     this.data = new Set(items);
+    console.log('BASE SET ALL, calling emit change', this, this.emitChange);
     this.emitChange();
   }
 
@@ -24,5 +25,9 @@ export default class BaseStore extends EventEmitter {
   remove(item) {
     this.data.delete(item);
     this.emitChange();
+  }
+
+  isDirty() {
+    return this._dirty;
   }
 }
