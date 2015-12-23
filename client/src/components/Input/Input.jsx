@@ -1,0 +1,39 @@
+import React, {PropTypes} from 'react';
+
+export default class Input extends React.Component {
+
+  static propTypes = {
+    text: PropTypes.string,
+    defaultValue: PropTypes.any,
+    name: PropTypes.string.isRequired
+  };
+
+  static defaultProps = {
+    type: 'text'
+  }
+
+  static contextTypes = {
+    formView: React.PropTypes.object.isRequired
+  }
+
+  onChange = (e) => {
+    let value = e.target.value;
+    this.context.formView.update(this.props.name, value);
+  }
+
+  render() {
+
+    let { context, props } = this;
+
+    let value = context.formView.values[props.name] || props.defaultValue;
+
+    return (
+      <input
+        {...props}
+        onChange={this.onChange}
+        type={props.type}
+        value={value}
+      />
+    );
+  }
+}

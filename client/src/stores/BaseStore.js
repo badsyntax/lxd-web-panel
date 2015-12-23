@@ -9,7 +9,6 @@ export default class BaseStore extends EventEmitter {
 
   setAll(items) {
     this.data = new Set(items);
-    console.log('BASE SET ALL, calling emit change', this, this.emitChange);
     this.emitChange();
   }
 

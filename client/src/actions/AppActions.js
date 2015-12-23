@@ -10,17 +10,44 @@ import {
 
   IMAGES__GET_SUCCESS,
   IMAGES__GET_ERROR,
+
+  AUTHENTICATE__SUCCESS,
+  AUTHENTICATE__ERROR,
+  AUTHENTICATE__START,
+  AUTHENTICATE__END
 } from '../constants/AppConstants';
 
 export default {
-  getProfiles() {
-    WebAPI.getProfiles()
+
+  authenticate(credentials) {
+    AppDispatcher.dispatch({
+      actionType: AUTHENTICATE__START
+    });
+    var promise = WebAPI.authenticate(credentials)
     .then((response) => {
-      if (response.error) {
+      if (response.token) {
         AppDispatcher.dispatch({
-          actionType: PROFILES__GET_ERROR
+          actionType: AUTHENTICATE__SUCCESS,
+          token: response.token
         });
       }
+    })
+    .catch((e) => {
+      AppDispatcher.dispatch({
+        actionType: AUTHENTICATE__ERROR,
+        error: e
+      });
+    })
+    .finally((e) => {
+      AppDispatcher.dispatch({
+        actionType: AUTHENTICATE__END
+      });
+    });
+  },
+
+  getProfiles() {
+    return WebAPI.getProfiles()
+    .then((response) => {
       if (response.profiles) {
         AppDispatcher.dispatch({
           actionType: PROFILES__GET_SUCCESS,
@@ -28,31 +55,30 @@ export default {
         });
       }
     })
-    .catch(() => {
+    .catch((e) => {
       AppDispatcher.dispatch({
-        actionType: PROFILES__GET_ERROR
+        actionType: PROFILES__GET_ERROR,
+        error: e
       });
     });
   },
 
   getContainers() {
-    WebAPI.getContainers()
+    return WebAPI.getContainers()
     .then((response) => {
-      if (response.error) {
-        AppDispatcher.dispatch({
-          actionType: CONTAINERS__GET_ERROR
-        });
-      }
       if (response.containers) {
         AppDispatcher.dispatch({
           actionType: CONTAINERS__GET_SUCCESS,
           containers: response.containers
         });
+        return response.containers;
       }
+      return [];
     })
-    .catch(() => {
+    .catch((e) => {
       AppDispatcher.dispatch({
-        actionType: CONTAINERS__GET_ERROR
+        actionType: CONTAINERS__GET_ERROR,
+        error: e
       });
     });
   },
@@ -60,13 +86,7 @@ export default {
   getImages() {
     WebAPI.getImages()
     .then((response) => {
-      if (response.error) {
-        AppDispatcher.dispatch({
-          actionType: IMAGES__GET_ERROR
-        });
-      }
       if (response.images) {
-        console.log('GOT IMAGES FROM RESPONSE', response.images);
         AppDispatcher.dispatch({
           actionType: IMAGES__GET_SUCCESS,
           images: response.images

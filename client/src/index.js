@@ -4,6 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, Redirect } from 'react-router';
 
+import 'promise.prototype.finally';
+
 import App from './components/App/App.jsx';
 import Containers from './components/Containers/Containers.jsx';
 import ContainerCreate from './components/ContainerCreate/ContainerCreate.jsx';
@@ -21,6 +23,7 @@ import AuthStore from './stores/AuthStore';
 
 function requireAuth(nextState, replaceState) {
   if (!AuthStore.loggedIn()) {
+    console.log(nextState);
     replaceState({ nextPathname: nextState.location.pathname }, '/signin')
   }
 }

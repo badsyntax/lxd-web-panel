@@ -3,9 +3,12 @@ import pkg from '../../package';
 export const DEBUG = (process.env.NODE_ENV !== 'production');
 export const APP__TITLE = pkg.name;
 
-export const AUTH__GET_SUCCESS = 'AUTH__GET_SUCCESS';
-export const AUTH__GET_ERROR = 'AUTH__GET_ERROR';
-export const AUTH__UPDATED = 'AUTH__UPDATED';
+export const AUTHENTICATE__ERROR = 'AUTHENTICATE__ERROR';
+export const AUTHENTICATE__START = 'AUTHENTICATE__START';
+export const AUTHENTICATE__END = 'AUTHENTICATE__END';
+export const AUTHENTICATE__SUCCESS = 'AUTHENTICATE__SUCCESS';
+
+export const AUTH__STORE_UPDATED = 'AUTH__STORE_UPDATED';
 
 export const PROFILES__GET_SUCCESS = 'PROFILES__GET_SUCCESS';
 export const PROFILES__GET_ERROR = 'PROFILES__GET_ERROR';

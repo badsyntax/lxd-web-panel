@@ -28,7 +28,11 @@ class ContainerStore extends BaseStore {
   }
 
   setAll(containers) {
-    return super.setAll(containers.map((container) => new ContainerModel(container)));
+    return super.setAll(
+      containers.map(
+        (container) => new ContainerModel(container)
+      )
+    );
   }
 }
 

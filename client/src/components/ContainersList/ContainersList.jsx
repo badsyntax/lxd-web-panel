@@ -1,9 +1,9 @@
+import './ContainersList.scss';
 import React from 'react';
-import Button from 'react-bootstrap/lib/Button';
 import { Link } from 'react-router';
-import WebAPI from '../../util/WebAPI';
 import ContainersStore from '../../stores/ContainersStore';
 import AppActions from '../../actions/AppActions';
+import Alert from '../Alert/Alert';
 
 function getState() {
   return {
@@ -31,6 +31,21 @@ export default class ContainersList extends React.Component {
 
   render() {
 
+    return (
+      <div className={'containers-list'}>
+        <h1>
+          Containers
+          <Link
+            className={'btn btn-primary btn-new-container'}
+            to={'containers/create'}
+          >
+            New container
+          </Link>
+        </h1>
+        { this.state.containers.length ? getTable() : getAlert() }
+      </div>
+    );
+
     function getIPV4Address(container, protocol, intface) {
       var ip = container.status.ips.filter((ip) => {
         return ip.protocol === protocol && ip.interface === intface;
@@ -45,17 +60,9 @@ export default class ContainersList extends React.Component {
         );
       })
     }
-    return (
-      <div className={'containers'}>
-        <h1>
-          Containers
-          <Link
-            className={'btn btn-default btn-new-container'}
-            to={'containers/create'}
-          >
-            New container
-          </Link>
-        </h1>
+
+    function getTable() {
+      return (
         <div className="table-responsive">
           <table className="table table-striped">
             <thead>
@@ -92,7 +99,11 @@ export default class ContainersList extends React.Component {
             </tbody>
           </table>
         </div>
-      </div>
-    );
+      );
+    }
+
+    function getAlert() {
+      return (<Alert heading="No profiles" type="warning" />);
+    }
   }
 }

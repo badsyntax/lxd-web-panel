@@ -11,3 +11,10 @@ ProfileModel.factory = function(data) {
 };
 
 ProfileModel.prototype = Object.create(BaseModel.prototype);
+
+ProfileModel.prototype.getFriendlyDevices = function() {
+  return Object.keys(this.devices).map(function(key) {
+    var device = this.devices[key];
+    return [ key, device.parent, device.nictype ].join(' - ');
+  }, this).join(' | ');
+};

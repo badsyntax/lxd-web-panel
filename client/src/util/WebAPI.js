@@ -6,49 +6,6 @@ import {
   API__ENDPOINT,
 } from '../constants/AppConstants';
 
-function getJson(urlData, secure) {
-
-  let url = getURL(urlData, secure);
-
-  return fetch(url)
-    .then(checkStatus)
-    .then(parseJSON);
-
-  function parseJSON(response) {
-    return response.json()
-  }
-
-  function checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
-      return response
-    } else {
-      var error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-  }
-}
-
-function postJson(urlData, data, secure) {
-
-  let url = getURL(urlData, secure);
-
-  return fetch(url, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    method: 'post',
-    body: JSON.stringify(data)
-  }).then((response) => {
-    return response.json();
-  });
-}
-
-function getURL(data, secure) {
-  secure = secure === undefined ? true : secure;
-  return [ API__ENDPOINT ].concat(_.values(data)).join('/') + (secure ? '?token=' + AuthStore.getToken() : '');
-}
-
 class API {
 
   authenticate(credentials) {
@@ -83,3 +40,60 @@ class API {
 }
 
 export default new API();
+
+function parseJSON(response) {
+  return response.json()
+}
+
+function checkResponseStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  }
+  var error = new Error(response.statusText)
+  error.response = response
+  throw error
+}
+
+function checkJSONStatus(response) {
+  if (!response.error) {
+    return response;
+  }
+  var error = new Error(response.error);
+  error.response = response;
+  throw err;
+}
+
+function getJson(urlData, secure) {
+
+  let url = getURL(urlData, secure);
+
+  return fetch(url)
+    .then(checkResponseStatus)
+    .then(parseJSON)
+    .then(checkJSONStatus);
+}
+
+function postJson(urlData, data, secure) {
+
+  let url = getURL(urlData, secure);
+
+  return fetch(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    body: JSON.stringify(data)
+  })
+  .then(checkResponseStatus)
+  .then(parseJSON);
+}
+
+function getURL(data, secure) {
+
+  secure = secure === undefined ? true : secure;
+  var token = (secure ? '?token=' + AuthStore.getToken() : '');
+
+  return [ API__ENDPOINT ]
+    .concat(_.values(data))
+    .join('/') + token;
+}

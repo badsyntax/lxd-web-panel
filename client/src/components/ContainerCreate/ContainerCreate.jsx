@@ -110,9 +110,9 @@ export default class ContainerCreate extends React.Component {
           Create container
         </h1>
         <form
-          ref={'form'}
           className={'form-horizontal'}
           onChange={this.onFormChange}
+          ref={'form'}
         >
           <div className="form-group">
             <label
@@ -124,11 +124,12 @@ export default class ContainerCreate extends React.Component {
             <div className="col-sm-5">
               <input
                 className="form-control"
-                ref={'name'}
+                defaultValue={this.state.container.name}
                 id="inputName"
                 placeholder="name"
-                defaultValue={this.state.container.name}
-                type="text" />
+                ref={'name'}
+                type="text"
+              />
             </div>
           </div>
           <div className="form-group">
@@ -141,18 +142,18 @@ export default class ContainerCreate extends React.Component {
             <div className="col-sm-5">
               <select
                 className="form-control"
-                ref={'name'}
+                defaultValue={this.state.container.image.alias}
                 id="inputImage"
                 placeholder="Default image"
-                defaultValue={this.state.container.image.alias}
+                ref={'name'}
               >
                 <option>Please select...</option>
                 { this.state.images.map((image, i) => {
                   return (
                     <option
                       key={'image-' + i}
-                      value={image.alias}
                       selected={hasImage(image)}
+                      value={image.alias}
                     >
                       {image.alias}
                     </option>
@@ -183,10 +184,10 @@ export default class ContainerCreate extends React.Component {
                       >
                         <label>
                           <input
-                            type="checkbox"
-                            data-index={i}
                             checked={hasProfile(profile)}
+                            data-index={i}
                             onChange={this.onProfileCheckboxChange}
+                            type="checkbox"
                           />
                           { profile.name }
                         </label>

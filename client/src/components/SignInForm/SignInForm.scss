@@ -1,0 +1,44 @@
+.sign-in-form {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.sign-in-form .sign-in-form__heading,
+.sign-in-form .checkbox {
+  margin-bottom: 10px;
+}
+
+.sign-in-form .checkbox {
+  font-weight: normal;
+}
+
+.sign-in-form .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.sign-in-form .form-control:focus {
+  z-index: 2;
+}
+
+.sign-in-form input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.sign-in-form input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.sign-in-form__fieldset {
+  margin-bottom: 20px;
+}

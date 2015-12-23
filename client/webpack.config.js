@@ -41,6 +41,7 @@ var config = {
       exclude: nodeModulesPath,
       query: {
         presets: ['es2015', 'stage-0', 'react'],
+        plugins: ['transform-decorators-legacy']
       }
     }, {
       test: /\.scss$/,
@@ -68,6 +69,9 @@ var config = {
       }
     })
   ],
+  resolve: {
+    extensions: ['', '.js', '.json', '.jsx']
+  },
   devServer: {
     port: pkg.config.devPort
   }

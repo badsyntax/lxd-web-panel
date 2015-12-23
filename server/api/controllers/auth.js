@@ -12,7 +12,7 @@ function signin(req, reply) {
     password: req.body.password
   }, function(err, token) {
     if (err) {
-      reply.status(500);
+      reply.status(422);
       reply.json({
         message: String(err)
       });

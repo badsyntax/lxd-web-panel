@@ -12,7 +12,6 @@ var token = null;
 class ImagesStore extends BaseStore {
 
   emitChange() {
-    console.log('images store updated');
     this.emit(IMAGES__UPDATED);
   }
 
@@ -25,11 +24,14 @@ class ImagesStore extends BaseStore {
   }
 
   set(image) {
-    return super.set(new ImageModel(image));
+    return super.set(
+      image instanceof ImageModel ?
+      image :
+      new ProfileModel(image)
+    );
   }
 
   setAll(images) {
-    console.log('image set all');
     return super.setAll(images.map((image) => new ImageModel(image)));
   }
 }
@@ -39,7 +41,6 @@ let store = new ImagesStore();
 AppDispatcher.register((action) => {
   switch(action.actionType) {
     case IMAGES__GET_SUCCESS:
-      console.log('SETTINGS IMAGES', action.images);
       store.setAll(action.images);
       break;
     default:

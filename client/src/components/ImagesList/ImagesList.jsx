@@ -1,10 +1,9 @@
 import './ImagesList.scss';
 import React from 'react';
-import Button from 'react-bootstrap/lib/Button';
 import { Link } from 'react-router';
-import WebAPI from '../../util/WebAPI';
 import ImagesStore from '../../stores/ImagesStore';
 import AppActions from '../../actions/AppActions';
+import Alert from '../Alert/Alert';
 
 function getState() {
   return {
@@ -34,7 +33,19 @@ export default class Images extends React.Component {
       <div className={'images-list'}>
         <h1>
           Images
+          <Link
+            className={'btn btn-primary btn-new-container'}
+            to={'images/import'}
+          >
+            Import image
+          </Link>
         </h1>
+        { this.state.images.length ? getTable() : getAlert() }
+      </div>
+    );
+
+    function getTable() {
+      return (
         <div className="table-responsive">
           <table className="table table-striped">
             <thead>
@@ -66,7 +77,11 @@ export default class Images extends React.Component {
             </tbody>
           </table>
         </div>
-      </div>
-    );
+      );
+    }
+
+    function getAlert() {
+      return (<Alert heading="No images" type="warning" />);
+    }
   }
 }

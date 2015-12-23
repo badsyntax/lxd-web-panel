@@ -24,7 +24,11 @@ class ProfilesStore extends BaseStore {
   }
 
   set(profile) {
-    return super.set(new ProfileModel(profile));
+    return super.set(
+      profile instanceof ProfileModel ?
+      profile :
+      new ProfileModel(profile)
+    );
   }
 
   setAll(profiles) {
@@ -36,12 +40,12 @@ let store = new ProfilesStore();
 
 AppDispatcher.register((action) => {
   switch(action.actionType) {
-  case PROFILES__GET_SUCCESS:
-    store.setAll(action.profiles);
-    console.log(store);
-    break;
-  default:
-    break;
+    case PROFILES__GET_SUCCESS:
+      store.setAll(action.profiles);
+      console.log(store);
+      break;
+    default:
+      break;
   }
 });
 

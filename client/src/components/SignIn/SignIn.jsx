@@ -1,84 +1,75 @@
 import './SignIn.scss';
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import AuthStore from '../../stores/AuthStore';
-import WebAPI from '../../util/WebAPI';
+import AppDispatcher from '../../dispatcher/AppDispatcher';
+import AppActions from '../../actions/AppActions';
 
-function getInitialState() {
-  return {
-    username: 'rich',
-    password: 'foo'
-  };
-}
+import SignInForm from '../SignInForm/SignInForm';
+
+import {
+  AUTHENTICATE__SUCCESS,
+  AUTHENTICATE__ERROR,
+  AUTHENTICATE__START,
+  AUTHENTICATE__END
+} from '../../constants/AppConstants';
 
 export default class SignIn extends React.Component {
+
+  state = {}
 
   static contextTypes = {
     location: React.PropTypes.object,
     history: React.PropTypes.object
   };
 
-  state = getInitialState()
-
-  onChange = (e) => {
-    this.setState({
-      username: this.refs.username.getDOMNode().value,
-      password: this.refs.password.getDOMNode().value
-    });
+  constructor(...props) {
+    super(...props)
+    this.actionHandler = AppDispatcher.register(this.onAction);
   }
 
-  onSubmit = (e) => {
+  componentWillUnmount() {
+    AppDispatcher.unregister(this.actionHandler);
+  }
+
+  onAction = (action) => {
+    switch(action.actionType) {
+      case AUTHENTICATE__ERROR:
+        this.setState({
+          hasError: true
+        });
+        break;
+      case AUTHENTICATE__SUCCESS:
+        var pathName = this.context.location.state.nextPathname;
+        this.context.history.pushState(null, pathName);
+        break;
+      case AUTHENTICATE__START:
+        this.setState({
+          hasError: false,
+          isFormLoading: true
+        });
+        break;
+      case AUTHENTICATE__END:
+        this.setState({
+          isFormLoading: false
+        });
+        break;
+      default:
+    }
+  }
+
+  onSubmit = (e, formView) => {
     e.preventDefault();
-    WebAPI.authenticate(this.state)
-    .then(function(response) {
-      AuthStore.setToken(response.token);
-      this.context.history.pushState('home');
-    }.bind(this))
+    AppActions.authenticate(formView.values);
   }
 
   render() {
     return (
-      <form className={'form-signin'} onSubmit={this.onSubmit}>
-        <h2 className={'form-signin-heading'}>
-          Please sign in
-        </h2>
-        <label
-          className={'sr-only'}
-          htmlFor={'inputUsername'}
-        >
-          Username
-        </label>
-        <input
-          ref={'username'}
-          autoFocus
-          className={'form-control'}
-          id={'inputUsername'}
-          onChange={this.onChange}
-          required
-          type={'username'}
-          placeholder={'Username'}
-          defaultValue={this.state.username} />
-        <label
-          className={'sr-only'}
-          htmlFor={'inputPassword'}
-        >
-          Password
-        </label>
-        <input
-          className={'form-control'}
-          ref={'password'}
-          id={'inputPassword'}
-          onChange={this.onChange}
-          placeholder={'Password'}
-          required
-          type={'password'}
-          defaultValue={this.state.password}/>
-        <button
-          className={'btn btn-lg btn-primary btn-block'}
-          type={'submit'}>
-          Sign in
-        </button>
-      </form>
+      <SignInForm
+        disabled={this.state.isFormLoading}
+        error={this.state.hasError}
+        onSubmit={this.onSubmit}
+      />
     );
   }
 }
