@@ -15,7 +15,10 @@ export default class Navbar extends React.Component {
           >
             <ul className="nav navbar-nav navbar-right">
               <li>
-                <Link to={'signout'}>Sign Out</Link>
+                <Link to={'signout'}>
+                  Sign Out
+                  &nbsp;<span className="glyphicon glyphicon-log-out"></span>
+                </Link>
               </li>
             </ul>
           </div>

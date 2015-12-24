@@ -76,7 +76,7 @@ export default class Profiles extends React.Component {
     }
 
     function getAlert() {
-      return <Alert heading="No images" type="warning" />
+      return <Alert heading="No profiles" type="warning" />
     }
   }
 }

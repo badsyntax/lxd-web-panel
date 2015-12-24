@@ -1,0 +1,9 @@
+/* mixins.scss */
+
+@mixin my-padding-mixin($some-number) {
+  padding: $some-number;
+}
+
+@mixin fadeIn($time) {
+  animation: fadeIn $time;
+}

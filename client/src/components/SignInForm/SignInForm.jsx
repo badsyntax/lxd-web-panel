@@ -74,6 +74,7 @@ export default class SignInForm extends React.Component {
       <Alert
         message="Sorry, there was an error signing you in. Please try again."
         type="danger"
+        icon="info-sign"
       />
     ) : '';
     return (

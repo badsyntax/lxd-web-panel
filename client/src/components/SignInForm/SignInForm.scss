@@ -1,7 +1,11 @@
+@import "toolkit";
+
 .sign-in-form {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
+
+  @include fadeIn(0.5s);
 }
 
 .sign-in-form .sign-in-form__heading,

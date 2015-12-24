@@ -47,6 +47,7 @@ var config = {
       test: /\.scss$/,
       loader: 'style!css!sass?' + [
       'outputStyle=expanded',
+      'includePaths[]=' + path.resolve(__dirname, './src/scss'),
       'includePaths[]=' + nodeModulesPath
       ].join('&')
     }, {

@@ -1,0 +1,9 @@
+@import "toolkit";
+
+.alert {
+  @include fadeIn(0.5s);
+}
+
+.alert__icon {
+  margin-right: 5px;
+}
