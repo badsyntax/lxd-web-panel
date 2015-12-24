@@ -1,17 +1,19 @@
 import React, {PropTypes} from 'react';
+import classNames from 'classnames';
 import Input from '../Input/Input';
 
 export default class Field extends React.Component {
 
   static propTypes = {
     ...React.Component.propTypes,
-    label: PropTypes.string,
-    labelClassName: PropTypes.string,
-    name: PropTypes.string,
+    horizontal: PropTypes.bool,
     Input: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func
-    ])
+      PropTypes.func,
+      PropTypes.string
+    ]),
+    label: PropTypes.string,
+    labelLayoutClassName: PropTypes.string,
+    name: PropTypes.string
   };
 
   static contextTypes = {
@@ -23,13 +25,30 @@ export default class Field extends React.Component {
   };
 
   render() {
-    let {Input, label, children} = this.props;
+    let { Input } = this.props;
+
+    let label = this.props.label ? (
+      <label
+        className={classNames(this.props.labelLayoutClassName, 'control-label')}
+      >
+        { this.props.label }
+      </label>
+    ) : '';
+
+    let input = (
+      <Input { ...this.props}
+        className={'form-control'}
+      />
+    );
+
     return (
       <div className={this.props.className}>
-        { this.props.label ? (<label className={this.props.labelClassName}>{ this.props.label }</label>) : '' }
-        <Input { ...this.props}
-          className={'form-control'}
-         />
+        { label }
+        { this.props.horizontal ? (
+          <div className={this.props.inputLayoutClassName}>
+            { input }
+          </div>
+        ) : input }
       </div>
     )
   }

@@ -22,6 +22,7 @@ BaseModel.prototype.setData = function(data) {
 BaseModel.prototype.save = function() {};
 
 BaseModel.prototype.update = function(key, value) {
+  console.log('UPDATE MODEL');
   if (!this._keys.has(key)) {
     throw new Error('Trying to update a property that has not been defined in schema');
   }

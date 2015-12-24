@@ -28,14 +28,10 @@ export default class ContainerCreateForm extends React.Component {
     var initialData = {
       name: 'foobar',
       profiles: [],
-      // TODO: convert ImageModel
-      image: {
-        name: null,
-        alias: null
-      }
+      image: {}
     };
 
-    var formModel = new ContainerModel(initialData, null, this.onChange);
+    var formModel = new ContainerModel(initialData, null, this.onFormModelChange);
     formModel.setRequired('profiles', true);
     formModel.setRequired('name', true);
     formModel.setRequired('image', true);
@@ -59,6 +55,12 @@ export default class ContainerCreateForm extends React.Component {
   componentWillUnmount() {
     ProfilesStore.removeChangeListener(this.onProfilesStoreChange);
     ImagesStore.removeChangeListener(this.onImagesStoreChange);
+  }
+
+  onFormModelChange = (formModel) => {
+    this.setState({
+      formModel: formModel
+    });
   }
 
   onProfilesStoreChange = () => {

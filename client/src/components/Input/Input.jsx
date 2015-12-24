@@ -3,7 +3,7 @@ import React, {PropTypes} from 'react';
 export default class Input extends React.Component {
 
   static propTypes = {
-    text: PropTypes.string,
+    type: PropTypes.string,
     defaultValue: PropTypes.any,
     name: PropTypes.string.isRequired
   };
@@ -27,14 +27,15 @@ export default class Input extends React.Component {
 
     let value = context.formModel.get(props.name) || props.defaultValue;
 
-    return (
+    let input = (
       <input
-        {...props}
         className={'form-control'}
         onChange={this.onChange}
         type={props.type}
         value={value}
       />
     );
+
+    return input;
   }
 }
