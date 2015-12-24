@@ -6,7 +6,7 @@ import Form from '../Form/Form';
 import Field from '../Field/Field';
 import Alert from '../Alert/Alert';
 
-import { UserModel } from '../../models'
+import UserModel from '../../models/User';
 
 class SignInUserFieldset extends React.Component {
 

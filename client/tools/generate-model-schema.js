@@ -10,7 +10,7 @@ parser.parse(swaggerFile)
   .then(getModelSchema)
   .then(writeSchema)
   .then(function() {
-    console.log('Successfully written schema data to', schemaFile);
+    console.log('Successfully written schema data to:', schemaFile);
   })
   .catch(function(e) {
     console.log(e);
@@ -19,12 +19,14 @@ parser.parse(swaggerFile)
 function getModelSchema(api) {
   console.log("API name: %s, Version: %s", api.info.title, api.info.version);
 
-  var models = Object.keys(api.definitions).filter(function(definitionKey) {
-    return /Model$/.test(definitionKey);
-  }).reduce(function(models, definitionKey) {
-    models[definitionKey] = api.definitions[definitionKey];
-    return models;
-  }, {});
+  var models = Object.keys(api.definitions)
+    .filter(function(definitionKey) {
+      return /Model$/.test(definitionKey);
+    })
+    .reduce(function(models, definitionKey) {
+      models[definitionKey] = api.definitions[definitionKey];
+      return models;
+    }, {});
 
   return JSON.stringify(models, null, 2);
 }

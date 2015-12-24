@@ -8,10 +8,8 @@ import ProfilesStore from '../../stores/ProfilesStore';
 import ImagesStore from '../../stores/ImagesStore';
 import AppActions from '../../actions/AppActions';
 
-import {
-  ContainerModel,
-  ImageModel
-} from '../../models';
+import ContainerModel from '../../models/Container';
+import ImageModel from '../../models/Container';
 
 /*
 Example create model:

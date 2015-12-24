@@ -1,10 +1,11 @@
+var path = require('path');
 var revalidator = require('revalidator');
 
 module.exports = BaseModel;
 
 let noop = () => {};
 
-BaseModel.schema = require('../schema.json');
+BaseModel.schema = require('./schema.json');
 
 function BaseModel(data, schema, onChange) {
   this._keys = new Set();
@@ -47,10 +48,8 @@ BaseModel.prototype.validate = function() {
   this.validation = revalidator.validate(this.getData(), this.schema);
 };
 
-BaseModel.prototype.setRequired = function(key) {
-  this.updateSchema(key, {
-    required: true
-  });
+BaseModel.prototype.setRequired = function(key, required) {
+  this.updateSchema(key, { required });
 };
 
 BaseModel.prototype.updateSchema = function(key, data) {
