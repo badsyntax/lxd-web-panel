@@ -13,19 +13,19 @@ export default class Input extends React.Component {
   }
 
   static contextTypes = {
-    formView: React.PropTypes.object.isRequired
+    formModel: React.PropTypes.object.isRequired
   }
 
   onChange = (e) => {
     let value = e.target.value;
-    this.context.formView.update(this.props.name, value);
+    this.context.formModel.update(this.props.name, value);
   }
 
   render() {
 
     let { context, props } = this;
 
-    let value = context.formView.values[props.name] || props.defaultValue;
+    let value = context.formModel.get(props.name) || props.defaultValue;
 
     return (
       <input

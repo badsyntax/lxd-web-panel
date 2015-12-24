@@ -6,20 +6,7 @@ import Form from '../Form/Form';
 import Field from '../Field/Field';
 import Alert from '../Alert/Alert';
 
-let schema = {
-  properties: {
-    username: {
-      description: 'Your username',
-      type: 'string',
-      required: true
-    },
-    password: {
-      description: 'Your password',
-      type: 'string',
-      required: true
-    }
-  }
-};
+import { UserModel } from '../../models'
 
 class SignInUserFieldset extends React.Component {
 
@@ -58,25 +45,28 @@ export default class SignInForm extends React.Component {
 
   static propTypes = {
     disabled: PropTypes.bool,
-    error: PropTypes.bool
+    error: PropTypes.bool,
+    onSubmit: PropTypes.func
   }
 
   constructor(...props) {
     super(...props);
 
-    this.state = {
-      formView: new FormView(schema, this.onChange)
-    }
+    var formModel = new UserModel(null, null, this.onChange);
+    formModel.setRequired('username', true);
+    formModel.setRequired('password', true);
+
+    this.state = { formModel }
   }
 
-  onChange = (formView) => {
+  onChange = (formModel) => {
     this.setState({
-      formView: formView
+      formModel: formModel
     });
   }
 
   onSubmit = (e) => {
-    this.props.onSubmit(e, this.state.formView);
+    this.props.onSubmit(e, this.state.formModel);
   }
 
   render() {
@@ -89,7 +79,7 @@ export default class SignInForm extends React.Component {
     return (
       <Form
         className={'sign-in-form'}
-        formView={this.state.formView}
+        formModel={this.state.formModel}
         onSubmit={this.onSubmit}
       >
         <h2 className={'sign-in-form__heading'}>

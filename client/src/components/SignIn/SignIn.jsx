@@ -58,9 +58,9 @@ export default class SignIn extends React.Component {
     }
   }
 
-  onSubmit = (e, formView) => {
+  onSubmit = (e, formModel) => {
     e.preventDefault();
-    AppActions.authenticate(formView.values);
+    AppActions.authenticate(formModel.getData());
   }
 
   render() {

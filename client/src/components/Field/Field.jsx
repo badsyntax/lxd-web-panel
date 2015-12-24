@@ -14,7 +14,7 @@ export default class Field extends React.Component {
   };
 
   static contextTypes = {
-    formView: React.PropTypes.object.isRequired
+    formModel: React.PropTypes.object.isRequired
   }
 
   static defaultProps = {

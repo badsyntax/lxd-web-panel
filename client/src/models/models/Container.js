@@ -2,8 +2,10 @@ var BaseModel = require('./Base');
 
 module.exports = ContainerModel;
 
-function ContainerModel(data) {
-  BaseModel.apply(this, [data]);
+ContainerModel.schema = BaseModel.schema.ContainerModel;
+
+function ContainerModel(data, schema, onChange) {
+  BaseModel.call(this, data, schema || ContainerModel.schema, onChange);
 };
 
 ContainerModel.factory = function(data) {

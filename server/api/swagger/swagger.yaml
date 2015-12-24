@@ -294,8 +294,10 @@ definitions:
       - password
     properties:
       username:
+        description: "User username"
         type: string
       password:
+        description: "User password"
         type: string
   ContainerModel:
     required:

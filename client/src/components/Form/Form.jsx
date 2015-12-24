@@ -5,22 +5,22 @@ import React, {PropTypes} from 'react';
 export default class Form extends React.Component {
 
   static propTypes = {
-    formView: PropTypes.object.isRequired
+    formModel: PropTypes.object.isRequired
   }
 
   static childContextTypes = {
-    formView: PropTypes.object.isRequired
+    formModel: PropTypes.object.isRequired
   }
 
   getChildContext() {
     return {
-      formView: this.props.formView
+      formModel: this.props.formModel
     };
   }
 
   render() {
     return (
-      <form {...this.props} formView={this.props.formView}>
+      <form {...this.props} formModel={this.props.formModel}>
         {this.props.children}
       </form>
     );

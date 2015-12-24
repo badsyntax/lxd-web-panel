@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "webpack-dev-server --devtool eval --progress --colors --hot -d",
     "lint": "eslint --ext .js --ext .jsx ./src && echo No linting errors.",
-    "prestart": "npm install",
+    "prestart": "npm install && node tools/generate-model-schema",
     "start": "NODE_ENV=development API_HOST=$npm_package_config_defaultAPIHost API_PORT=$npm_package_config_defaultAPIPort npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -54,6 +54,7 @@
     "rimraf": "^2.4.4",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
+    "swagger-parser": "^3.3.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"

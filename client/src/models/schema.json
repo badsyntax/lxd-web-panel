@@ -1,0 +1,97 @@
+{
+  "UserModel": {
+    "required": [
+      "username",
+      "password"
+    ],
+    "properties": {
+      "username": {
+        "description": "User username",
+        "type": "string"
+      },
+      "password": {
+        "description": "User password",
+        "type": "string"
+      }
+    }
+  },
+  "ContainerModel": {
+    "required": [
+      "name"
+    ],
+    "properties": {
+      "name": {
+        "type": "string"
+      }
+    }
+  },
+  "ProfileModel": {
+    "required": [
+      "name"
+    ],
+    "properties": {
+      "name": {
+        "type": "string"
+      }
+    }
+  },
+  "ImageModel": {
+    "required": [
+      "fingerprint"
+    ],
+    "properties": {
+      "fingerprint": {
+        "type": "string"
+      }
+    }
+  },
+  "ContainerConfigModel": {
+    "properties": {
+      "boot.autostart": {
+        "type": "boolean"
+      },
+      "boot.autostart.delay": {
+        "type": "integer"
+      },
+      "boot.autostart.priority": {
+        "type": "integer"
+      },
+      "limits.cpu": {
+        "type": "string"
+      },
+      "limits.cpu.allowance": {
+        "type": "string"
+      },
+      "limits.cpu.priority": {
+        "type": "integer"
+      },
+      "limits.memory": {
+        "type": "string"
+      },
+      "limits.memory.enforce": {
+        "type": "string"
+      },
+      "limits.memory.swap": {
+        "type": "boolean"
+      },
+      "limits.memory.swap.priority": {
+        "type": "integer"
+      },
+      "security.nesting": {
+        "type": "boolean"
+      },
+      "security.privileged": {
+        "type": "boolean"
+      },
+      "volatile.base_image": {
+        "type": "string"
+      },
+      "volatile.last_state.idmap": {
+        "type": "string"
+      },
+      "volatile.last_state.power": {
+        "type": "string"
+      }
+    }
+  }
+}
