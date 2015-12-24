@@ -26,11 +26,10 @@ export default class ContainersList extends React.Component {
 
   onChange = () => {
     this.setState(getState());
-    console.log(this.state.containers);
   }
 
   render() {
-
+    let { containers } = this.state;
     return (
       <div className={'containers-list'}>
         <h1>
@@ -42,16 +41,9 @@ export default class ContainersList extends React.Component {
             New container
           </Link>
         </h1>
-        { this.state.containers.length ? getTable() : getAlert() }
+        { containers.length ? getTable(containers) : getAlert() }
       </div>
     );
-
-    function getIPV4Address(container, protocol, intface) {
-      var ip = container.status.ips.filter((ip) => {
-        return ip.protocol === protocol && ip.interface === intface;
-      })[0];
-      return ip && ip.address && ip.address + ' (' + intface + ')';
-    }
 
     function getProfiles(container) {
       return container.profiles.map(function(profile) {
@@ -61,7 +53,7 @@ export default class ContainersList extends React.Component {
       })
     }
 
-    function getTable() {
+    function getTable(containers) {
       return (
         <div className="table-responsive">
           <table className="table table-striped">
@@ -77,14 +69,14 @@ export default class ContainersList extends React.Component {
             </thead>
             <tbody>
             {
-              this.state.containers.map((container) => {
+              containers.map((container) => {
                 console.log(container);
                 return (
                   <tr key={'row-' + container.name}>
                     <td>{ container.name }</td>
                     <td>{ container.status.status.toUpperCase() }</td>
-                    <td>{ getIPV4Address(container, 'IPV4', 'eth0') }</td>
-                    <td>{ getIPV4Address(container, 'IPV6', 'eth0') }</td>
+                    <td>{ container.getAddress('IPV4', 'eth0') }</td>
+                    <td>{ container.getAddress('IPV6', 'eth0') }</td>
                     <td>{ getProfiles(container) }</td>
                     <td>
                       <button className="btn btn-default btn-xs">Edit</button>

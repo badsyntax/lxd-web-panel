@@ -12,33 +12,70 @@ import ContainerCreateFieldset from './ContainerCreateFieldset';
 import ContainerModel from '../../models/Container';
 import ImageModel from '../../models/Image';
 
+import Form from '../Form/Form';
+
 export default class ContainerCreateForm extends React.Component {
 
   static propTypes = {
     disabled: PropTypes.bool,
     error: PropTypes.bool,
     onSubmit: PropTypes.func
-  }
+  };
 
-  state = getInitialState()
+  constructor(...props) {
+    super(...props);
+
+    var initialData = {
+      name: 'foobar',
+      profiles: [],
+      // TODO: convert ImageModel
+      image: {
+        name: null,
+        alias: null
+      }
+    };
+
+    var formModel = new ContainerModel(initialData, null, this.onChange);
+    formModel.setRequired('profiles', true);
+    formModel.setRequired('name', true);
+    formModel.setRequired('image', true);
+
+    this.state = {
+      profiles: ProfilesStore.getAll(),
+      images: ImagesStore.getAll(),
+      formModel
+    };
+  }
 
   componentDidMount() {
 
-    ProfilesStore.addChangeListener(this.onStoreChange);
-    ImagesStore.addChangeListener(this.onStoreChange);
+    ProfilesStore.addChangeListener(this.onProfilesStoreChange);
+    ImagesStore.addChangeListener(this.onImagesStoreChange);
 
     AppActions.getProfiles();
     AppActions.getImages();
   }
 
   componentWillUnmount() {
-    ProfilesStore.removeChangeListener(this.onStoreChange);
-    ImagesStore.removeChangeListener(this.onStoreChange);
+    ProfilesStore.removeChangeListener(this.onProfilesStoreChange);
+    ImagesStore.removeChangeListener(this.onImagesStoreChange);
   }
 
-  onStoreChange = () => {
+  onProfilesStoreChange = () => {
+    var profiles = ProfilesStore.getAll();
+
+    // An example of having a model with profiles
+    var formModel = this.state.formModel;
+    formModel.update('profiles', [ profiles[0] ])
+
     this.setState({
-      profiles: ProfilesStore.getAll(),
+      profiles,
+      formModel
+    });
+  }
+
+  onImagesStoreChange = () => {
+    this.setState({
       images: ImagesStore.getAll()
     });
   }
@@ -50,7 +87,7 @@ export default class ContainerCreateForm extends React.Component {
   render() {
     return (
       <Form
-        className={'container-create-form'}
+        className={'container-create-form form-horizontal'}
         formModel={this.state.formModel}
         onSubmit={this.onSubmit}
       >

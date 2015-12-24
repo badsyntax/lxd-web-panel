@@ -14,8 +14,9 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --devtool eval --progress --colors --hot -d",
+    "generate-schema": "node tools/generate-model-schema",
     "lint": "eslint --ext .js --ext .jsx ./src && echo No linting errors.",
-    "prestart": "npm install && node tools/generate-model-schema",
+    "prestart": "npm install && npm run generate-schema",
     "start": "NODE_ENV=development API_HOST=$npm_package_config_defaultAPIHost API_PORT=$npm_package_config_defaultAPIPort npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

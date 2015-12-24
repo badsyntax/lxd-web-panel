@@ -20,3 +20,10 @@ ContainerModel.prototype.getName = function() {
   }
   return this.resource.replace('/1.0/containers/', '');
 };
+
+ContainerModel.prototype.getAddress = function(protocol, intface) {
+  var ip = this.status.ips.filter((ip) => {
+    return ip.protocol === protocol && ip.interface === intface;
+  })[0];
+  return ip && ip.address && ip.address + ' (' + intface + ')';
+};

@@ -1,13 +1,11 @@
 import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import { ProfileModel} from '../models';
+import ProfileModel from '../models/Profile';
 
 import {
   PROFILES__UPDATED,
   PROFILES__GET_SUCCESS
 } from '../constants/AppConstants';
-
-var token = null;
 
 class ProfilesStore extends BaseStore {
 
@@ -25,8 +23,6 @@ class ProfilesStore extends BaseStore {
 
   set(profile) {
     return super.set(
-      profile instanceof ProfileModel ?
-      profile :
       new ProfileModel(profile)
     );
   }
@@ -42,7 +38,6 @@ AppDispatcher.register((action) => {
   switch(action.actionType) {
     case PROFILES__GET_SUCCESS:
       store.setAll(action.profiles);
-      console.log(store);
       break;
     default:
       break;

@@ -3,43 +3,11 @@ import React, {PropTypes} from 'react';
 import { FormView } from '../../models';
 
 import Form from '../Form/Form';
-import Field from '../Field/Field';
 import Alert from '../Alert/Alert';
 
 import UserModel from '../../models/User';
+import SignInFieldset from './SignInFieldset';
 
-class SignInUserFieldset extends React.Component {
-
-  static propTypes = {
-    disabled: PropTypes.bool
-  }
-
-  render() {
-    return (
-      <fieldset className="sign-in-form__fieldset">
-        <Field
-          autoFocus
-          disabled={this.props.disabled}
-          name="username"
-          placeholder="Username"
-        />
-        <Field
-          disabled={this.props.disabled}
-          name="password"
-          placeholder="Password"
-          type="password"
-        />
-        <button
-          className={'btn btn-lg btn-primary btn-block'}
-          disabled={this.props.disabled}
-          type={'submit'}
-        >
-          Sign in
-        </button>
-      </fieldset>
-    );
-  }
-}
 
 export default class SignInForm extends React.Component {
 
@@ -52,7 +20,12 @@ export default class SignInForm extends React.Component {
   constructor(...props) {
     super(...props);
 
-    var formModel = new UserModel(null, null, this.onChange);
+    let initialData = {
+      username: 'rich',
+      password: 'foo'
+    };
+
+    var formModel = new UserModel(initialData, null, this.onChange);
     formModel.setRequired('username', true);
     formModel.setRequired('password', true);
 
@@ -86,7 +59,7 @@ export default class SignInForm extends React.Component {
         <h2 className={'sign-in-form__heading'}>
           Please sign in
         </h2>
-        <SignInUserFieldset disabled={this.props.disabled} />
+        <SignInFieldset disabled={this.props.disabled} />
         { error }
       </Form>
     )

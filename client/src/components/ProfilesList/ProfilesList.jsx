@@ -13,7 +13,10 @@ function getState() {
 
 export default class Profiles extends React.Component {
 
-  state = getState()
+  constructor(...props) {
+    super(...props);
+    this.state = getState();
+  }
 
   componentDidMount() {
     ProfilesStore.addChangeListener(this.onChange);
@@ -25,12 +28,12 @@ export default class Profiles extends React.Component {
   }
 
   onChange = () => {
-    this.setState(getState());
-    console.log(this.state);
+    var state = getState();
+    this.setState(state);
   }
 
   render() {
-
+    let { profiles } = this.state;
     return (
       <div className={'profiles'}>
         <h1>
@@ -39,11 +42,11 @@ export default class Profiles extends React.Component {
             New profile
           </Link>
         </h1>
-        { this.state.profiles.length ? getTable() : getAlert() }
+        { profiles.length ? getTable(profiles) : getAlert() }
       </div>
     );
 
-    function getTable() {
+    function getTable(profiles) {
       return (
         <div className="table-responsive">
           <table className="table table-striped">
@@ -56,7 +59,7 @@ export default class Profiles extends React.Component {
             </thead>
             <tbody>
             {
-              this.state.profiles.map((profile, index) => {
+              profiles.map((profile, index) => {
                 return (
                   <tr key={'profile-' + index}>
                     <td>{ profile.name }</td>

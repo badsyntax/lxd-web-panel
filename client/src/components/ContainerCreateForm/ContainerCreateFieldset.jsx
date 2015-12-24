@@ -1,20 +1,19 @@
 import React, { PropTypes } from 'react';
 
+import Field from '../Field/Field';
+import InputHorizontal from '../InputHorizontal/InputHorizontal';
+import ContainerCreateProfilesFieldset from './ContainerCreateProfilesFieldset';
+
 export default class ContainerCreateFieldset extends React.Component {
 
   static propTypes = {
-    images: PropTypes.array,
-    profiles: PropTypes.array
+    images: PropTypes.array.isRequired,
+    profiles: PropTypes.array.isRequired
   };
 
   render() {
 
-    let hasProfile = (profile) => {
-      return false;
-      return (
-        this.state.container.profiles.indexOf(profile.name) >= 0
-      );
-    }
+
     let hasImage = (image) => {
       return false;
       return (
@@ -24,21 +23,16 @@ export default class ContainerCreateFieldset extends React.Component {
     return (
       <fieldset>
         <div className="form-group">
-          <label
-            className="col-sm-2 control-label"
-            htmlFor="inputName"
-          >
-            Name
-          </label>
-          <div className="col-sm-5">
-            <input
-              className="form-control"
-              id="inputName"
-              placeholder="name"
-              ref={'name'}
-              type="text"
-            />
-          </div>
+          <Field
+            autoFocus
+            disabled={this.props.disabled}
+            Input={InputHorizontal}
+            name="name"
+            label="Name"
+            wrapperClassName="col-sm-5"
+            labelClassName="col-sm-2"
+            placeholder="Name"
+          />
         </div>
         <div className="form-group">
           <label
@@ -69,42 +63,7 @@ export default class ContainerCreateFieldset extends React.Component {
             </select>
           </div>
         </div>
-        <div className="form-group">
-          <label
-            className="col-sm-2 control-label"
-            htmlFor="input"
-          >
-            Profiles
-          </label>
-          <div className="col-sm-5">
-            <ul className="container-create__profiles">
-              {
-                this.props.profiles.map((profile, i) => {
-                  var className = classNames({
-                    'checkbox': true,
-                    '-checked': hasProfile(profile)
-                  });
-                  return (
-                    <li
-                      className={className}
-                      key={'profile-' + i}
-                    >
-                      <label>
-                        <input
-                          checked={hasProfile(profile)}
-                          data-index={i}
-                          onChange={this.onProfileCheckboxChange}
-                          type="checkbox"
-                        />
-                        { profile.name }
-                      </label>
-                    </li>
-                  );
-                })
-              }
-            </ul>
-          </div>
-        </div>
+        <ContainerCreateProfilesFieldset profiles={this.props.profiles} />
       </fieldset>
     );
   }

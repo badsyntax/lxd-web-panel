@@ -29,6 +29,7 @@ export default class Images extends React.Component {
   }
 
   render() {
+    let { images } = this.state;
     return (
       <div className={'images-list'}>
         <h1>
@@ -40,11 +41,11 @@ export default class Images extends React.Component {
             Import image
           </Link>
         </h1>
-        { this.state.images.length ? getTable() : getAlert() }
+        { images.length ? getTable(images) : getAlert() }
       </div>
     );
 
-    function getTable() {
+    function getTable(images) {
       return (
         <div className="table-responsive">
           <table className="table table-striped">
@@ -59,7 +60,7 @@ export default class Images extends React.Component {
             </thead>
             <tbody>
             {
-              this.state.images.map((image, index) => {
+              images.map((image, index) => {
                 return (
                   <tr key={'image-' + index}>
                     <td>{ image.getAlias() }</td>

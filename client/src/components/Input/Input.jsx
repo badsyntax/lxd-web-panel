@@ -30,6 +30,7 @@ export default class Input extends React.Component {
     return (
       <input
         {...props}
+        className={'form-control'}
         onChange={this.onChange}
         type={props.type}
         value={value}

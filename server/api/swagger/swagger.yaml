@@ -305,6 +305,13 @@ definitions:
     properties:
       name:
         type: string
+      profiles:
+        type: array
+        items:
+          $ref: "#/definitions/ProfileModel"
+      image:
+        type: object
+        $ref: "#/definitions/ImageModel"
   ProfileModel:
     required:
       - name

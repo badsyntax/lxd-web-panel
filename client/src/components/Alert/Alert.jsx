@@ -9,7 +9,7 @@ function getIcon(icon) {
 }
 
 function getHeading(heading) {
-  return heading ? (<strong class="alert__heading">{heading}</strong>) : '';
+  return heading ? (<strong className="alert__heading">{heading}</strong>) : '';
 }
 
 export default (props) => {

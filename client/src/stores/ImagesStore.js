@@ -7,8 +7,6 @@ import {
   IMAGES__GET_SUCCESS
 } from '../constants/AppConstants';
 
-var token = null;
-
 class ImagesStore extends BaseStore {
 
   emitChange() {
@@ -25,8 +23,6 @@ class ImagesStore extends BaseStore {
 
   set(image) {
     return super.set(
-      image instanceof ImageModel ?
-      image :
       new ProfileModel(image)
     );
   }

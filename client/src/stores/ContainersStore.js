@@ -7,8 +7,6 @@ import {
   CONTAINERS__GET_SUCCESS
 } from '../constants/AppConstants';
 
-var token = null;
-
 class ContainerStore extends BaseStore {
 
   emitChange() {
@@ -24,7 +22,9 @@ class ContainerStore extends BaseStore {
   }
 
   set(container) {
-    return super.set(new ContainerModel(container));
+    return super.set(
+      new ContainerModel(container)
+    );
   }
 
   setAll(containers) {

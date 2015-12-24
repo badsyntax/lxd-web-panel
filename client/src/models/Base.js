@@ -8,15 +8,15 @@ let noop = () => {};
 BaseModel.schema = require('./schema.json');
 
 function BaseModel(data, schema, onChange) {
-  this.setData(data || {});
   this.schema = Object.assign({}, schema);
   this._keys = new Set(Object.keys(this.schema.properties));
+  this.setData(data || {});
   this.onChange = onChange || noop;
-  this.validate();
 };
 
 BaseModel.prototype.setData = function(data) {
   Object.assign(this, data);
+  this.validate();
 };
 
 BaseModel.prototype.save = function() {};
@@ -54,7 +54,7 @@ BaseModel.prototype.setRequired = function(key, required) {
 
 BaseModel.prototype.updateSchema = function(key, data) {
   if (!this.schema.properties[key]) {
-    throw new Error('Unable to update schema for', key);
+    throw new Error('Unable to update schema for key "' + key + '", not defined in schema.');
   }
   Object.assign(this.schema.properties[key], data);
   this.validate();
