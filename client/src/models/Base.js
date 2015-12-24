@@ -8,38 +8,38 @@ let noop = () => {};
 BaseModel.schema = require('./schema.json');
 
 function BaseModel(data, schema, onChange) {
-  this._keys = new Set();
   this.setData(data || {});
   this.schema = Object.assign({}, schema);
+  this._keys = new Set(Object.keys(this.schema.properties));
   this.onChange = onChange || noop;
+  this.validate();
 };
 
 BaseModel.prototype.setData = function(data) {
   Object.assign(this, data);
-  Object.keys(data).forEach(this._keys.add.bind(this._keys));
 };
 
 BaseModel.prototype.save = function() {};
 
 BaseModel.prototype.update = function(key, value) {
+  if (!this._keys.has(key)) {
+    throw new Error('Trying to update a property that has not been defined in schema');
+  }
   this[key] = value;
-  this._keys.add(key);
   this.validate();
   this.onChange(this);
 };
 
 BaseModel.prototype.get = function(key) {
-  if (this._keys.has(key)) {
-    return this[key];
+  if (!this._keys.has(key)) {
+    throw new Error('Trying to get a property that has not been defined in schema');
   }
-  return undefined;
+  return this[key];
 };
 
 BaseModel.prototype.getData = function() {
-  return Object.keys(this).reduce(function(data, key) {
-    if (this._keys.has(key)) {
-      data[key] = this[key];
-    }
+  return Array.from(this._keys).reduce(function(data, key) {
+    data[key] = this[key];
     return data;
   }.bind(this), {});
 };
@@ -57,4 +57,5 @@ BaseModel.prototype.updateSchema = function(key, data) {
     throw new Error('Unable to update schema for', key);
   }
   Object.assign(this.schema.properties[key], data);
+  this.validate();
 };

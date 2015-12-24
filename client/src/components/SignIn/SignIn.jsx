@@ -40,7 +40,8 @@ export default class SignIn extends React.Component {
         });
         break;
       case AUTHENTICATE__SUCCESS:
-        var pathName = this.context.location.state.nextPathname;
+        var state = this.context.location.state;
+        var pathName = state && state.nextPathname || '/';
         this.context.history.pushState(null, pathName);
         break;
       case AUTHENTICATE__START:
@@ -60,7 +61,13 @@ export default class SignIn extends React.Component {
 
   onSubmit = (e, formModel) => {
     e.preventDefault();
-    AppActions.authenticate(formModel.getData());
+    if (formModel.validation.valid) {
+      AppActions.authenticate(formModel.getData());
+    } else {
+      this.setState({
+        hasError: true
+      });
+    }
   }
 
   render() {

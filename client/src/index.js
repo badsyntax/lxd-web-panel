@@ -23,7 +23,6 @@ import AuthStore from './stores/AuthStore';
 
 function requireAuth(nextState, replaceState) {
   if (!AuthStore.loggedIn()) {
-    console.log(nextState);
     replaceState({ nextPathname: nextState.location.pathname }, '/signin')
   }
 }
