@@ -296,19 +296,24 @@ definitions:
       username:
         description: "User username"
         type: string
+        minLength: 1
       password:
         description: "User password"
         type: string
+        minLength: 1
   ContainerModel:
     required:
       - name
+      - profiles
     properties:
       name:
         type: string
+        minLength: 1
       profiles:
         type: array
         items:
           $ref: "#/definitions/ProfileModel"
+        minItems: 1
       image:
         type: object
         $ref: "#/definitions/ImageModel"

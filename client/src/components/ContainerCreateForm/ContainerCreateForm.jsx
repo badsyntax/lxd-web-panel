@@ -12,6 +12,7 @@ import ContainerCreateFieldset from './ContainerCreateFieldset';
 import ContainerModel from '../../models/Container';
 import ImageModel from '../../models/Image';
 
+import Alert from '../Alert/Alert';
 import Form from '../Form/Form';
 
 export default class ContainerCreateForm extends React.Component {
@@ -68,7 +69,7 @@ export default class ContainerCreateForm extends React.Component {
 
     // An example of having a model with profiles
     var formModel = this.state.formModel;
-    formModel.update('profiles', [ profiles[0] ])
+    // formModel.update('profiles', [ profiles[0] ])
 
     this.setState({
       profiles,
@@ -83,22 +84,36 @@ export default class ContainerCreateForm extends React.Component {
   }
 
   onSubmit = (e) => {
-    this.props.onSubmit(e, this.state.formModel);
+    e.preventDefault();
+    this.setState({
+      showError: true
+    });
   }
 
   render() {
+    var error = this.state.showError ? (
+      <Alert
+        message="There was an error submitting the form. Please correct the errors below"
+        type="danger"
+        icon="info-sign"
+      />
+    ) : '';
     return (
-      <Form
-        className={'container-create-form form-horizontal'}
-        formModel={this.state.formModel}
-        onSubmit={this.onSubmit}
-      >
-        <ContainerCreateFieldset
-          profiles={this.state.profiles}
-          images={this.state.images}
-          disabled={this.props.disabled}
-        />
-      </Form>
+      <div className="container-create-form">
+        { error }
+        <Form
+          className={'form-horizontal'}
+          formModel={this.state.formModel}
+          onSubmit={this.onSubmit}
+        >
+          <ContainerCreateFieldset
+            profiles={this.state.profiles}
+            images={this.state.images}
+            disabled={this.props.disabled}
+            showErrors={this.state.showError}
+          />
+        </Form>
+      </div>
     )
   }
 }

@@ -16,15 +16,15 @@ export default class ContainersList extends React.Component {
   state = getState()
 
   componentDidMount() {
-    ContainersStore.addChangeListener(this.onChange);
+    ContainersStore.addChangeListener(this.onStoreChange);
     AppActions.getContainers();
   }
 
   componentWillUnmount() {
-    ContainersStore.removeChangeListener(this.onChange);
+    ContainersStore.removeChangeListener(this.onStoreChange);
   }
 
-  onChange = () => {
+  onStoreChange = () => {
     this.setState(getState());
   }
 
@@ -53,6 +53,25 @@ export default class ContainersList extends React.Component {
       })
     }
 
+    function getContainerRow(container) {
+      console.log(container);
+      return (
+        <tr key={'row-' + container.name}>
+          <td>{ container.name }</td>
+          <td>{ container.status.status.toUpperCase() }</td>
+          <td>{ container.getAddress('IPV4', 'eth0') }</td>
+          <td>{ container.getAddress('IPV6', 'eth0') }</td>
+          <td>{ getProfiles(container) }</td>
+          <td>
+            <button className="btn btn-default btn-xs">Edit</button>
+            <button className="btn btn-default btn-xs">Delete</button>
+            <button className="btn btn-default btn-xs">Stop</button>
+            <button className="btn btn-default btn-xs">Start</button>
+          </td>
+        </tr>
+      );
+    }
+
     function getTable(containers) {
       return (
         <div className="table-responsive">
@@ -69,24 +88,7 @@ export default class ContainersList extends React.Component {
             </thead>
             <tbody>
             {
-              containers.map((container) => {
-                console.log(container);
-                return (
-                  <tr key={'row-' + container.name}>
-                    <td>{ container.name }</td>
-                    <td>{ container.status.status.toUpperCase() }</td>
-                    <td>{ container.getAddress('IPV4', 'eth0') }</td>
-                    <td>{ container.getAddress('IPV6', 'eth0') }</td>
-                    <td>{ getProfiles(container) }</td>
-                    <td>
-                      <button className="btn btn-default btn-xs">Edit</button>
-                      <button className="btn btn-default btn-xs">Delete</button>
-                      <button className="btn btn-default btn-xs">Stop</button>
-                      <button className="btn btn-default btn-xs">Start</button>
-                    </td>
-                  </tr>
-                );
-              })
+              containers.map(getContainerRow)
             }
             </tbody>
           </table>

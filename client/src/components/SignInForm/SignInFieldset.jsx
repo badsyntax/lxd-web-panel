@@ -4,7 +4,8 @@ import Field from '../Field/Field';
 export default class SignIFieldset extends React.Component {
 
   static propTypes = {
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    showErrors: PropTypes.bool
   }
 
   render() {
@@ -15,12 +16,14 @@ export default class SignIFieldset extends React.Component {
           disabled={this.props.disabled}
           name="username"
           placeholder="Username"
+          showError={this.props.showErrors}
         />
         <Field
           disabled={this.props.disabled}
           name="password"
           placeholder="Password"
           type="password"
+          showError={this.props.showErrors}
         />
         <button
           className={'btn btn-lg btn-primary btn-block'}

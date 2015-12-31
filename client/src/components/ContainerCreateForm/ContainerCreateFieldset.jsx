@@ -27,6 +27,7 @@ export default class ContainerCreateFieldset extends React.Component {
           labelLayoutClassName="col-sm-2"
           inputLayoutClassName="col-sm-5"
           placeholder="Name"
+          showError={this.props.showErrors}
         />
         <Field
           className="form-group"
@@ -38,8 +39,17 @@ export default class ContainerCreateFieldset extends React.Component {
           label="Image"
           labelLayoutClassName="col-sm-2"
           inputLayoutClassName="col-sm-5"
+          showError={this.props.showErrors}
         />
-        <ContainerCreateProfilesFieldset profiles={this.props.profiles} />
+        <ContainerCreateProfilesFieldset
+          profiles={this.props.profiles}
+          showErrors={this.props.showErrors}
+        />
+        <div className="form-group">
+          <div className="col-sm-offset-2 col-sm-2">
+            <button type="submit" className="btn btn-med btn-primary btn-block">Submit</button>
+          </div>
+        </div>
       </fieldset>
     );
   }

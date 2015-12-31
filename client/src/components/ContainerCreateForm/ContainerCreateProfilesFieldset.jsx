@@ -4,7 +4,8 @@ import classNames from 'classnames';
 export default class ContainerCreateProfilesFieldset extends React.Component {
 
   static propTypes = {
-    profiles: PropTypes.array.isRequired
+    profiles: PropTypes.array.isRequired,
+    showErrors: PropTypes.bool
   };
 
   static contextTypes = {

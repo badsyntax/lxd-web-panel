@@ -59,7 +59,9 @@ export default class SignInForm extends React.Component {
         <h2 className={'sign-in-form__heading'}>
           Please sign in
         </h2>
-        <SignInFieldset disabled={this.props.disabled} />
+        <SignInFieldset
+          showErrors={this.props.error}
+          disabled={this.props.disabled} />
         { error }
       </Form>
     )

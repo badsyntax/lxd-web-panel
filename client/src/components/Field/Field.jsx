@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 import Input from '../Input/Input';
+import FieldContainer from '../FieldContainer/FieldContainer';
 
 export default class Field extends React.Component {
 
@@ -11,9 +12,14 @@ export default class Field extends React.Component {
       PropTypes.func,
       PropTypes.string
     ]),
+    FieldContainer: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.string
+    ]),
     label: PropTypes.string,
     labelLayoutClassName: PropTypes.string,
-    name: PropTypes.string
+    name: PropTypes.string,
+    showError: PropTypes.bool
   };
 
   static contextTypes = {
@@ -21,13 +27,19 @@ export default class Field extends React.Component {
   }
 
   static defaultProps = {
-    Input
+    Input,
+    FieldContainer,
+    horizontal: false
   };
 
   render() {
-    let { Input } = this.props;
 
-    let label = this.props.label ? (
+    let {
+      Input,
+      FieldContainer
+    } = this.props;
+
+    let labelComponent = this.props.label ? (
       <label
         className={classNames(this.props.labelLayoutClassName, 'control-label')}
       >
@@ -35,21 +47,29 @@ export default class Field extends React.Component {
       </label>
     ) : '';
 
-    let input = (
+    let inputComponent = (
       <Input { ...this.props}
         className={'form-control'}
       />
     );
 
+    let formModel = this.context.formModel;
+    let hasError = this.props.showError && !formModel.isPropValid(this.props.name);
+
+    let className = classNames(
+      this.props.className,
+      hasError ? 'has-error' : null
+    );
+
     return (
-      <div className={this.props.className}>
-        { label }
-        { this.props.horizontal ? (
-          <div className={this.props.inputLayoutClassName}>
-            { input }
-          </div>
-        ) : input }
-      </div>
-    )
+      <FieldContainer
+        { ...this.props}
+        formModel={formModel}
+        className={className}
+        labelComponent={labelComponent}
+        inputComponent={inputComponent}
+        hasError={hasError}
+      />
+    );
   }
 }

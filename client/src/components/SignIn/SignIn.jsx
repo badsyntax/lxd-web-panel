@@ -62,6 +62,9 @@ export default class SignIn extends React.Component {
   onSubmit = (e, formModel) => {
     e.preventDefault();
     if (formModel.validation.valid) {
+      this.setState({
+        hasError: false
+      });
       AppActions.authenticate(formModel.getData());
     } else {
       this.setState({
@@ -72,11 +75,15 @@ export default class SignIn extends React.Component {
 
   render() {
     return (
-      <SignInForm
-        disabled={this.state.isFormLoading}
-        error={this.state.hasError}
-        onSubmit={this.onSubmit}
-      />
+      <div
+        className="sign-in"
+      >
+        <SignInForm
+          disabled={this.state.isFormLoading}
+          error={this.state.hasError}
+          onSubmit={this.onSubmit}
+        />
+      </div>
     );
   }
 }

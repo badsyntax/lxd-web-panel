@@ -22,7 +22,6 @@ BaseModel.prototype.setData = function(data) {
 BaseModel.prototype.save = function() {};
 
 BaseModel.prototype.update = function(key, value) {
-  console.log('UPDATE MODEL');
   if (!this._keys.has(key)) {
     throw new Error('Trying to update a property that has not been defined in schema');
   }
@@ -47,6 +46,25 @@ BaseModel.prototype.getData = function() {
 
 BaseModel.prototype.validate = function() {
   this.validation = revalidator.validate(this.getData(), this.schema);
+};
+
+BaseModel.prototype.isPropValid = function(prop) {
+  this.validate();
+  var propHasError = this.validation.errors.reduce(function(hasError, error) {
+    return hasError || error.property === prop;
+  }, false);
+  return !propHasError;
+};
+
+BaseModel.prototype.getPropValidationError = function(prop) {
+  return this.validation.errors.filter(function(error) {
+    return error.property === prop;
+  })[0] || {};
+};
+
+BaseModel.prototype.getPropValidationErrorMessage = function(prop) {
+  var error = this.getPropValidationError(prop);
+  return prop + ' ' + error.message;
 };
 
 BaseModel.prototype.setRequired = function(key, required) {

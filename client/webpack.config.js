@@ -16,7 +16,9 @@ var PRODUCTION = process.env.NODE_ENV === 'production';
 
 // get entries
 var entries = {
-  bundle: [path.resolve(pkg.config.srcPath, 'index.js')]
+  bundle: [
+    path.resolve(pkg.config.srcPath, 'index.js')
+  ]
 };
 
 if (DEVELOPMENT) {
@@ -74,7 +76,8 @@ var config = {
     extensions: ['', '.js', '.json', '.jsx']
   },
   devServer: {
-    port: pkg.config.devPort
+    port: pkg.config.devPort,
+    // historyApiFallback: true,
   }
 };
 
