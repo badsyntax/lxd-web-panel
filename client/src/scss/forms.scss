@@ -1,0 +1,8 @@
+legend {
+  &.control-label {
+    @extend label;
+    border: 0;
+    font-size: inherit;
+  }
+}
+
