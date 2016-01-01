@@ -9,7 +9,8 @@ export default class Input extends React.Component {
   };
 
   static defaultProps = {
-    type: 'text'
+    type: 'text',
+    className: 'form-control'
   }
 
   static contextTypes = {
@@ -24,18 +25,21 @@ export default class Input extends React.Component {
   render() {
 
     let { context, props } = this;
+    let value = null;
 
-    let value = context.formModel.get(props.name) || props.defaultValue;
+    try {
+      value = context.formModel.get(props.name) || props.defaultValue;
+    } catch(e) {
+      window.alert(e);
+    }
 
-    let input = (
+    return (
       <input
-        className={'form-control'}
-        onChange={this.onChange}
+        className={props.className}
         type={props.type}
         value={value}
+        onChange={this.onChange}
       />
     );
-
-    return input;
   }
 }

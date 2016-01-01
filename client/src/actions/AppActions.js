@@ -2,12 +2,16 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import WebAPI from '../util/WebAPI';
 
 import {
+  PROFILES__GET_START,
+  PROFILES__GET_END,
   PROFILES__GET_SUCCESS,
   PROFILES__GET_ERROR,
 
   CONTAINERS__GET_SUCCESS,
   CONTAINERS__GET_ERROR,
 
+  IMAGES__GET_START,
+  IMAGES__GET_END,
   IMAGES__GET_SUCCESS,
   IMAGES__GET_ERROR,
 
@@ -18,6 +22,12 @@ import {
 } from '../constants/AppConstants';
 
 export default {
+
+  async(funcs) {
+    funcs.forEach((func) => {
+      window.setTimeout(func);
+    });
+  },
 
   authenticate(credentials) {
     AppDispatcher.dispatch({
@@ -38,7 +48,7 @@ export default {
         error: e
       });
     })
-    .finally((e) => {
+    .finally(() => {
       AppDispatcher.dispatch({
         actionType: AUTHENTICATE__END
       });
@@ -46,6 +56,9 @@ export default {
   },
 
   getProfiles() {
+    AppDispatcher.dispatch({
+      actionType: PROFILES__GET_START
+    });
     return WebAPI.getProfiles()
     .then((response) => {
       if (response.profiles) {
@@ -59,6 +72,11 @@ export default {
       AppDispatcher.dispatch({
         actionType: PROFILES__GET_ERROR,
         error: e
+      });
+    })
+    .finally(() => {
+      AppDispatcher.dispatch({
+        actionType: PROFILES__GET_END
       });
     });
   },
@@ -84,6 +102,9 @@ export default {
   },
 
   getImages() {
+    AppDispatcher.dispatch({
+      actionType: IMAGES__GET_START
+    });
     WebAPI.getImages()
     .then((response) => {
       if (response.images) {
@@ -96,6 +117,11 @@ export default {
     .catch(() => {
       AppDispatcher.dispatch({
         actionType: IMAGES__GET_ERROR
+      });
+    })
+    .finally(() => {
+      AppDispatcher.dispatch({
+        actionType: IMAGES__GET_END
       });
     });
   }

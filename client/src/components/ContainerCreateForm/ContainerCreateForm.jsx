@@ -4,9 +4,6 @@ import classNames from 'classnames';
 import Button from 'react-bootstrap/lib/Button';
 import { Link } from 'react-router';
 import WebAPI from '../../util/WebAPI';
-import ProfilesStore from '../../stores/ProfilesStore';
-import ImagesStore from '../../stores/ImagesStore';
-import AppActions from '../../actions/AppActions';
 import ContainerCreateFieldset from './ContainerCreateFieldset';
 
 import ContainerModel from '../../models/Container';
@@ -20,16 +17,16 @@ export default class ContainerCreateForm extends React.Component {
   static propTypes = {
     disabled: PropTypes.bool,
     error: PropTypes.bool,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    images: PropTypes.array.isRequired,
+    profiles: PropTypes.array.isRequired
   };
 
   constructor(...props) {
     super(...props);
 
     var initialData = {
-      name: 'foobar',
-      profiles: [],
-      image: {}
+      profiles: []
     };
 
     var formModel = new ContainerModel(initialData, null, this.onFormModelChange);
@@ -37,25 +34,11 @@ export default class ContainerCreateForm extends React.Component {
     formModel.setRequired('name', true);
     formModel.setRequired('image', true);
 
+    console.log('FORM MODEL', formModel);
+
     this.state = {
-      profiles: ProfilesStore.getAll(),
-      images: ImagesStore.getAll(),
       formModel
     };
-  }
-
-  componentDidMount() {
-
-    ProfilesStore.addChangeListener(this.onProfilesStoreChange);
-    ImagesStore.addChangeListener(this.onImagesStoreChange);
-
-    AppActions.getProfiles();
-    AppActions.getImages();
-  }
-
-  componentWillUnmount() {
-    ProfilesStore.removeChangeListener(this.onProfilesStoreChange);
-    ImagesStore.removeChangeListener(this.onImagesStoreChange);
   }
 
   onFormModelChange = (formModel) => {
@@ -64,51 +47,32 @@ export default class ContainerCreateForm extends React.Component {
     });
   }
 
-  onProfilesStoreChange = () => {
-    var profiles = ProfilesStore.getAll();
-
-    // An example of having a model with profiles
-    var formModel = this.state.formModel;
-    // formModel.update('profiles', [ profiles[0] ])
-
-    this.setState({
-      profiles,
-      formModel
-    });
-  }
-
-  onImagesStoreChange = () => {
-    this.setState({
-      images: ImagesStore.getAll()
-    });
-  }
-
   onSubmit = (e) => {
     e.preventDefault();
     this.setState({
       showError: true
     });
+    console.log('FORM MODEL', this.state.formModel);
   }
 
   render() {
-    var error = this.state.showError ? (
-      <Alert
-        message="There was an error submitting the form. Please correct the errors below"
-        type="danger"
-        icon="info-sign"
-      />
-    ) : '';
     return (
       <div className="container-create-form">
-        { error }
+        { this.state.showError ? (
+          <Alert
+            message="There was an error submitting the form. Please correct the errors below."
+            type="danger"
+            icon="info-sign"
+          />
+        ) : '' }
         <Form
           className={'form-horizontal'}
           formModel={this.state.formModel}
           onSubmit={this.onSubmit}
         >
           <ContainerCreateFieldset
-            profiles={this.state.profiles}
-            images={this.state.images}
+            profiles={this.props.profiles}
+            images={this.props.images}
             disabled={this.props.disabled}
             showErrors={this.state.showError}
           />

@@ -42,8 +42,7 @@ var config = {
       loader: 'babel',
       exclude: nodeModulesPath,
       query: {
-        presets: ['es2015', 'stage-0', 'react'],
-        plugins: ['transform-decorators-legacy']
+        presets: ['es2015', 'stage-0', 'react']
       }
     }, {
       test: /\.scss$/,
@@ -77,6 +76,7 @@ var config = {
   },
   devServer: {
     port: pkg.config.devPort,
+    debug: true
     // historyApiFallback: true,
   }
 };

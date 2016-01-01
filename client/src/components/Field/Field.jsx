@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 import Input from '../Input/Input';
-import FieldContainer from '../FieldContainer/FieldContainer';
 
 export default class Field extends React.Component {
 
@@ -9,10 +8,6 @@ export default class Field extends React.Component {
     ...React.Component.propTypes,
     horizontal: PropTypes.bool,
     Input: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string
-    ]),
-    FieldContainer: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.string
     ]),
@@ -28,30 +23,12 @@ export default class Field extends React.Component {
 
   static defaultProps = {
     Input,
-    FieldContainer,
     horizontal: false
   };
 
   render() {
 
-    let {
-      Input,
-      FieldContainer
-    } = this.props;
-
-    let labelComponent = this.props.label ? (
-      <label
-        className={classNames(this.props.labelLayoutClassName, 'control-label')}
-      >
-        { this.props.label }
-      </label>
-    ) : '';
-
-    let inputComponent = (
-      <Input { ...this.props}
-        className={'form-control'}
-      />
-    );
+    let { Input } = this.props;
 
     let formModel = this.context.formModel;
     let hasError = this.props.showError && !formModel.isPropValid(this.props.name);
@@ -61,15 +38,30 @@ export default class Field extends React.Component {
       hasError ? 'has-error' : null
     );
 
-    return (
-      <FieldContainer
-        { ...this.props}
-        formModel={formModel}
-        className={className}
-        labelComponent={labelComponent}
-        inputComponent={inputComponent}
-        hasError={hasError}
+    let inputComponent = (
+      <Input { ...this.props}
+        className={'form-control'}
       />
+    );
+
+    return (
+      <div className={className}>
+        { this.props.label ? (
+          <label
+            className={classNames(this.props.labelLayoutClassName, 'control-label')}
+          >
+            { this.props.label }
+          </label>
+        ) : '' }
+        { this.props.horizontal ? (
+          <div className={this.props.inputLayoutClassName}>
+            { inputComponent }
+            { hasError ? (
+              <span className="help-block">{ formModel.getPropValidationErrorMessage(this.props.name) }</span>
+            ) : null }
+          </div>
+        ) : inputComponent }
+      </div>
     );
   }
 }

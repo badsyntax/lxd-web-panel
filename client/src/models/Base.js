@@ -1,3 +1,4 @@
+var util = require('util');
 var path = require('path');
 var revalidator = require('revalidator');
 
@@ -23,7 +24,7 @@ BaseModel.prototype.save = function() {};
 
 BaseModel.prototype.update = function(key, value) {
   if (!this._keys.has(key)) {
-    throw new Error('Trying to update a property that has not been defined in schema');
+    throw new Error('Trying to update a property that has not been defined in schema (' + key + ')');
   }
   this[key] = value;
   this.validate();
@@ -32,7 +33,7 @@ BaseModel.prototype.update = function(key, value) {
 
 BaseModel.prototype.get = function(key) {
   if (!this._keys.has(key)) {
-    throw new Error('Trying to get a property that has not been defined in schema');
+    throw new Error('Trying to get a property that has not been defined in schema (' + key + ')');
   }
   return this[key];
 };
@@ -64,7 +65,7 @@ BaseModel.prototype.getPropValidationError = function(prop) {
 
 BaseModel.prototype.getPropValidationErrorMessage = function(prop) {
   var error = this.getPropValidationError(prop);
-  return prop + ' ' + error.message;
+  return util.format('%s %s', prop, error.message);
 };
 
 BaseModel.prototype.setRequired = function(key, required) {

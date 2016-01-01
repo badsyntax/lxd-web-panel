@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
 import Field from '../Field/Field';
+import CheckboxGroup from '../CheckboxGroup/CheckboxGroup';
 import Select from '../Select/Select';
-import ContainerCreateProfilesFieldset from './ContainerCreateProfilesFieldset';
 
 export default class ContainerCreateFieldset extends React.Component {
 
@@ -41,9 +41,17 @@ export default class ContainerCreateFieldset extends React.Component {
           inputLayoutClassName="col-sm-5"
           showError={this.props.showErrors}
         />
-        <ContainerCreateProfilesFieldset
-          profiles={this.props.profiles}
-          showErrors={this.props.showErrors}
+        <Field
+          className="form-group"
+          disabled={this.props.disabled}
+          horizontal={true}
+          Input={CheckboxGroup}
+          options={this.props.profiles}
+          name="profiles"
+          label="Profiles"
+          labelLayoutClassName="col-sm-2"
+          inputLayoutClassName="col-sm-5"
+          showError={this.props.showErrors}
         />
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-2">
