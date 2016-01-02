@@ -11,11 +11,16 @@
     "devPort": 9000
   },
   "scripts": {
-    "start-server": "cd ./server && npm start",
-    "start-client": "cd ./client && npm start"
+    "generate-model-schema": "node ./tools/generate-model-schema",
+    "pregenerate-model-schema": "npm install",
+    "prestart-client": "npm run generate-model-schema",
+    "prestart-server": "npm run generate-model-schema",
+    "start-client": "cd ./client && npm start",
+    "start-server": "cd ./server && npm start"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "swagger-parser": "^3.3.0"
+  }
 }

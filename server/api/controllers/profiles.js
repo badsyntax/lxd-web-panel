@@ -3,7 +3,7 @@
 var Promise = require('bluebird');
 var helpers = require('../helpers');
 var lxdClient = helpers.getLXDClient();
-var ProfileModel = require('../models').ProfileModel;
+var ProfileModel = require('../models/Profile');
 
 module.exports = {
   getAllProfiles: getAllProfiles,

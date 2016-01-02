@@ -8,7 +8,6 @@ var pkg = require('./package.json');
 // paths
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
-
 // setup environment flags
 var DEVELOPMENT = process.env.NODE_ENV === 'development';
 var PRODUCTION = process.env.NODE_ENV === 'production';
@@ -40,7 +39,9 @@ var config = {
     loaders: [{
       test: /\.jsx?$/,
       loader: 'babel',
-      exclude: nodeModulesPath,
+      exclude: [
+        nodeModulesPath
+      ],
       query: {
         presets: ['es2015', 'stage-0', 'react']
       }

@@ -16,20 +16,26 @@ export default class Images extends React.Component {
   state = getState()
 
   componentDidMount() {
-    ImagesStore.addChangeListener(this.onChange);
-    AppActions.getImages();
+    try {
+      ImagesStore.addChangeListener(this.onImageStoreChange);
+      AppActions.async([AppActions.getImages]);
+    } catch(e) {
+      alert(e);
+    }
   }
 
   componentWillUnmount() {
-    ImagesStore.removeChangeListener(this.onChange);
+    ImagesStore.removeChangeListener(this.onImageStoreChange);
   }
 
-  onChange = () => {
+  onImageStoreChange = () => {
     this.setState(getState());
   }
 
   render() {
+    try {
     let { images } = this.state;
+    console.log('images', images, images.length);
     return (
       <div className={'images-list'}>
         <h1>
@@ -52,7 +58,7 @@ export default class Images extends React.Component {
             <thead>
               <tr>
                 <th>Alias</th>
-                <th>OS</th>
+                <th>Description</th>
                 <th>Size</th>
                 <th>Created</th>
                 <th>Actions</th>
@@ -64,7 +70,7 @@ export default class Images extends React.Component {
                 return (
                   <tr key={'image-' + index}>
                     <td>{ image.getAlias() }</td>
-                    <td>{ image.properties.os } ({ image.properties.release })</td>
+                    <td>{ image.properties.description }</td>
                     <td>{ image.sizeFriendly() }</td>
                     <td>{ image.createdAtFriendly() }</td>
                     <td>
@@ -82,7 +88,14 @@ export default class Images extends React.Component {
     }
 
     function getAlert() {
-      return (<Alert heading="No images" type="warning" />);
+      return (
+        <Alert
+          heading="No images"
+          type="warning"
+          icon="info-sign"
+        />
+      );
     }
+    } catch(e) { alert(e); }
   }
 }

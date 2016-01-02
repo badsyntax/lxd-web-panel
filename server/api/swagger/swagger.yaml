@@ -284,6 +284,25 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /images/aliases:
+    x-swagger-router-controller: images
+    get:
+      description: Returns a list of image aliases.
+      # used as the method name of the controller
+      operationId: getAllImageAliases
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ImageAliasesResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"          
   /swagger.json:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -322,6 +341,12 @@ definitions:
       - name
     properties:
       name:
+        type: string
+  ImageAliasModel:
+    required:
+      - alias
+    properties:
+      alias:
         type: string
   ImageModel:
     required:
@@ -399,6 +424,14 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/ImageModel"
+  ImageAliasesResponse:
+    required:
+      - aliases
+    properties:
+      aliases:
+        type: array
+        items:
+          $ref: "#/definitions/ImageAliasModel"
   ContainerResponse:
     required:
       - container

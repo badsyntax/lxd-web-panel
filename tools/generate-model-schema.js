@@ -1,8 +1,8 @@
 var fs = require('fs');
 var path = require('path');
 var SwaggerParser = require('swagger-parser');
-var swaggerFile = path.resolve(__dirname, '../../server/api/swagger/swagger.yaml');
-var schemaFile = path.resolve(__dirname, '../src/models/schema.json');
+var swaggerFile = path.resolve(__dirname, '../server/api/swagger/swagger.yaml');
+var schemaFile = path.resolve(__dirname, '../models/schema.json');
 
 var parser = new SwaggerParser();
 

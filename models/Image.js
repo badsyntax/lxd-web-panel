@@ -2,10 +2,12 @@ var dateFormat = require('dateformat');
 var filesize = require('filesize');
 var BaseModel = require('./Base');
 
-// dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+module.exports = ImageModel;
 
-function ImageModel(data) {
-  BaseModel.apply(this, [data]);
+ImageModel.schema = BaseModel.schema.ImageModel;
+
+function ImageModel(data, schema, onChange) {
+  BaseModel.call(this, data, schema || ImageModel.schema, onChange);
 };
 
 ImageModel.factory = function(data) {
@@ -30,8 +32,7 @@ ImageModel.prototype.sizeFriendly = function() {
 };
 
 ImageModel.prototype.getAlias = function() {
-  return this.aliases && this.aliases[0].target;
+  return (this.aliases && this.aliases.length && this.aliases[0].target) || null;
 };
 
-module.exports = ImageModel;
 

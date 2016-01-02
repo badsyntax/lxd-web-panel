@@ -14,8 +14,9 @@
   "scripts": {
     "edit": "swagger project edit .",
     "lint": "eslint --ext .js . && echo No linting errors.",
+    "prestart-dev-server": "cd ../ && npm run generate-model-schema && cd server/api && ln -sf ../../models/",
     "start": "sudo ./start-dev-server.sh",
-    "start-dev-server": "PORT=$npm_package_config_devPort HOST=$npm_package_config_devHost node app",
+    "start-dev-server": "PORT=$npm_package_config_devPort HOST=$npm_package_config_devHost node ./app",
     "start-prod-server": "node app",
     "test": "swagger project test ."
   },
@@ -27,8 +28,10 @@
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
+    "concurrently": "^1.0.0",
     "eslint": "^1.10.3",
     "should": "^7.1.0",
-    "supertest": "^1.0.0"
+    "supertest": "^1.0.0",
+    "sync-files": "^1.0.3"
   }
 }

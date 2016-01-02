@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "dateformat": "^1.0.12",
-    "filesize": "^3.1.4"
+    "filesize": "^3.1.4",
+    "revalidator": "^0.3.1"
   }
 }

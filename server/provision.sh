@@ -26,6 +26,11 @@ sudo zpool set listsnapshots=on lxc
 sudo lxc config set storage.zfs_pool_name lxc
 sudo lxc config set core.https_address 127.0.0.1
 
+lxc remote add images images.linuxcontainers.org
+
+# lxc launch images:centos/7/amd64 centos
+# lxc image copy images:debian/jessie/amd64 local: --alias=jessie-amd64
+
 # echo "Importing base image..."
 # sudo lxd-images import ubuntu --alias ubuntu
 

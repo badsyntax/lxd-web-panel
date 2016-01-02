@@ -5,7 +5,7 @@ import { FormView } from '../../models';
 import Form from '../Form/Form';
 import Alert from '../Alert/Alert';
 
-import UserModel from '../../models/User';
+import { UserModel } from '../../models';
 import SignInFieldset from './SignInFieldset';
 
 

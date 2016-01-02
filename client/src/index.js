@@ -21,6 +21,7 @@ import Profiles from './components/Profiles/Profiles.jsx';
 import ProfilesList from './components/ProfilesList/ProfilesList.jsx';
 import Images from './components/Images/Images.jsx';
 import ImagesList from './components/ImagesList/ImagesList.jsx';
+import ImagesImport from './components/ImagesImport/ImagesImport.jsx';
 
 import Config from './components/Config/Config.jsx';
 import Users from './components/Users/Users.jsx';
@@ -61,6 +62,7 @@ try {
         <Route component={Images} onEnter={requireAuth} path="/images">
           <IndexRoute component={ImagesList}  />
           <Route component={ImagesList} path="/images/list" />
+          <Route component={ImagesImport} path="/images/import" />
         </Route>
       </Route>
       <Route component={Config} path="/config" />

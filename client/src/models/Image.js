@@ -32,7 +32,7 @@ ImageModel.prototype.sizeFriendly = function() {
 };
 
 ImageModel.prototype.getAlias = function() {
-  return this.aliases && this.aliases[0].target;
+  return (this.aliases && this.aliases.length && this.aliases[0].target) || null;
 };
 
 

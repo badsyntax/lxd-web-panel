@@ -15,7 +15,8 @@ function getHeading(heading) {
 export default (props) => {
   let icon = getIcon(props.icon);
   let heading = getHeading(props.heading);
-  let message = <span className="alert__message">{ props.message }</span>
+  let message = props.message ? <span className="alert__message">{ props.message }</span> : null;
+  let children = props.children ? <span className="alert__children">{ props.children }</span> : null;
   let className = classNames(
     'alert',
     'alert-' + (props.type || 'warning')
@@ -28,6 +29,7 @@ export default (props) => {
       {icon}
       {heading}
       {message}
+      {children}
     </div>
   );
 };

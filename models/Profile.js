@@ -2,8 +2,10 @@ var BaseModel = require('./Base');
 
 module.exports = ProfileModel;
 
-function ProfileModel(data) {
-  BaseModel.apply(this, [data]);
+ProfileModel.schema = BaseModel.schema.ProfileModel;
+
+function ProfileModel(data, schema, onChange) {
+  BaseModel.call(this, data, schema || ProfileModel.schema, onChange);
 };
 
 ProfileModel.factory = function(data) {

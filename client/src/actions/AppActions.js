@@ -15,6 +15,11 @@ import {
   IMAGES__GET_SUCCESS,
   IMAGES__GET_ERROR,
 
+  REMOTE_IMAGES__GET_START,
+  REMOTE_IMAGES__GET_END,
+  REMOTE_IMAGES__GET_SUCCESS,
+  REMOTE_IMAGES__GET_ERROR,
+
   AUTHENTICATE__SUCCESS,
   AUTHENTICATE__ERROR,
   AUTHENTICATE__START,
@@ -122,6 +127,31 @@ export default {
     .finally(() => {
       AppDispatcher.dispatch({
         actionType: IMAGES__GET_END
+      });
+    });
+  },
+
+  getRemoteImages() {
+    AppDispatcher.dispatch({
+      actionType: REMOTE_IMAGES__GET_START
+    });
+    WebAPI.getRemoteImages()
+    .then((response) => {
+      if (response.images) {
+        AppDispatcher.dispatch({
+          actionType: REMOTE_IMAGES__GET_SUCCESS,
+          remoteImages: response.remoteImages
+        });
+      }
+    })
+    .catch(() => {
+      AppDispatcher.dispatch({
+        actionType: REMOTE_IMAGES__GET_ERROR
+      });
+    })
+    .finally(() => {
+      AppDispatcher.dispatch({
+        actionType: REMOTE_IMAGES__GET_END
       });
     });
   }

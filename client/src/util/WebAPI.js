@@ -2,6 +2,8 @@ import 'whatwg-fetch';
 import _ from 'lodash';
 import AuthStore from '../stores/AuthStore';
 
+import remoteImages from '../data/remoteImages';
+
 import {
   API__ENDPOINT,
 } from '../constants/AppConstants';
@@ -35,6 +37,12 @@ class API {
   getImages() {
     return getJson({
       action: 'images/detailed'
+    });
+  }
+
+  getRemoteImages() {
+    return new Promise((resolve) => {
+      resolve(remoteImages);
     });
   }
 }
