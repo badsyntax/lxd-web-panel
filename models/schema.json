@@ -122,6 +122,12 @@
       },
       "upload_date": {
         "type": "string"
+      },
+      "value": {
+        "type": "string"
+      },
+      "label": {
+        "type": "string"
       }
     }
   },
@@ -136,6 +142,31 @@
       },
       "source": {
         "type": "object"
+      }
+    }
+  },
+  "ImageImportModel": {
+    "required": [
+      "public",
+      "remoteAlias",
+      "localAlias",
+      "server"
+    ],
+    "properties": {
+      "public": {
+        "type": "boolean"
+      },
+      "remoteAlias": {
+        "type": "string",
+        "minLength": 1
+      },
+      "localAlias": {
+        "type": "string",
+        "minLength": 1
+      },
+      "server": {
+        "type": "string",
+        "minLength": 1
       }
     }
   },

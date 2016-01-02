@@ -45,9 +45,7 @@ export default {
     var promise = WebAPI.authenticate(credentials)
     .then((response) => {
       if (response.token) {
-        dispatchAction(AUTHENTICATE__SUCCESS, {
-          token: response.token
-        });
+        dispatchAction(AUTHENTICATE__SUCCESS, response);
       }
     })
     .catch((e) => {
@@ -61,10 +59,7 @@ export default {
     return WebAPI.getProfiles()
     .then((response) => {
       if (response.profiles) {
-        AppDispatcher.dispatch({
-          actionType: PROFILES__GET_SUCCESS,
-          profiles: response.profiles
-        });
+        dispatchAction(PROFILES__GET_SUCCESS, responsee);
       }
     })
     .catch((e) => {
@@ -77,9 +72,7 @@ export default {
     return WebAPI.getContainers()
     .then((response) => {
       if (response.containers) {
-        dispatchAction(CONTAINERS__GET_SUCCESS, {
-          containers: response.containers
-        });
+        dispatchAction(CONTAINERS__GET_SUCCESS, response);
         return response.containers;
       }
       return [];
@@ -94,9 +87,7 @@ export default {
     WebAPI.getImages()
     .then((response) => {
       if (response.images) {
-        dispatchAction(IMAGES__GET_SUCCESS, {
-          images: response.images
-        });
+        dispatchAction(IMAGES__GET_SUCCESS, response);
       }
     })
     .catch((e) => {
@@ -105,14 +96,12 @@ export default {
     .finally(() => dispatchAction(IMAGES__GET_END));
   },
 
-  getRemoteImages() {
+  getRemoteImages(server) {
     dispatchAction(REMOTE_IMAGES__GET_START);
-    WebAPI.getRemoteImages()
+    WebAPI.getRemoteImages(server)
     .then((response) => {
       if (response.images) {
-        dispatchAction(REMOTE_IMAGES__GET_SUCCESS, {
-          remoteImages: response.remoteImages
-        });
+        dispatchAction(REMOTE_IMAGES__GET_SUCCESS, response);
       }
     })
     .catch((e) => {

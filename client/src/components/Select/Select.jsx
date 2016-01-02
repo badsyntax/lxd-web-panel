@@ -13,31 +13,42 @@ export default class Select extends React.Component {
     formModel: React.PropTypes.object.isRequired
   }
 
-  hasOption = (otion) => {
+  hasOption = (option) => {
     return (this.props.value === option);
   }
 
+  onChange = (e) => {
+    let value = e.target.value;
+    let formModel = this.context.formModel;
+    formModel.update(this.props.name, value);
+  }
+
   render() {
+    try {
     let select = (
       <select
         className={'form-control'}
         onChange={this.onChange}
+        defaultValue={this.props.value}
       >
-        <option>Please select...</option>
+        <option value="">Please select...</option>
         { this.props.options.map((option, i) => {
           return (
             <option
               key={'option-' + this.props.name + '-' + i}
-              selected={this.hasOption(option)}
-              value={option.alias}
+              value={option.value}
             >
-              {option.alias}
+              {option.label}
             </option>
           );
         })}
       </select>
     );
-
     return select;
+
+    } catch(e) {
+      alert(e);
+    }
+
   }
 }

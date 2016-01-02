@@ -6,7 +6,7 @@ import AppActions from '../../actions/AppActions';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 
 import Alert from '../Alert/Alert';
-// import ImagesImportForm from '../ImagesImportForm/ImagesImportForm';
+import ImagesImportForm from '../ImagesImportForm/ImagesImportForm';
 
 import {
   IMAGES__GET_END
@@ -20,19 +20,18 @@ export default class ImagesImport extends React.Component {
     this.dispatchToken = AppDispatcher.register(this.onAction);
 
     this.state = {
-      images: RemoteImagesStore.getAll(),
+      remoteImages: RemoteImagesStore.getAll(),
       hasLoaded: false
     };
   }
 
   componentDidMount() {
-
     try {
-
       RemoteImagesStore.addChangeListener(this.onRemoteImagesStoreChange);
-
       AppActions.async([
-        AppActions.getRemoteImages
+        function getRemoteImages() {
+          AppActions.getRemoteImages('images')
+        }
       ]);
     } catch(e) {
       alert(e);
@@ -57,7 +56,6 @@ export default class ImagesImport extends React.Component {
 
   onRemoteImagesStoreChange = () => {
     var remoteImages = RemoteImagesStore.getAll();
-    console.log('REMOTE IMAGES', remoteImages);
     this.setState({ remoteImages });
   }
 
@@ -67,6 +65,9 @@ export default class ImagesImport extends React.Component {
         <h1>
           Import image
         </h1>
+        <ImagesImportForm
+            remoteImages={this.state.remoteImages}
+            className={'form-horizontal'} />
       </div>
     );
   }

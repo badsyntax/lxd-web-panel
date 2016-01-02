@@ -1,6 +1,7 @@
+
 import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import { ImageModel } from '../models';
+import RemoteImageModel from '../models/RemoteImage';
 
 import {
   REMOTE_IMAGES__UPDATED,
@@ -19,6 +20,16 @@ class RemoteImagesStore extends BaseStore {
 
   removeChangeListener(callback) {
     this.removeListener(REMOTE_IMAGES__UPDATED, callback);
+  }
+
+  set(image) {
+    return super.set(
+      new RemoteImageModel(image)
+    );
+  }
+
+  setAll(images) {
+    return super.setAll(images.map((image) => new RemoteImageModel(image)));
   }
 }
 

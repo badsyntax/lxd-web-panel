@@ -19,7 +19,8 @@ export default class Input extends React.Component {
 
   onChange = (e) => {
     let value = e.target.value;
-    this.context.formModel.update(this.props.name, value);
+    let formModel = this.context.formModel;
+    formModel.update(this.props.name, value);
   }
 
   render() {

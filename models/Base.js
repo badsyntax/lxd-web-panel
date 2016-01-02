@@ -22,13 +22,17 @@ BaseModel.prototype.setData = function(data) {
 
 BaseModel.prototype.save = function() {};
 
-BaseModel.prototype.update = function(key, value) {
+BaseModel.prototype.set = function(key, value) {
   if (!this._keys.has(key)) {
-    throw new Error('Trying to update a property that has not been defined in schema (' + key + ')');
+    throw new Error('Trying to set a property that has not been defined in schema (' + key + ')');
   }
   this[key] = value;
   this.validate();
   this.onChange(this);
+};
+
+BaseModel.prototype.update = function(key, value) {
+  this.set(key, value);
 };
 
 BaseModel.prototype.get = function(key) {
