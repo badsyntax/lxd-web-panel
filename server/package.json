@@ -28,6 +28,7 @@
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
+    "asciiparse": "^0.1.1",
     "concurrently": "^1.0.0",
     "eslint": "^1.10.3",
     "should": "^7.1.0",

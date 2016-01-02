@@ -42,7 +42,9 @@ class API {
 
   getRemoteImages() {
     return new Promise((resolve) => {
-      resolve(remoteImages);
+      resolve({
+        images: remoteImages.remoteImages
+      });
     });
   }
 }

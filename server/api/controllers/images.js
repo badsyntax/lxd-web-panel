@@ -2,7 +2,8 @@
 
 var Promise = require('bluebird');
 var helpers = require('../helpers');
-var lxdClient = helpers.getLXDClient();
+var lxd = helpers.lxd;
+var lxc = helpers.lxc;
 var ImageModel = require('../models/Image');
 var ImageAliasModel = require('../models/ImageAlias');
 
@@ -10,12 +11,13 @@ module.exports = {
   getAllImages: getAllImages,
   getAllImagesWithDetails: getAllImagesWithDetails,
   getAllImageAliases: getAllImageAliases,
+  getRemoteImages: getRemoteImages,
   createImageAlias: createImageAlias,
-  importImage: importImage
+  createImage: createImage
 };
 
-function getAllImageAliases() {
-  return lxdClient.getImageAliases()
+function getAllImageAliases(req, reply) {
+  return lxd.getImageAliases()
   .then(function(res) {
     var aliases = res.metadata.map(function(resource) {
       return new ImageAliasModel({
@@ -23,14 +25,24 @@ function getAllImageAliases() {
       });
     });
     return aliases;
-    console.log('IMaGE ALIASES', aliases);
+  })
+  .then(function(aliases) {
+    reply.json({
+      aliases: aliases
+    });
+  })
+  .catch(function(e) {
+    reply.status(500);
+    reply.json({
+      message: e.toString()
+    });
   });
 }
 
 var config = process.env;
 
 function getImages() {
-  return lxdClient.getImages()
+  return lxd.getImages()
   .then(function(images) {
     var images = images.metadata.map(function(resource) {
       return new ImageModel({
@@ -47,6 +59,12 @@ function getAllImages(req, reply) {
     reply.json({
       images: images
     });
+  })
+  .catch(function(e) {
+    reply.status(500);
+    reply.json({
+      message: e.toString()
+    });
   });
 }
 
@@ -55,7 +73,7 @@ function getAllImagesWithDetails(req, reply) {
   .then(function(images) {
 
     var promises = images.map(function(image) {
-      return lxdClient.getImage(image.getFingerprint())
+      return lxd.getImage(image.getFingerprint())
         .then(function(imageData) {
           if (!imageData.error) {
             image.setData(imageData.metadata);
@@ -69,34 +87,74 @@ function getAllImagesWithDetails(req, reply) {
     reply.json({
       images: images
     });
+  })
+  .catch(function(e) {
+    reply.status(500);
+    reply.json({
+      message: e.toString()
+    });
   });
 }
 
-function importImage(req, res) {
-  // var alias = req.body.alias;
-  // var remoteImage = req.body.remoteImage;
+function createImage(req, reply) {
+  var imageData = req.body;
 
-  // var createImageData = {
-  //   public: true,
-  //   "source": {
-  //       "type": "url",
-  //       "url": "https://www.some-server.com/image"
-  //   }
-  // }
-
-  // lxdClient.createImage()
-
-
-  // var container = new Image({
-  //   name: containerName
-  // });
-  // container.save().then(function() {
-  //   res.json({
-  //     message: 'Success'
-  //   });
-  // });
+  return lxd.createImage(imageData).then(function(res) {
+    if (res.error) {
+      reply.status(res.error_code);
+      reply.json({
+        message: res.error
+      });
+    } else {
+      lxd.waitOperation(res).then(function(operation) {
+        console.log('OPERATION', operation);
+      });
+    }
+  })
+  .catch(function(e) {
+    reply.status(500);
+    reply.json({
+      message: e.toString()
+    });
+  });
 }
 
-function createImageAlias() {
+function createImageAlias(req, reply) {
+  var json = req.body;
 
+  return lxd.createImageAlias(json)
+  .then(function(res) {
+    if (res.error) {
+      reply.status(res.error_code);
+      return reply.json({
+        message: res.error
+      });
+    }
+    reply.json({
+      message: 'Success'
+    });
+  })
+  .catch(function(e) {
+    reply.status(500);
+    reply.json({
+      message: e.toString()
+    });
+  });
+}
+
+function getRemoteImages(req, reply) {
+  var imageName = req.swagger.params.name.value;
+
+  lxc.getRemoteImages(imageName)
+  .then(function(images) {
+    reply.json({
+      images: images
+    });
+  })
+  .catch(function(e) {
+    reply.status(500);
+    reply.json({
+      message: e.toString()
+    });
+  });
 }

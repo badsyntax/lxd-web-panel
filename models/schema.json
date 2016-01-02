@@ -17,6 +17,27 @@
       }
     }
   },
+  "ImageAliasCreateModel": {
+    "required": [
+      "description",
+      "target",
+      "name"
+    ],
+    "properties": {
+      "description": {
+        "type": "string",
+        "minLength": 1
+      },
+      "target": {
+        "type": "string",
+        "minLength": 1
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
   "ContainerModel": {
     "required": [
       "name",
@@ -67,6 +88,54 @@
     "properties": {
       "fingerprint": {
         "type": "string"
+      }
+    }
+  },
+  "RemoteImageModel": {
+    "required": [
+      "alias",
+      "fingerprint",
+      "public",
+      "description",
+      "arch",
+      "size",
+      "upload_date"
+    ],
+    "properties": {
+      "alias": {
+        "type": "string"
+      },
+      "fingerprint": {
+        "type": "string"
+      },
+      "public": {
+        "type": "boolean"
+      },
+      "description": {
+        "type": "string"
+      },
+      "arch": {
+        "type": "string"
+      },
+      "size": {
+        "type": "string"
+      },
+      "upload_date": {
+        "type": "string"
+      }
+    }
+  },
+  "ImageCreateModel": {
+    "required": [
+      "public",
+      "source"
+    ],
+    "properties": {
+      "public": {
+        "type": "boolean"
+      },
+      "source": {
+        "type": "object"
       }
     }
   },

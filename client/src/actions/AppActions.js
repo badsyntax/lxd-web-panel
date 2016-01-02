@@ -26,6 +26,12 @@ import {
   AUTHENTICATE__END
 } from '../constants/AppConstants';
 
+function dispatchAction(actionType, data) {
+  AppDispatcher.dispatch(Object.assign({
+    actionType: actionType
+  }, data || {}));
+}
+
 export default {
 
   async(funcs) {
@@ -35,35 +41,23 @@ export default {
   },
 
   authenticate(credentials) {
-    AppDispatcher.dispatch({
-      actionType: AUTHENTICATE__START
-    });
+    dispatchAction(AUTHENTICATE__START);
     var promise = WebAPI.authenticate(credentials)
     .then((response) => {
       if (response.token) {
-        AppDispatcher.dispatch({
-          actionType: AUTHENTICATE__SUCCESS,
+        dispatchAction(AUTHENTICATE__SUCCESS, {
           token: response.token
         });
       }
     })
     .catch((e) => {
-      AppDispatcher.dispatch({
-        actionType: AUTHENTICATE__ERROR,
-        error: e
-      });
+      dispatchAction(AUTHENTICATE__ERROR, { error: e });
     })
-    .finally(() => {
-      AppDispatcher.dispatch({
-        actionType: AUTHENTICATE__END
-      });
-    });
+    .finally(() => dispatchAction(AUTHENTICATE__END));
   },
 
   getProfiles() {
-    AppDispatcher.dispatch({
-      actionType: PROFILES__GET_START
-    });
+    dispatchAction(PROFILES__GET_START);
     return WebAPI.getProfiles()
     .then((response) => {
       if (response.profiles) {
@@ -74,24 +68,16 @@ export default {
       }
     })
     .catch((e) => {
-      AppDispatcher.dispatch({
-        actionType: PROFILES__GET_ERROR,
-        error: e
-      });
+      dispatchAction(PROFILES__GET_ERROR, { error: e });
     })
-    .finally(() => {
-      AppDispatcher.dispatch({
-        actionType: PROFILES__GET_END
-      });
-    });
+    .finally(() => dispatchAction(PROFILES__GET_END));
   },
 
   getContainers() {
     return WebAPI.getContainers()
     .then((response) => {
       if (response.containers) {
-        AppDispatcher.dispatch({
-          actionType: CONTAINERS__GET_SUCCESS,
+        dispatchAction(CONTAINERS__GET_SUCCESS, {
           containers: response.containers
         });
         return response.containers;
@@ -99,60 +85,39 @@ export default {
       return [];
     })
     .catch((e) => {
-      AppDispatcher.dispatch({
-        actionType: CONTAINERS__GET_ERROR,
-        error: e
-      });
+      dispatchAction(CONTAINERS__GET_ERROR, { error: e });
     });
   },
 
   getImages() {
-    AppDispatcher.dispatch({
-      actionType: IMAGES__GET_START
-    });
+    dispatchAction(IMAGES__GET_START);
     WebAPI.getImages()
     .then((response) => {
       if (response.images) {
-        AppDispatcher.dispatch({
-          actionType: IMAGES__GET_SUCCESS,
+        dispatchAction(IMAGES__GET_SUCCESS, {
           images: response.images
         });
       }
     })
-    .catch(() => {
-      AppDispatcher.dispatch({
-        actionType: IMAGES__GET_ERROR
-      });
+    .catch((e) => {
+      dispatchAction(IMAGES__GET_ERROR, { error: e });
     })
-    .finally(() => {
-      AppDispatcher.dispatch({
-        actionType: IMAGES__GET_END
-      });
-    });
+    .finally(() => dispatchAction(IMAGES__GET_END));
   },
 
   getRemoteImages() {
-    AppDispatcher.dispatch({
-      actionType: REMOTE_IMAGES__GET_START
-    });
+    dispatchAction(REMOTE_IMAGES__GET_START);
     WebAPI.getRemoteImages()
     .then((response) => {
       if (response.images) {
-        AppDispatcher.dispatch({
-          actionType: REMOTE_IMAGES__GET_SUCCESS,
+        dispatchAction(REMOTE_IMAGES__GET_SUCCESS, {
           remoteImages: response.remoteImages
         });
       }
     })
-    .catch(() => {
-      AppDispatcher.dispatch({
-        actionType: REMOTE_IMAGES__GET_ERROR
-      });
+    .catch((e) => {
+      dispatchAction(REMOTE_IMAGES__GET_ERROR, { error: e });
     })
-    .finally(() => {
-      AppDispatcher.dispatch({
-        actionType: REMOTE_IMAGES__GET_END
-      });
-    });
-  }
+    .finally(() => dispatchAction(REMOTE_IMAGES__GET_END));
+  },
 };

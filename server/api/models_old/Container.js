@@ -1,5 +1,5 @@
 var helpers = require('../helpers');
-var lxdClient = helpers.getLXDClient();
+var lxdClient = helpers.lxd;
 var BaseModel = require('./Base');
 
 module.exports = ContainerModel;

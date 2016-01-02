@@ -90,7 +90,7 @@ paths:
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/ContainerCreateResponse"
+            $ref: "#/definitions/CreateResponse"
         # responses may fall through to errors
         default:
           description: Error
@@ -118,7 +118,7 @@ paths:
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/ContainerCreateResponse"
+            $ref: "#/definitions/CreateResponse"
         # responses may fall through to errors
         default:
           description: Error
@@ -183,7 +183,7 @@ paths:
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/ContainerCreateResponse"
+            $ref: "#/definitions/CreateResponse"
         # responses may fall through to errors
         default:
           description: Error
@@ -265,6 +265,54 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post: 
+      description: Create a new image
+      operationId: createImage
+      security:
+        - token: []
+      parameters:
+        - name: image
+          in: body
+          description: Image data
+          required: true
+          schema:
+            $ref: '#/definitions/ImageCreateModel'
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/CreateResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /images/remote/{name}:
+    x-swagger-router-controller: images
+    get:
+      description: Returns a list of remote images.
+      # used as the method name of the controller
+      operationId: getRemoteImages
+      security:
+        - token: []
+      parameters:
+        - name: name
+          in: path
+          description: Remote server name
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/RemoteImagesResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /images/detailed:
     x-swagger-router-controller: images
     get:
@@ -286,6 +334,29 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /images/aliases:
     x-swagger-router-controller: images
+    post: 
+      description: Create a new alias
+      operationId: createImageAlias
+      security:
+        - token: []
+      parameters:
+        - name: alias
+          in: body
+          description: Alias data
+          required: true
+          schema:
+            $ref: '#/definitions/ImageAliasCreateModel'
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/CreateResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     get:
       description: Returns a list of image aliases.
       # used as the method name of the controller
@@ -318,6 +389,21 @@ definitions:
         minLength: 1
       password:
         description: "User password"
+        type: string
+        minLength: 1
+  ImageAliasCreateModel:
+    required:
+      - description
+      - target
+      - name
+    properties:
+      description:
+        type: string
+        minLength: 1
+      target:
+        type: string
+        minLength: 1
+      name: 
         type: string
         minLength: 1
   ContainerModel:
@@ -354,6 +440,39 @@ definitions:
     properties:
       fingerprint:
         type: string
+  RemoteImageModel:
+    required:
+      - alias
+      - fingerprint
+      - public
+      - description
+      - arch
+      - size
+      - upload_date
+    properties:
+      alias:
+        type: string
+      fingerprint:
+        type: string
+      public:
+        type: boolean
+      description:
+        type: string
+      arch:
+        type: string
+      size:
+        type: string
+      upload_date:
+        type: string
+  ImageCreateModel:
+    required:
+      - public
+      - source
+    properties:
+      public:
+        type: boolean
+      source:
+        type: object
   ContainerConfigModel:
     properties:
       boot.autostart:
@@ -424,6 +543,14 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/ImageModel"
+  RemoteImagesResponse:
+    required:
+      - images
+    properties:
+      images:
+        type: array
+        items:
+          $ref: "#/definitions/RemoteImageModel"
   ImageAliasesResponse:
     required:
       - aliases
@@ -438,7 +565,7 @@ definitions:
     properties:
       container:
         $ref: "#/definitions/ContainerModel"
-  ContainerCreateResponse:
+  CreateResponse:
     required:
       - message
     properties:

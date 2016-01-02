@@ -1,7 +1,7 @@
 'use strict';
 
 var helpers = require('../helpers');
-var lxdClient = helpers.getLXDClient();
+var lxdClient = helpers.lxd;
 
 module.exports = {
   getServerInfo: getServerInfo

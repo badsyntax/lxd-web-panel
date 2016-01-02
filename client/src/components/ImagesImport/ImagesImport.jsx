@@ -40,7 +40,7 @@ export default class ImagesImport extends React.Component {
   }
 
   componentWillUnmount() {
-    ProfilesStore.removeChangeListener(this.onProfilesStoreChange);
+    ProfilesStore.removeChangeListener(this.onRemoteImagesStoreChange);
     AppDispatcher.unregister(this.dispatchToken);
   }
 
@@ -57,6 +57,7 @@ export default class ImagesImport extends React.Component {
 
   onRemoteImagesStoreChange = () => {
     var remoteImages = RemoteImagesStore.getAll();
+    console.log('REMOTE IMAGES', remoteImages);
     this.setState({ remoteImages });
   }
 
