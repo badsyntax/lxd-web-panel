@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "concurrent --raw \"npm run sync-models\" \"npm run dev-server\"",
-    "dev-server": "webpack-dev-server --devtool eval --progress --colors --hot -d",
+    "dev-server": "webpack-dev-server --devtool source-map --progress --inline --colors --hot --debug",
     "lint": "eslint --ext .js --ext .jsx ./src && echo No linting errors.",
     "prestart": "npm install",
     "presync-models": "cd ../ && npm run generate-model-schema && cd client",

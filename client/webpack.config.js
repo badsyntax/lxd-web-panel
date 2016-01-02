@@ -12,20 +12,12 @@ var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var DEVELOPMENT = process.env.NODE_ENV === 'development';
 var PRODUCTION = process.env.NODE_ENV === 'production';
 
-
 // get entries
 var entries = {
   bundle: [
     path.resolve(pkg.config.srcPath, 'index.js')
   ]
 };
-
-if (DEVELOPMENT) {
-  entries.bundle.push(
-    'webpack/hot/dev-server',
-    util.format('webpack-dev-server/client?http://%s:%d', pkg.config.devHost, pkg.config.devPort)
-  );
-}
 
 // webpack configuration
 var config = {
@@ -76,9 +68,7 @@ var config = {
     extensions: ['', '.js', '.json', '.jsx']
   },
   devServer: {
-    port: pkg.config.devPort,
-    debug: true
-    // historyApiFallback: true,
+    port: pkg.config.devPort
   }
 };
 
