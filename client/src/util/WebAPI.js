@@ -43,12 +43,18 @@ class API {
       action: 'images/remote/' + server
     });
   }
+
+  createImage(data) {
+    return postJson({
+      action: 'images'
+    }, data);
+  }
 }
 
 export default new API();
 
 function parseJSON(response) {
-  return response.json()
+  return response.json();
 }
 
 function checkResponseStatus(response) {

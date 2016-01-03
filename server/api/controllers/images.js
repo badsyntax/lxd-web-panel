@@ -99,22 +99,30 @@ function getAllImagesWithDetails(req, reply) {
 function createImage(req, reply) {
   var imageData = req.body;
 
+  console.log('create image with data', imageData);
+
   return lxd.createImage(imageData).then(function(res) {
-    if (res.error) {
-      reply.status(res.error_code);
-      reply.json({
-        message: res.error
-      });
-    } else {
-      lxd.waitOperation(res).then(function(operation) {
-        console.log('OPERATION', operation);
-      });
-    }
+    if (res.error) { throw res; }
+    return lxd.waitOperation(res)
+    .then(function(operation) {
+      var metadata = JSON.parse(operation).metadata;
+      if (metadata.status_code !== 200) {
+        throw {
+          error_code: metadata.status_code
+        };
+      }
+      return metadata;
+    });
+  })
+  .then(function(metadata) {
+    reply.json({
+      message: 'Success'
+    });
   })
   .catch(function(e) {
-    reply.status(500);
+    reply.status(e.error_code);
     reply.json({
-      message: e.toString()
+      message: e.error || 'Unknown error'
     });
   });
 }

@@ -150,7 +150,8 @@
       "public",
       "remoteAlias",
       "localAlias",
-      "server"
+      "server",
+      "description"
     ],
     "properties": {
       "public": {
@@ -165,6 +166,10 @@
         "minLength": 1
       },
       "server": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": {
         "type": "string",
         "minLength": 1
       }

@@ -1,5 +1,7 @@
 import pkg from '../../package';
 
+export const API__ENDPOINT = 'http://192.168.50.4:9000/v1'
+
 export const DEBUG = (process.env.NODE_ENV !== 'production');
 export const APP__TITLE = pkg.name;
 
@@ -33,4 +35,13 @@ export const CONTAINERS__GET_ERROR = 'CONTAINERS__GET_ERROR';
 export const CONTAINERS__UPDATED = 'CONTAINERS__UPDATED';
 
 
-export const API__ENDPOINT = 'http://192.168.50.4:9000/v1'
+export const IMAGE_CREATE__ERROR = 'IMAGE_CREATE__ERROR';
+export const IMAGE_CREATE__START = 'IMAGE_CREATE__START';
+export const IMAGE_CREATE__END = 'IMAGE_CREATE__END';
+export const IMAGE_CREATE__SUCCESS = 'IMAGE_CREATE__SUCCESS';
+
+export const IMAGE_IMPORT__ERROR = 'IMAGE_IMPORT__ERROR';
+export const IMAGE_IMPORT__START = 'IMAGE_IMPORT__START';
+export const IMAGE_IMPORT__END = 'IMAGE_IMPORT__END';
+export const IMAGE_IMPORT__SUCCESS = 'IMAGE_IMPORT__SUCCESS';
+

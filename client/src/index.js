@@ -25,6 +25,7 @@ import ImagesImport from './components/ImagesImport/ImagesImport.jsx';
 
 import Config from './components/Config/Config.jsx';
 import Users from './components/Users/Users.jsx';
+import UserInterface from './components/UserInterface/UserInterface.jsx';
 import SignIn from './components/SignIn/SignIn.jsx';
 import SignOut from './components/SignOut/SignOut.jsx';
 import Home from './components/Home/Home.jsx';
@@ -64,9 +65,10 @@ try {
           <Route component={ImagesList} path="/images/list" />
           <Route component={ImagesImport} path="/images/import" />
         </Route>
+        <Route component={Config} onEnter={requireAuth} path="/config" />
+        <Route component={Users} onEnter={requireAuth} path="/users" />
+        <Route component={UserInterface} onEnter={requireAuth} path="/user-interface" />
       </Route>
-      <Route component={Config} path="/config" />
-      <Route component={Users} path="/Users" />
       <Route component={SignIn} path="/signin" />
       <Route component={SignOut} path="/signout" />
     </Router>

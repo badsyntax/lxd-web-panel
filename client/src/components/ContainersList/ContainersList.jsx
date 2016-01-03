@@ -32,15 +32,15 @@ export default class ContainersList extends React.Component {
     let { containers } = this.state;
     return (
       <div className={'containers-list'}>
-        <h1>
+        <h2 className="sub-header">
           Containers
-          <Link
+           <Link
             className={'btn btn-primary btn-new-container'}
             to={'containers/create'}
           >
             New container
           </Link>
-        </h1>
+        </h2>
         { containers.length ? getTable(containers) : getAlert() }
       </div>
     );

@@ -22,7 +22,7 @@ ImageImportModel.prototype.getCreateModel = function() {
     public: this.public,
     source: {
       type: 'image',
-      model: 'pull',
+      mode: 'pull',
       server: this.server,
       alias: this.remoteAlias
     }

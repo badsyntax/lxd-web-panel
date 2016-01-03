@@ -67,9 +67,9 @@ export default class ContainerCreate extends React.Component {
   render() {
     return (
       <div className={'container-creae'}>
-        <h1>
+        <h2 class="sub-header">
           Create container
-        </h1>
+        </h2>
         { this.state.hasLoaded && this.state.images.length ? (
           <ContainerCreateForm
             images={this.state.images}

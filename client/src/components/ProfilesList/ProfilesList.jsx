@@ -35,13 +35,7 @@ export default class Profiles extends React.Component {
   render() {
     let { profiles } = this.state;
     return (
-      <div className={'profiles'}>
-        <h1>
-          Profiles
-          <Link className={'btn btn-primary btn-new-profile'} to={'profiles/create'}>
-            New profile
-          </Link>
-        </h1>
+      <div className={'profiles-list'}>
         { profiles.length ? getTable(profiles) : getAlert() }
       </div>
     );

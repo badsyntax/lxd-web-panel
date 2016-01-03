@@ -36,6 +36,9 @@ BaseModel.prototype.update = function(key, value) {
 };
 
 BaseModel.prototype.get = function(key) {
+  if (!key) {
+    return this.getData();
+  }
   if (!this._keys.has(key)) {
     throw new Error('Trying to get a property that has not been defined in schema (' + key + ')');
   }
@@ -59,6 +62,10 @@ BaseModel.prototype.isPropValid = function(prop) {
     return hasError || error.property === prop;
   }, false);
   return !propHasError;
+};
+
+BaseModel.prototype.isValid = function() {
+  return this.validation.valid;
 };
 
 BaseModel.prototype.getPropValidationError = function(prop) {

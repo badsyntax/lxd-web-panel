@@ -15,6 +15,16 @@ import {
   IMAGES__GET_SUCCESS,
   IMAGES__GET_ERROR,
 
+  IMAGE_CREATE__START,
+  IMAGE_CREATE__END,
+  IMAGE_CREATE__SUCCESS,
+  IMAGE_CREATE__ERROR,
+
+  IMAGE_IMPORT__START,
+  IMAGE_IMPORT__END,
+  IMAGE_IMPORT__SUCCESS,
+  IMAGE_IMPORT__ERROR,
+
   REMOTE_IMAGES__GET_START,
   REMOTE_IMAGES__GET_END,
   REMOTE_IMAGES__GET_SUCCESS,
@@ -109,4 +119,37 @@ export default {
     })
     .finally(() => dispatchAction(REMOTE_IMAGES__GET_END));
   },
+
+  createImage(imageCreateModel) {
+    let data = imageCreateModel.get();
+
+    dispatchAction(IMAGE_CREATE__START);
+    WebAPI.createImage(data)
+    .then((response) => {
+      if (response.message) {
+        dispatchAction(IMAGE_CREATE__SUCCESS, response);
+      }
+    })
+    .catch((e) => {
+      dispatchAction(IMAGE_CREATE__ERROR, { error: e });
+    })
+    .finally(() => dispatchAction(IMAGE_CREATE__END));
+  },
+
+  importImage(imageImportModel) {
+    let imageCreateModel = imageImportModel.getCreateModel();
+    let data = imageCreateModel.get();
+
+    dispatchAction(IMAGE_IMPORT__START);
+    WebAPI.createImage(data)
+    .then((response) => {
+      if (response.message) {
+        dispatchAction(IMAGE_IMPORT__SUCCESS, response);
+      }
+    })
+    .catch((e) => {
+      dispatchAction(IMAGE_IMPORT__ERROR, { error: e });
+    })
+    .finally(() => dispatchAction(IMAGE_IMPORT__END));
+  }
 };

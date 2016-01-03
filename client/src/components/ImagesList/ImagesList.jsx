@@ -38,7 +38,7 @@ export default class Images extends React.Component {
     console.log('images', images, images.length);
     return (
       <div className={'images-list'}>
-        <h1>
+        <h2 className="sub-header">
           Images
           <Link
             className={'btn btn-primary btn-new-container'}
@@ -46,7 +46,7 @@ export default class Images extends React.Component {
           >
             Import image
           </Link>
-        </h1>
+        </h2>
         { images.length ? getTable(images) : getAlert() }
       </div>
     );

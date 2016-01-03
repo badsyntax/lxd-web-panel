@@ -1,6 +1,5 @@
 import './ImagesImport.scss';
 import React from 'react';
-import ProfilesStore from '../../stores/ProfilesStore';
 import RemoteImagesStore from '../../stores/RemoteImagesStore';
 import AppActions from '../../actions/AppActions';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
@@ -39,7 +38,7 @@ export default class ImagesImport extends React.Component {
   }
 
   componentWillUnmount() {
-    ProfilesStore.removeChangeListener(this.onRemoteImagesStoreChange);
+    RemoteImagesStore.removeChangeListener(this.onRemoteImagesStoreChange);
     AppDispatcher.unregister(this.dispatchToken);
   }
 
@@ -62,12 +61,12 @@ export default class ImagesImport extends React.Component {
   render() {
     return (
       <div className={'container-creae'}>
-        <h1>
+        <h2 className="sub-header">
           Import image
-        </h1>
+        </h2>
         <ImagesImportForm
             remoteImages={this.state.remoteImages}
-            className={'form-horizontal'} />
+            className={'form form-horizontal'} />
       </div>
     );
   }

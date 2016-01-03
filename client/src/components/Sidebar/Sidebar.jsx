@@ -3,41 +3,51 @@ import { Link } from 'react-router';
 
 const activeClassName = 'active';
 
+let pages = [
+  {
+    path: 'overview',
+    label: 'Overview'
+  },
+  {
+    path: 'containers',
+    label: 'Container'
+  },
+  {
+    path: 'profiles',
+    label: 'Profiles'
+  },
+  {
+    path: 'images',
+    label: 'Images'
+  },
+  {
+    path: 'config',
+    label: 'Config'
+  },
+  {
+    path: 'users',
+    label: 'Users'
+  },
+  {
+    path: 'user-interface',
+    label: 'User Interface'
+  }
+];
+
 export default class Navbar extends React.Component {
   render() {
     return (
       <ul className="nav nav-sidebar">
-       <li>
-        <Link activeClassName={activeClassName} to={'overview'}>
-          Overview
-        </Link>
-      </li>
-      <li>
-        <Link activeClassName={activeClassName} to={'containers'}>
-          Containers
-        </Link>
-      </li>
-      <li>
-        <Link activeClassName={activeClassName} to={'profiles'}>
-          Profiles
-        </Link>
-      </li>
-      <li>
-        <Link activeClassName={activeClassName} to={'images'}>
-          Images
-        </Link>
-      </li>
-      <li>
-        <Link activeClassName={activeClassName} to={'config'}>
-          Config
-        </Link>
-      </li>
-      <li>
-        <Link activeClassName={activeClassName} to={'users'}>
-          Users
-        </Link>
-      </li>
-    </ul>
+      { pages.map((page, i) => {
+        return (
+          <li key={'page-' + i}>
+            <Link activeClassName={activeClassName} to={page.path}>
+              { page.label }
+            </Link>
+          </li>
+        );
+      })}
+      </ul>
     );
   }
 }

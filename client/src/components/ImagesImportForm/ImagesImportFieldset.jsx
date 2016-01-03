@@ -21,6 +21,18 @@ export default class ImagesImportFieldset extends React.Component {
           className="form-group"
           disabled={this.props.disabled}
           horizontal={true}
+          Input={Select}
+          options={this.props.remoteImages}
+          name="remoteAlias"
+          label="Image"
+          labelLayoutClassName="col-sm-2"
+          inputLayoutClassName="col-sm-5"
+          showError={this.props.showErrors}
+        />
+        <Field
+          className="form-group"
+          disabled={this.props.disabled}
+          horizontal={true}
           name="localAlias"
           label="Alias"
           labelLayoutClassName="col-sm-2"
@@ -32,12 +44,11 @@ export default class ImagesImportFieldset extends React.Component {
           className="form-group"
           disabled={this.props.disabled}
           horizontal={true}
-          Input={Select}
-          options={this.props.remoteImages}
-          name="remoteAlias"
-          label="Image"
+          name="description"
+          label="Description"
           labelLayoutClassName="col-sm-2"
           inputLayoutClassName="col-sm-5"
+          placeholder="Description"
           showError={this.props.showErrors}
         />
         <div className="form-group">
