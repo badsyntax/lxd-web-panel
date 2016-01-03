@@ -6,9 +6,7 @@ import ReactDOM from 'react-dom';
 import {
   Router,
   Route,
-  Link,
   IndexRoute,
-  Redirect
 } from 'react-router';
 
 import 'promise.prototype.finally';
@@ -36,14 +34,12 @@ import AuthStore from './stores/AuthStore';
 
 function requireAuth(nextState, replaceState) {
   if (!AuthStore.loggedIn()) {
-    replaceState({ nextPathname: nextState.location.pathname }, '/signin')
+    replaceState({ nextPathname: nextState.location.pathname }, '/signin');
   }
 }
 
 const reactContainerElement = document.createElement('div');
 document.body.appendChild(reactContainerElement);
-
-const createBrowserHistory = require('history/lib/createBrowserHistory');
 
 try {
   ReactDOM.render((

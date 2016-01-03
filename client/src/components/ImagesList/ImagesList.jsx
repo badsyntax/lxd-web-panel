@@ -34,68 +34,68 @@ export default class Images extends React.Component {
 
   render() {
     try {
-    let { images } = this.state;
-    console.log('images', images, images.length);
-    return (
-      <div className={'images-list'}>
-        <h2 className="sub-header">
-          Images
-          <Link
-            className={'btn btn-primary btn-new-container'}
-            to={'images/import'}
-          >
-            Import image
-          </Link>
-        </h2>
-        { images.length ? getTable(images) : getAlert() }
-      </div>
-    );
-
-    function getTable(images) {
+      let { images } = this.state;
+      console.log('images', images, images.length);
       return (
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Alias</th>
-                <th>Description</th>
-                <th>Size</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-            {
-              images.map((image, index) => {
-                return (
-                  <tr key={'image-' + index}>
-                    <td>{ image.getAlias() }</td>
-                    <td>{ image.properties.description }</td>
-                    <td>{ image.sizeFriendly() }</td>
-                    <td>{ image.createdAtFriendly() }</td>
-                    <td>
-                      <button className="btn btn-default btn-xs">Edit</button>
-                      <button className="btn btn-default btn-xs">Delete</button>
-                    </td>
-                  </tr>
-                );
-              })
-            }
-            </tbody>
-          </table>
+        <div className={'images-list'}>
+          <h2 className="sub-header">
+            Images
+            <Link
+              className={'btn btn-primary btn-new-container'}
+              to={'images/import'}
+            >
+              Import image
+            </Link>
+          </h2>
+          { images.length ? getTable(images) : getAlert() }
         </div>
       );
-    }
 
-    function getAlert() {
-      return (
-        <Alert
-          heading="No images"
-          type="warning"
-          icon="info-sign"
-        />
-      );
-    }
+      function getTable(images) {
+        return (
+          <div className="table-responsive">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Alias</th>
+                  <th>Description</th>
+                  <th>Size</th>
+                  <th>Created</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+              {
+                images.map((image, index) => {
+                  return (
+                    <tr key={'image-' + index}>
+                      <td>{ image.getAlias() }</td>
+                      <td>{ image.properties.description }</td>
+                      <td>{ image.sizeFriendly() }</td>
+                      <td>{ image.createdAtFriendly() }</td>
+                      <td>
+                        <button className="btn btn-default btn-xs">Edit</button>
+                        <button className="btn btn-default btn-xs">Delete</button>
+                      </td>
+                    </tr>
+                  );
+                })
+              }
+              </tbody>
+            </table>
+          </div>
+        );
+      }
+
+      function getAlert() {
+        return (
+          <Alert
+            heading="No images"
+            type="warning"
+            icon="info-sign"
+          />
+        );
+      }
     } catch(e) { alert(e); }
   }
 }

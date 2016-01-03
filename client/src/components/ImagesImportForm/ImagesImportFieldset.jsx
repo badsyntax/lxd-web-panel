@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
 import Field from '../Field/Field';
-import CheckboxGroup from '../CheckboxGroup/CheckboxGroup';
 import Select from '../Select/Select';
 
 export default class ImagesImportFieldset extends React.Component {

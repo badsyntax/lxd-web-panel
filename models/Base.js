@@ -1,5 +1,4 @@
 var util = require('util');
-var path = require('path');
 var revalidator = require('revalidator');
 
 module.exports = BaseModel;

@@ -1,8 +1,6 @@
 import React from 'react';
 import WebAPI from '../../util/WebAPI';
 
-import { Link } from 'react-router';
-
 export default class Home extends React.Component {
   state = {
     serverinfo: {}

@@ -59,11 +59,11 @@ function parseJSON(response) {
 
 function checkResponseStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response
+    return response;
   }
-  var error = new Error(response.statusText)
-  error.response = response
-  throw error
+  var error = new Error(response.statusText);
+  error.response = response;
+  throw error;
 }
 
 function checkJSONStatus(response) {
@@ -72,7 +72,7 @@ function checkJSONStatus(response) {
   }
   var error = new Error(response.error);
   error.response = response;
-  throw err;
+  throw error;
 }
 
 function getJson(urlData, secure) {

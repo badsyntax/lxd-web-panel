@@ -1,13 +1,8 @@
 import './ContainerCreateForm.scss';
 import React, { PropTypes } from 'react';
-import classNames from 'classnames';
-import Button from 'react-bootstrap/lib/Button';
-import { Link } from 'react-router';
-import WebAPI from '../../util/WebAPI';
 import ContainerCreateFieldset from './ContainerCreateFieldset';
 
 import ContainerModel from '../../models/Container';
-import ImageModel from '../../models/Image';
 
 import Alert from '../Alert/Alert';
 import Form from '../Form/Form';
@@ -60,9 +55,9 @@ export default class ContainerCreateForm extends React.Component {
       <div className="container-create-form">
         { this.state.showError ? (
           <Alert
+            icon="info-sign"
             message="There was an error submitting the form. Please correct the errors below."
             type="danger"
-            icon="info-sign"
           />
         ) : '' }
         <Form
@@ -71,13 +66,13 @@ export default class ContainerCreateForm extends React.Component {
           onSubmit={this.onSubmit}
         >
           <ContainerCreateFieldset
-            profiles={this.props.profiles}
-            images={this.props.images}
             disabled={this.props.disabled}
+            images={this.props.images}
+            profiles={this.props.profiles}
             showErrors={this.state.showError}
           />
         </Form>
       </div>
-    )
+    );
   }
 }

@@ -1,6 +1,6 @@
 import pkg from '../../package';
 
-export const API__ENDPOINT = 'http://192.168.50.4:9000/v1'
+export const API__ENDPOINT = 'http://192.168.50.4:9000/v1';
 
 export const DEBUG = (process.env.NODE_ENV !== 'production');
 export const APP__TITLE = pkg.name;

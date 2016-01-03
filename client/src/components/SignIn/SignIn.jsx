@@ -1,9 +1,8 @@
 import './SignIn.scss';
 import React, {PropTypes} from 'react';
 
-import AuthStore from '../../stores/AuthStore';
-import AppDispatcher from '../../dispatcher/AppDispatcher';
 import AppActions from '../../actions/AppActions';
+import AppDispatcher from '../../dispatcher/AppDispatcher';
 
 import SignInForm from '../SignInForm/SignInForm';
 
@@ -19,12 +18,12 @@ export default class SignIn extends React.Component {
   state = {}
 
   static contextTypes = {
-    location: React.PropTypes.object,
-    history: React.PropTypes.object
+    location: PropTypes.object,
+    history: PropTypes.object
   };
 
   constructor(...props) {
-    super(...props)
+    super(...props);
     this.actionHandler = AppDispatcher.register(this.onAction);
   }
 

@@ -1,5 +1,3 @@
-var dateFormat = require('dateformat');
-var filesize = require('filesize');
 var BaseModel = require('./Base');
 
 module.exports = ImageCreateModel;

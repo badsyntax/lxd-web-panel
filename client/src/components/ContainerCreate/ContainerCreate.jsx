@@ -67,19 +67,20 @@ export default class ContainerCreate extends React.Component {
   render() {
     return (
       <div className={'container-creae'}>
-        <h2 class="sub-header">
+        <h2 className="sub-header">
           Create container
         </h2>
         { this.state.hasLoaded && this.state.images.length ? (
           <ContainerCreateForm
+            className={'form-horizontal'}
             images={this.state.images}
             profiles={this.state.profiles}
-            className={'form-horizontal'} />
+          />
           ) : (
           <Alert
+            icon="info-sign"
             message="You need to create a base image before you can create a container."
             type="danger"
-            icon="info-sign"
           />
         ) }
       </div>

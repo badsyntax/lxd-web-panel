@@ -4,7 +4,10 @@ import classNames from 'classnames';
 
 function getIcon(icon) {
   return icon ? (
-    <span className={'alert__icon glyphicon glyphicon-' + icon} aria-hidden="true"></span>
+    <span
+      aria-hidden="true"
+      className={'alert__icon glyphicon glyphicon-' + icon}
+    ></span>
   ) : '';
 }
 

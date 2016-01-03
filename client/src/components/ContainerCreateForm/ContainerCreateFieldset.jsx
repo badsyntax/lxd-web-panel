@@ -22,23 +22,23 @@ export default class ContainerCreateFieldset extends React.Component {
           className="form-group"
           disabled={this.props.disabled}
           horizontal={true}
-          name="name"
+          inputLayoutClassName="col-sm-5"
           label="Name"
           labelLayoutClassName="col-sm-2"
-          inputLayoutClassName="col-sm-5"
+          name="name"
           placeholder="Name"
           showError={this.props.showErrors}
         />
         <Field
+          Input={Select}
           className="form-group"
           disabled={this.props.disabled}
           horizontal={true}
-          Input={Select}
-          options={this.props.images}
-          name="image"
+          inputLayoutClassName="col-sm-5"
           label="Image"
           labelLayoutClassName="col-sm-2"
-          inputLayoutClassName="col-sm-5"
+          name="image"
+          options={this.props.images}
           showError={this.props.showErrors}
         />
         <Field
@@ -46,16 +46,19 @@ export default class ContainerCreateFieldset extends React.Component {
           disabled={this.props.disabled}
           horizontal={true}
           Input={CheckboxGroup}
-          options={this.props.profiles}
-          name="profiles"
+          inputLayoutClassName="col-sm-5"
           label="Profiles"
           labelLayoutClassName="col-sm-2"
-          inputLayoutClassName="col-sm-5"
+          name="profiles"
+          options={this.props.profiles}
           showError={this.props.showErrors}
         />
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-2">
-            <button type="submit" className="btn btn-med btn-primary btn-block">Submit</button>
+            <button
+              className="btn btn-med btn-primary btn-block"
+              type="submit"
+            >Submit</button>
           </div>
         </div>
       </fieldset>

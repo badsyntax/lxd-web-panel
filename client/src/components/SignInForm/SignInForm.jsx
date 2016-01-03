@@ -1,6 +1,5 @@
 import './SignInForm.scss';
 import React, {PropTypes} from 'react';
-import { FormView } from '../../models';
 
 import Form from '../Form/Form';
 import Alert from '../Alert/Alert';
@@ -29,7 +28,7 @@ export default class SignInForm extends React.Component {
     formModel.setRequired('username', true);
     formModel.setRequired('password', true);
 
-    this.state = { formModel }
+    this.state = { formModel };
   }
 
   onChange = (formModel) => {
@@ -64,6 +63,6 @@ export default class SignInForm extends React.Component {
           disabled={this.props.disabled} />
         { error }
       </Form>
-    )
+    );
   }
 }

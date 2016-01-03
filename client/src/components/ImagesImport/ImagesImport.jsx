@@ -4,7 +4,6 @@ import RemoteImagesStore from '../../stores/RemoteImagesStore';
 import AppActions from '../../actions/AppActions';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 
-import Alert from '../Alert/Alert';
 import ImagesImportForm from '../ImagesImportForm/ImagesImportForm';
 
 import {
@@ -29,7 +28,7 @@ export default class ImagesImport extends React.Component {
       RemoteImagesStore.addChangeListener(this.onRemoteImagesStoreChange);
       AppActions.async([
         function getRemoteImages() {
-          AppActions.getRemoteImages('images')
+          AppActions.getRemoteImages('images');
         }
       ]);
     } catch(e) {

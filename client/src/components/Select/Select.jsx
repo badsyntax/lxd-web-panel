@@ -25,26 +25,26 @@ export default class Select extends React.Component {
 
   render() {
     try {
-    let select = (
-      <select
-        className={'form-control'}
-        onChange={this.onChange}
-        defaultValue={this.props.value}
-      >
-        <option value="">Please select...</option>
-        { this.props.options.map((option, i) => {
-          return (
-            <option
-              key={'option-' + this.props.name + '-' + i}
-              value={option.value}
-            >
-              {option.label}
-            </option>
-          );
-        })}
-      </select>
-    );
-    return select;
+      let select = (
+        <select
+          className={'form-control'}
+          onChange={this.onChange}
+          defaultValue={this.props.value}
+        >
+          <option value="">Please select...</option>
+          { this.props.options.map((option, i) => {
+            return (
+              <option
+                key={'option-' + this.props.name + '-' + i}
+                value={option.value}
+              >
+                {option.label}
+              </option>
+            );
+          })}
+        </select>
+      );
+      return select;
 
     } catch(e) {
       alert(e);

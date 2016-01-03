@@ -1,8 +1,6 @@
 import React from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
 import Sidebar from '../Sidebar/Sidebar.jsx';
-import { Link } from 'react-router';
-
 
 export default class App extends React.Component {
   render() {

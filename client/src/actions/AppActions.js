@@ -52,7 +52,7 @@ export default {
 
   authenticate(credentials) {
     dispatchAction(AUTHENTICATE__START);
-    var promise = WebAPI.authenticate(credentials)
+    return WebAPI.authenticate(credentials)
     .then((response) => {
       if (response.token) {
         dispatchAction(AUTHENTICATE__SUCCESS, response);
@@ -69,7 +69,7 @@ export default {
     return WebAPI.getProfiles()
     .then((response) => {
       if (response.profiles) {
-        dispatchAction(PROFILES__GET_SUCCESS, responsee);
+        dispatchAction(PROFILES__GET_SUCCESS, response);
       }
     })
     .catch((e) => {

@@ -1,7 +1,6 @@
 import './CheckboxGroup.scss';
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
-import Input from '../Input/Input';
 
 export default class CheckboxGroup extends React.Component {
 
@@ -63,9 +62,9 @@ export default class CheckboxGroup extends React.Component {
             >
               <label>
                 <input
-                  onChange={this.onChange}
                   checked={this.hasOption(option)}
                   data-index={i}
+                  onChange={this.onChange}
                   type="checkbox"
                 />
                 <span>{ option.name }</span>

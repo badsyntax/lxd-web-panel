@@ -50,7 +50,7 @@ export default class ContainersList extends React.Component {
         return (
           <Link key={'profile-'+profile} to={'profile'}>{profile}</Link>
         );
-      })
+      });
     }
 
     function getContainerRow(container) {
@@ -100,8 +100,8 @@ export default class ContainersList extends React.Component {
       return (
         <Alert
           heading="No containers"
-          type="warning"
           icon="info-sign"
+          type="warning"
         />
       );
     }

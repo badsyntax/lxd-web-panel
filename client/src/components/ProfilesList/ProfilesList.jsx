@@ -1,6 +1,5 @@
 import './ProfilesList.scss';
 import React from 'react';
-import { Link } from 'react-router';
 import ProfilesStore from '../../stores/ProfilesStore';
 import AppActions from '../../actions/AppActions';
 import Alert from '../Alert/Alert';
@@ -73,7 +72,7 @@ export default class Profiles extends React.Component {
     }
 
     function getAlert() {
-      return <Alert heading="No profiles" type="warning" />
+      return <Alert heading="No profiles" type="warning" />;
     }
   }
 }

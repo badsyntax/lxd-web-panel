@@ -1,9 +1,5 @@
 import './ImagesImportForm.scss';
 import React, { PropTypes } from 'react';
-import classNames from 'classnames';
-import Button from 'react-bootstrap/lib/Button';
-import { Link } from 'react-router';
-import WebAPI from '../../util/WebAPI';
 import ImagesImportFieldset from './ImagesImportFieldset';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 import AppActions from '../../actions/AppActions';
