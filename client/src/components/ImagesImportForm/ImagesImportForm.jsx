@@ -25,6 +25,11 @@ export default class ImagesImportForm extends React.Component {
     remoteImages: PropTypes.array.isRequired,
   };
 
+  static contextTypes = {
+    location: PropTypes.object,
+    history: PropTypes.object
+  };
+
   constructor(...props) {
     super(...props);
 

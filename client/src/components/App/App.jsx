@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
 import Sidebar from '../Sidebar/Sidebar.jsx';
+import LogViewer from '../LogViewer/LogViewer.jsx';
 
 export default class App extends React.Component {
   render() {
@@ -17,6 +18,7 @@ export default class App extends React.Component {
             </div>
           </div>
         </div>
+        <LogViewer />
       </div>
     );
   }

@@ -79,8 +79,6 @@ function updateContainer(req, res) {
 
   var newConfig = req.body;
 
-  console.log('UPDATE CONTAINER CONFIG', newConfig)
-
   return lxdClient.updateContainer(name, {
     config: newConfig
   }).then(function(container) {

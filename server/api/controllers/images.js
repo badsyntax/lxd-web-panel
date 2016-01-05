@@ -99,8 +99,6 @@ function getAllImagesWithDetails(req, reply) {
 function createImage(req, reply) {
   var imageData = req.body;
 
-  console.log('create image with data', imageData);
-
   return lxd.createImage(imageData).then(function(res) {
     if (res.error) { throw res; }
     return lxd.waitOperation(res)

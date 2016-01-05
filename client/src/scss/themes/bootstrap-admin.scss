@@ -45,7 +45,7 @@ h1, .h1, h2, .h2, h3, .h3 {
     top: 51px;
     bottom: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 2;
     display: block;
     padding: 20px;
     overflow-x: hidden;
@@ -79,6 +79,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 
 .main {
   padding: 20px;
+  margin-bottom: 50px;
 }
 @media (min-width: 768px) {
   .main {

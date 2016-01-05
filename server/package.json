@@ -9,7 +9,9 @@
   "main": "app.js",
   "config": {
     "devHost": "0.0.0.0",
-    "devPort": 9000
+    "devPort": 9000,
+    "logServerHost": "0.0.0.0",
+    "logServerPort": 8080
   },
   "scripts": {
     "edit": "swagger project edit .",
@@ -17,6 +19,7 @@
     "prestart-dev-server": "cd ../ && npm run generate-model-schema && cd server/api && ln -sf ../../models/",
     "start": "sudo ./start-dev-server.sh",
     "start-dev-server": "PORT=$npm_package_config_devPort HOST=$npm_package_config_devHost node ./app",
+    "start-log-server": "PORT=$npm_package_config_logServerPort HOST=$npm_package_config_logServerHost node logserver",
     "start-prod-server": "node app",
     "test": "swagger project test ."
   },
@@ -25,6 +28,7 @@
     "express": "^4.12.3",
     "jsonwebtoken": "^5.4.1",
     "lxd": "git://github.com/badsyntax/node-lxd.git#develop",
+    "nodejs-websocket": "^1.4.1",
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {

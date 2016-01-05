@@ -31,7 +31,6 @@ import Home from './components/Home/Home.jsx';
 import AuthStore from './stores/AuthStore';
 
 
-
 function requireAuth(nextState, replaceState) {
   if (!AuthStore.loggedIn()) {
     replaceState({ nextPathname: nextState.location.pathname }, '/signin');
