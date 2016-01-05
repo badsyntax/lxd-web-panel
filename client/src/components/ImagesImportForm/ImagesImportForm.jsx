@@ -100,9 +100,11 @@ export default class ImagesImportForm extends React.Component {
   }
 
   onImageChange = (e) => {
-    var alias = e.target.value.replace(/\//g, '-');
+    var alias = e.target.value;
+    var description = e.target.options[e.target.selectedIndex].innerHTML.trim();
     var formModel = this.state.formModel;
     formModel.update('localAlias', alias);
+    formModel.update('description', description);
     this.setState({
       formModel: formModel
     });

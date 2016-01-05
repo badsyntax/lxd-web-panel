@@ -1,13 +1,17 @@
 import './LogViewer.scss';
 import React from 'react';
+import classNames from 'classnames';
 import { LOGSERVER_ENDPOINT } from '../../constants/AppConstants';
 
 const MAX_MESSAGES = 100;
 const SCROLL_LENIANCY = 10;
+const STATE_OPEN = true;
+const STATE_CLOSED = false;
 
 export default class LogViewer extends React.Component {
 
   state = {
+    openState: STATE_CLOSED,
     messages: []
   }
 
@@ -18,6 +22,7 @@ export default class LogViewer extends React.Component {
   }
 
   initWebSocketConnection() {
+    // TODO This needs to be in a store
     this.wsMessagePromise = Promise.resolve();
     this.ws = new WebSocket(LOGSERVER_ENDPOINT);
     this.ws.onmessage = this.onWebSocketMessage;
@@ -27,6 +32,7 @@ export default class LogViewer extends React.Component {
     if (!this.shouldScrollList) { return; }
     var list = this.refs.list;
     list.scrollTop = list.scrollHeight;
+    console.log('SCROLL LIST');
   }
 
   setMessage(message) {
@@ -55,7 +61,7 @@ export default class LogViewer extends React.Component {
               this.setMessage(message);
               this.scrollList();
               resolve();
-            }, 100);
+            }, 50);
           });
         });
       }, Promise.resolve());
@@ -70,10 +76,21 @@ export default class LogViewer extends React.Component {
     );*/
   }
 
+  onToggleButtonClick = (e) => {
+    this.setState({
+      openState: !this.state.openState
+    });
+  }
+
   render() {
+    let containerClassName = classNames({
+      'log-viewer': true,
+      '-open': this.state.openState === STATE_OPEN,
+      '-closed': this.state.openState === STATE_CLOSED
+    });
     let messages = this.state.messages;
     return (
-      <div className={'log-viewer'}>
+      <div className={containerClassName}>
         { messages.length ? (
           <ul
             className="log-viewer__list"
@@ -92,11 +109,26 @@ export default class LogViewer extends React.Component {
             })}
           </ul>
         ) : <span className="log-viewer__message">Log messages will appear here.</span> }
-        <div className="log-viewer__toolbar">
-          <button className="log-viewer__toggle-button btn btn-xs btn-default" title="Expand the log viewer">
-            <span className="glyphicon glyphicon-menu-up"></span>
-          </button>
-        </div>
+        { this.renderToolbar() }
+      </div>
+    );
+  }
+
+  renderToolbar() {
+    let toggleButtonIconClassName = classNames({
+      'glyphicon': true,
+      'glyphicon-menu-down': this.state.openState === STATE_OPEN,
+      'glyphicon-menu-up': this.state.openState === STATE_CLOSED
+    });
+    return (
+      <div className={'log-viewer__toolbar'}>
+        <button
+          onClick={this.onToggleButtonClick}
+          className="log-viewer__toggle-button btn btn-xs btn-default"
+          title="Expand the log viewer"
+        >
+          <span className={toggleButtonIconClassName}></span>
+        </button>
       </div>
     );
   }
