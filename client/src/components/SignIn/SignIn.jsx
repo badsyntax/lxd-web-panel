@@ -60,11 +60,11 @@ export default class SignIn extends React.Component {
 
   onSubmit = (e, formModel) => {
     e.preventDefault();
-    if (formModel.validation.valid) {
+    if (formModel.isValid()) {
       this.setState({
         hasError: false
       });
-      AppActions.authenticate(formModel.getData());
+      AppActions.authenticate(formModel.get());
     } else {
       this.setState({
         hasError: true

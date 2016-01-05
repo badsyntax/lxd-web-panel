@@ -288,6 +288,28 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /images/{fingerprint}:
+    x-swagger-router-controller: images
+    delete:
+      description: Deletes an image.
+      operationId: deleteImage
+      security:
+        - token: []
+      parameters:
+        - name: fingerprint
+          in: path
+          description: Image fingerprint
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/DeleteResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /images/remote/{name}:
     x-swagger-router-controller: images
     get:
@@ -592,6 +614,12 @@ definitions:
       container:
         $ref: "#/definitions/ContainerModel"
   CreateResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  DeleteResponse:
     required:
       - message
     properties:

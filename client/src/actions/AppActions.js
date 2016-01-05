@@ -20,6 +20,11 @@ import {
   IMAGE_CREATE__SUCCESS,
   IMAGE_CREATE__ERROR,
 
+  IMAGE_DELETE__START,
+  IMAGE_DELETE__END,
+  IMAGE_DELETE__SUCCESS,
+  IMAGE_DELETE__ERROR,
+
   IMAGE_IMPORT__START,
   IMAGE_IMPORT__END,
   IMAGE_IMPORT__SUCCESS,
@@ -134,6 +139,22 @@ export default {
       dispatchAction(IMAGE_CREATE__ERROR, { error: e });
     })
     .finally(() => dispatchAction(IMAGE_CREATE__END));
+  },
+
+  deleteImage(imageModel) {
+    let data = imageModel.get();
+
+    dispatchAction(IMAGE_DELETE__START);
+    WebAPI.deleteImage(data.fingerprint)
+    .then((response) => {
+      if (response.message) {
+        dispatchAction(IMAGE_DELETE__SUCCESS, response);
+      }
+    })
+    .catch((e) => {
+      dispatchAction(IMAGE_DELETE__ERROR, { error: e });
+    })
+    .finally(() => dispatchAction(IMAGE_DELETE__END));
   },
 
   importImage(imageImportModel) {

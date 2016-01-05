@@ -13,7 +13,8 @@ module.exports = {
   getAllImageAliases: getAllImageAliases,
   getRemoteImages: getRemoteImages,
   createImageAlias: createImageAlias,
-  createImage: createImage
+  createImage: createImage,
+  deleteImage: deleteImage
 };
 
 function getAllImageAliases(req, reply) {
@@ -129,6 +130,31 @@ function createImageAlias(req, reply) {
   var json = req.body;
 
   return lxd.createImageAlias(json)
+  .then(function(res) {
+    if (res.error) {
+      reply.status(res.error_code);
+      return reply.json({
+        message: res.error
+      });
+    }
+    reply.json({
+      message: 'Success'
+    });
+  })
+  .catch(function(e) {
+    reply.status(500);
+    reply.json({
+      message: e.toString()
+    });
+  });
+}
+
+function deleteImage(req, reply) {
+  var fingerprint = req.swagger.params.fingerprint.value;
+
+  var json = req.body;
+
+  return lxd.deleteImage(fingerprint)
   .then(function(res) {
     if (res.error) {
       reply.status(res.error_code);

@@ -1,8 +1,6 @@
 import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import ImageModel from '../../../models/Image';
-
-console.log('IMAGEMODEL', ImageModel);
+import ImageModel from '../models/ImageModel';
 
 import {
   IMAGES__UPDATED,
@@ -24,11 +22,11 @@ class ImagesStore extends BaseStore {
   }
 
   set(image) {
-    return super.set(new ImageModel(image));
+    super.set(new ImageModel(image));
   }
 
   setAll(images) {
-    return super.setAll(images.map((image) => new ImageModel(image)));
+    super.setAll(images.map((image) => new ImageModel(image)));
   }
 }
 

@@ -23,13 +23,11 @@ class RemoteImagesStore extends BaseStore {
   }
 
   set(image) {
-    return super.set(
-      new RemoteImageModel(image)
-    );
+    super.set(new RemoteImageModel(image));
   }
 
   setAll(images) {
-    return super.setAll(images.map((image) => new RemoteImageModel(image)));
+    super.setAll(images.map((image) => new RemoteImageModel(image)));
   }
 }
 

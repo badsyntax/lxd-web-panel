@@ -38,6 +38,12 @@ class API {
     });
   }
 
+  deleteImage(image) {
+    return deleteJson({
+      action: 'images/' + image
+    });
+  }
+
   getRemoteImages(server) {
     return getJson({
       action: 'images/remote/' + server
@@ -95,6 +101,20 @@ function postJson(urlData, data, secure) {
     },
     method: 'post',
     body: JSON.stringify(data)
+  })
+  .then(checkResponseStatus)
+  .then(parseJSON);
+}
+
+function deleteJson(urlData, secure) {
+
+  let url = getURL(urlData, secure);
+
+  return fetch(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'delete'
   })
   .then(checkResponseStatus)
   .then(parseJSON);

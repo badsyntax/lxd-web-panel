@@ -22,17 +22,11 @@ class ContainerStore extends BaseStore {
   }
 
   set(container) {
-    return super.set(
-      new ContainerModel(container)
-    );
+    return super.set(new ContainerModel(container));
   }
 
   setAll(containers) {
-    return super.setAll(
-      containers.map(
-        (container) => new ContainerModel(container)
-      )
-    );
+    super.setAll(containers.map((container) => new ContainerModel(container)));
   }
 }
 

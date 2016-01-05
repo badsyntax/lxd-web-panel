@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react';
 import Form from '../Form/Form';
 import Alert from '../Alert/Alert';
 
-import { UserModel } from '../../../../models';
+import UserModel from '../../models/UserModel';
 import SignInFieldset from './SignInFieldset';
 
 

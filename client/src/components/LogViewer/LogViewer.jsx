@@ -32,7 +32,6 @@ export default class LogViewer extends React.Component {
     if (!this.shouldScrollList) { return; }
     var list = this.refs.list;
     list.scrollTop = list.scrollHeight;
-    console.log('SCROLL LIST');
   }
 
   setMessage(message) {

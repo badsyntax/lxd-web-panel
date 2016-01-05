@@ -22,13 +22,11 @@ class ProfilesStore extends BaseStore {
   }
 
   set(profile) {
-    return super.set(
-      new ProfileModel(profile)
-    );
+    super.set(new ProfileModel(profile));
   }
 
   setAll(profiles) {
-    return super.setAll(profiles.map((profile) => new ProfileModel(profile)));
+    super.setAll(profiles.map((profile) => new ProfileModel(profile)));
   }
 }
 
