@@ -11,7 +11,7 @@ var config = {
 var server = ws
 .createServer(onConnection)
 .listen(config.port, config.host, function() {
-  console.log('Broadcasting @',this.socket.address())
+  console.log('Broadcasting @', this.socket.address());
 });
 
 function onConnection(conn) {
@@ -36,15 +36,11 @@ function onConnection(conn) {
   function onConnectionClose(code, reason) {
     console.log('Connection closed')
     remoteListeners();
-    if (!proc) { return; }
-    // proc.kill('SIGHUP')
   }
 
   function onConnectionError(err) {
     console.log('Error', err);
     remoteListeners();
-    if (!proc) { return; }
-    // proc.kill('SIGHUP')
   }
 
   function onProcStdout(data) {
@@ -59,16 +55,5 @@ function onConnection(conn) {
 
   function onProcError(err) {
     console.log('ERROR: '+err)
-    proc = null
   }
 }
-
-/** ON CLIENT */
-
-/*
-var ws = new WebSocket('ws://localhost:8080/');
-
-ws.onmessage = function(event) {
-  console.log('Count is: ' + event.data);
-};
- */
