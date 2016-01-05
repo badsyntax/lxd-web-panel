@@ -1,8 +1,9 @@
 $item-height: 13px;
-$num-items: 3;
+$num-items: 2;
 $padding-horizontal: 10px;
 $padding-vertical: 3px;
 $scrollbar-width: 15px;
+$item-font-size: $item-height - 2;
 
 .log-viewer {
   position: fixed;
@@ -24,7 +25,7 @@ $scrollbar-width: 15px;
 }
 
 .log-viewer__list-item {
-  font-size: $item-height - 2;
+  font-size: $item-font-size;
   line-height: $item-height;
   list-style: none;
   overflow: hidden;
@@ -34,9 +35,19 @@ $scrollbar-width: 15px;
 
 .log-viewer__message {
   display: block;
-  font-size: $item-height;
+  font-size: $item-font-size;
   font-style: italic;
-  height: ($item-height * $num-items);
   line-height: ($item-height * $num-items);
   padding: $padding-vertical $padding-horizontal;
+}
+
+.log-viewer__toolbar {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.log-viewer__toggle-button {
+  font-size: 10px;
+  margin-left: 5px;
 }

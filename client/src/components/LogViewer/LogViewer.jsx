@@ -55,7 +55,7 @@ export default class LogViewer extends React.Component {
               this.setMessage(message);
               this.scrollList();
               resolve();
-            }, 200);
+            }, 100);
           });
         });
       }, Promise.resolve());
@@ -92,6 +92,11 @@ export default class LogViewer extends React.Component {
             })}
           </ul>
         ) : <span className="log-viewer__message">Log messages will appear here.</span> }
+        <div className="log-viewer__toolbar">
+          <button className="log-viewer__toggle-button btn btn-xs btn-default" title="Expand the log viewer">
+            <span className="glyphicon glyphicon-menu-up"></span>
+          </button>
+        </div>
       </div>
     );
   }
