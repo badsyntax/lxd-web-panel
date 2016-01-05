@@ -1,7 +1,7 @@
 
 import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import RemoteImageModel from '../models/RemoteImage';
+import RemoteImageModel from '../../../models/RemoteImage';
 
 import {
   REMOTE_IMAGES__UPDATED,

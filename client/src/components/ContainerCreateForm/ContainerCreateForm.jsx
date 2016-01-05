@@ -2,7 +2,7 @@ import './ContainerCreateForm.scss';
 import React, { PropTypes } from 'react';
 import ContainerCreateFieldset from './ContainerCreateFieldset';
 
-import ContainerModel from '../../models/Container';
+import ContainerModel from '../../../../models/Container';
 
 import Alert from '../Alert/Alert';
 import Form from '../Form/Form';

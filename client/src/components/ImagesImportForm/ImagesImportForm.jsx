@@ -4,7 +4,7 @@ import ImagesImportFieldset from './ImagesImportFieldset';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 import AppActions from '../../actions/AppActions';
 
-import ImageImportModel from '../../models/ImageImport';
+import ImageImportModel from '../../../../models/ImageImport';
 
 import Alert from '../Alert/Alert';
 import Form from '../Form/Form';

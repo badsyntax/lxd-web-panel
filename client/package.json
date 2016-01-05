@@ -13,13 +13,12 @@
     "srcPath": "./src"
   },
   "scripts": {
-    "dev": "concurrent --raw \"npm run sync-models\" \"npm run dev-server\"",
-    "dev-server": "webpack-dev-server --devtool source-map --progress --inline --colors --hot --debug",
+    "dev": "npm run dev-server",
+    "dev-server": "webpack-dev-server --devtool source-map --progress --inline --colors --hot --debug --display-error-details",
     "lint": "eslint --ext .js --ext .jsx ./src && echo No linting errors.",
     "prestart": "npm install",
     "presync-models": "cd ../ && npm run generate-model-schema && cd client",
     "start": "NODE_ENV=development API_HOST=$npm_package_config_defaultAPIHost API_PORT=$npm_package_config_defaultAPIPort npm run dev",
-    "sync-models": "sync-files --watch ../models src/models",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -57,7 +56,6 @@
     "rimraf": "^2.4.4",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
-    "sync-files": "^1.0.3",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"

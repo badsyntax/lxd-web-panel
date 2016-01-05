@@ -1,6 +1,6 @@
 import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import ProfileModel from '../models/Profile';
+import ProfileModel from '../../../models/Profile';
 
 import {
   PROFILES__UPDATED,

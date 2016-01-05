@@ -32,6 +32,10 @@ export default class Images extends React.Component {
     this.setState(getState());
   }
 
+  onDeleteButtonClick = (image, e) => {
+    debugger;
+  }
+
   render() {
     try {
       let { images } = this.state;
@@ -75,7 +79,7 @@ export default class Images extends React.Component {
                       <td>{ image.createdAtFriendly() }</td>
                       <td>
                         <button className="btn btn-default btn-xs">Edit</button>
-                        <button className="btn btn-default btn-xs">Delete</button>
+                        <button className="btn btn-default btn-xs" onClick={this.onDeleteButtonClick.bind(this, image)}>Delete</button>
                       </td>
                     </tr>
                   );

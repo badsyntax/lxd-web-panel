@@ -7,6 +7,7 @@ var pkg = require('./package.json');
 
 // paths
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var modelsPath = path.resolve(__dirname, '..', 'models');
 
 // setup environment flags
 var DEVELOPMENT = process.env.NODE_ENV === 'development';
@@ -32,7 +33,17 @@ var config = {
       test: /\.jsx?$/,
       loader: 'babel',
       exclude: [
-        nodeModulesPath
+        nodeModulesPath,
+      ],
+      include: [
+        modelsPath
+      ]
+    }, {
+      test: /\.jsx?$/,
+      loader: 'babel',
+      exclude: [
+        nodeModulesPath,
+        modelsPath
       ],
       query: {
         presets: ['es2015', 'stage-0', 'react']
@@ -65,6 +76,7 @@ var config = {
     })
   ],
   resolve: {
+    root: path.resolve(__dirname),
     extensions: ['', '.js', '.json', '.jsx']
   },
   devServer: {
