@@ -99,6 +99,15 @@ export default class ImagesImportForm extends React.Component {
     }
   }
 
+  onImageChange = (e) => {
+    var alias = e.target.value.replace(/\//g, '-');
+    var formModel = this.state.formModel;
+    formModel.update('localAlias', alias);
+    this.setState({
+      formModel: formModel
+    });
+  }
+
   render() {
     try {
       return (
@@ -119,6 +128,7 @@ export default class ImagesImportForm extends React.Component {
               remoteImages={this.props.remoteImages}
               disabled={this.props.disabled}
               showErrors={this.state.hasError}
+              onImageChange={this.onImageChange}
             />
           </Form>
         </div>

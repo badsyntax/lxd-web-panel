@@ -21,6 +21,7 @@ export default class Select extends React.Component {
     let value = e.target.value;
     let formModel = this.context.formModel;
     formModel.update(this.props.name, value);
+    this.props.onChange(e);
   }
 
   render() {

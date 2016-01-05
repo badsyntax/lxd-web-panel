@@ -6,7 +6,8 @@ import Select from '../Select/Select';
 export default class ImagesImportFieldset extends React.Component {
 
   static propTypes = {
-    remoteImages: PropTypes.array.isRequired
+    remoteImages: PropTypes.array.isRequired,
+    onImageChange: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -27,6 +28,7 @@ export default class ImagesImportFieldset extends React.Component {
           labelLayoutClassName="col-sm-2"
           inputLayoutClassName="col-sm-5"
           showError={this.props.showErrors}
+          onChange={this.props.onImageChange}
         />
         <Field
           className="form-group"

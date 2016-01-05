@@ -94,6 +94,5 @@ export default class LogViewer extends React.Component {
         ) : <span className="log-viewer__message">Log messages will appear here.</span> }
       </div>
     );
-    return this.renderMessages(this.state.messages);
   }
 }
