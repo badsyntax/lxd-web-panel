@@ -1,3 +1,5 @@
 import Flux from 'flux';
 
-export default new Flux.Dispatcher();
+class AppDispatcher extends Flux.Dispatcher {}
+
+export default new AppDispatcher();
