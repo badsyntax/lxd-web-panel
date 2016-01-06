@@ -5,14 +5,16 @@ import ImagesStore from '../../stores/ImagesStore';
 import AppActions from '../../actions/AppActions';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 
-import Alert from '../Alert/Alert';
-import ContainerCreateForm from '../ContainerCreateForm/ContainerCreateForm';
+import Alert from '../../components/Alert/Alert';
+import ContainerCreateForm from '../../components/ContainerCreateForm/ContainerCreateForm';
 
 import {
   IMAGES__GET_END
 } from '../../constants/AppConstants';
 
 export default class ContainerCreate extends React.Component {
+
+  static foo = 'bar';
 
   constructor(...props) {
     super(...props);
@@ -70,7 +72,7 @@ export default class ContainerCreate extends React.Component {
         <h2 className="sub-header">
           Create container
         </h2>
-        { this.state.hasLoaded && this.state.images.length ? (
+        { true || this.state.hasLoaded && this.state.images.length ? (
           <ContainerCreateForm
             className={'form-horizontal'}
             images={this.state.images}

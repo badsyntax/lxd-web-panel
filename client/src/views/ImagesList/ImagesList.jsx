@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import ImagesStore from '../../stores/ImagesStore';
 import AppActions from '../../actions/AppActions';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
-import Alert from '../Alert/Alert';
+import Alert from '../../components/Alert/Alert';
 
 import {
   IMAGE_DELETE__START,

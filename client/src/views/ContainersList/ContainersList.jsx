@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import ContainersStore from '../../stores/ContainersStore';
 import AppActions from '../../actions/AppActions';
-import Alert from '../Alert/Alert';
+import Alert from '../../components/Alert/Alert';
 
 function getState() {
   return {

@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react';
 import AppActions from '../../actions/AppActions';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 
-import SignInForm from '../SignInForm/SignInForm';
+import SignInForm from '../../components/SignInForm/SignInForm';
 
 import {
   AUTHENTICATE__SUCCESS,

@@ -6,22 +6,23 @@ import {
   IndexRoute,
 } from 'react-router';
 
-import App from './components/App/App.jsx';
-import Containers from './components/Containers/Containers.jsx';
-import ContainerCreate from './components/ContainerCreate/ContainerCreate.jsx';
-import ContainersList from './components/ContainersList/ContainersList.jsx';
-import Profiles from './components/Profiles/Profiles.jsx';
-import ProfilesList from './components/ProfilesList/ProfilesList.jsx';
-import Images from './components/Images/Images.jsx';
-import ImagesList from './components/ImagesList/ImagesList.jsx';
-import ImagesImport from './components/ImagesImport/ImagesImport.jsx';
+import App from './views/App/App.jsx';
+import Containers from './views/Containers/Containers.jsx';
+import ContainerCreate from './views/ContainerCreate/ContainerCreate.jsx';
+import ContainersList from './views/ContainersList/ContainersList.jsx';
+import Profiles from './views/Profiles/Profiles.jsx';
+import ProfilesList from './views/ProfilesList/ProfilesList.jsx';
+import Images from './views/Images/Images.jsx';
+import ImagesList from './views/ImagesList/ImagesList.jsx';
+import ImagesImport from './views/ImagesImport/ImagesImport.jsx';
 
-import Config from './components/Config/Config.jsx';
-import Users from './components/Users/Users.jsx';
-import UserInterface from './components/UserInterface/UserInterface.jsx';
-import SignIn from './components/SignIn/SignIn.jsx';
-import SignOut from './components/SignOut/SignOut.jsx';
-import Home from './components/Home/Home.jsx';
+import Config from './views/Config/Config.jsx';
+import Users from './views/Users/Users.jsx';
+import RemoteServers from './views/RemoteServers/RemoteServers.jsx';
+import UserInterface from './views/UserInterface/UserInterface.jsx';
+import SignIn from './views/SignIn/SignIn.jsx';
+import SignOut from './views/SignOut/SignOut.jsx';
+import Home from './views/Home/Home.jsx';
 
 import AuthStore from './stores/AuthStore';
 
@@ -45,6 +46,7 @@ export default (props) => {
           <Route component={ImagesList} path="/images/list" />
           <Route component={ImagesImport} path="/images/import" />
         </Route>
+        <Route component={RemoteServers} onEnter={requireAuth} path="/remote-servers" />
         <Route component={Config} onEnter={requireAuth} path="/config" />
         <Route component={Users} onEnter={requireAuth} path="/users" />
         <Route component={UserInterface} onEnter={requireAuth} path="/user-interface" />

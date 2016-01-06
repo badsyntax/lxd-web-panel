@@ -17,23 +17,32 @@ export default class ContainerCreateForm extends React.Component {
     profiles: PropTypes.array.isRequired
   };
 
+  static initialFormData = {
+    profiles: []
+  };
+
   constructor(...props) {
     super(...props);
-
-    var initialData = {
-      profiles: []
+    this.state = {
+      formModel: this.getFormModel()
     };
+  }
 
-    var formModel = new ContainerModel(initialData, null, this.onFormModelChange);
+  getFormModel() {
+
+    let initialData = this.constructor.initialFormData;
+
+    let formModel = new ContainerModel(
+      initialData,
+      null,
+      this.onFormModelChange
+    );
+
     formModel.setRequired('profiles', true);
     formModel.setRequired('name', true);
     formModel.setRequired('image', true);
 
-    console.log('FORM MODEL', formModel);
-
-    this.state = {
-      formModel
-    };
+    return formModel;
   }
 
   onFormModelChange = (formModel) => {

@@ -4,7 +4,7 @@ import RemoteImagesStore from '../../stores/RemoteImagesStore';
 import AppActions from '../../actions/AppActions';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 
-import ImagesImportForm from '../ImagesImportForm/ImagesImportForm';
+import ImagesImportForm from '../../components/ImagesImportForm/ImagesImportForm';
 
 import {
   IMAGES__GET_END

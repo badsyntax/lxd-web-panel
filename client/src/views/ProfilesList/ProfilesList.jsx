@@ -2,7 +2,7 @@ import './ProfilesList.scss';
 import React from 'react';
 import ProfilesStore from '../../stores/ProfilesStore';
 import AppActions from '../../actions/AppActions';
-import Alert from '../Alert/Alert';
+import Alert from '../../components/Alert/Alert';
 
 function getState() {
   return {
