@@ -1,0 +1,34 @@
+[
+  {
+    "path": "overview",
+    "label": "Overview"
+  },
+  {
+    "path": "containers",
+    "label": "Containers"
+  },
+  {
+    "path": "profiles",
+    "label": "Profiles"
+  },
+  {
+    "path": "images",
+    "label": "Images"
+  },
+  {
+    "path": "remote-servers",
+    "label": "Remote Servers"
+  },
+  {
+    "path": "config",
+    "label": "Config"
+  },
+  {
+    "path": "users",
+    "label": "Users"
+  },
+  {
+    "path": "user-interface",
+    "label": "User Interface"
+  }
+]
