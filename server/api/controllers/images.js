@@ -8,31 +8,31 @@ var ImageModel = require('../models/Image');
 var ImageAliasModel = require('../models/ImageAlias');
 
 module.exports = {
-  getAllImages: getAllImages,
-  getAllImagesWithDetails: getAllImagesWithDetails,
-  getAllImageAliases: getAllImageAliases,
-  getRemoteImages: getRemoteImages,
-  createImageAlias: createImageAlias,
-  createImage: createImage,
-  deleteImage: deleteImage
+  getAllImages,
+  getAllImagesWithDetails,
+  getAllImageAliases,
+  getRemoteImages,
+  createImageAlias,
+  createImage,
+  deleteImage
 };
 
 function getAllImageAliases(req, reply) {
   return lxd.getImageAliases()
-  .then(function(res) {
-    var aliases = res.metadata.map(function(resource) {
+  .then((res) => {
+    var aliases = res.metadata.map((resource) => {
       return new ImageAliasModel({
         resource: resource
-      });
+      }).get();
     });
     return aliases;
   })
-  .then(function(aliases) {
+  .then((aliases) => {
     reply.json({
       aliases: aliases
     });
   })
-  .catch(function(e) {
+  .catch((e) => {
     reply.status(500);
     reply.json({
       message: e.toString()
@@ -44,8 +44,8 @@ var config = process.env;
 
 function getImages() {
   return lxd.getImages()
-  .then(function(images) {
-    var images = images.metadata.map(function(resource) {
+  .then((images) => {
+    var images = images.metadata.map((resource) => {
       return new ImageModel({
         resource: resource
       });
@@ -56,12 +56,12 @@ function getImages() {
 
 function getAllImages(req, reply) {
   return getImages()
-  .then(function(images) {
+  .then((images) => {
     reply.json({
       images: images
     });
   })
-  .catch(function(e) {
+  .catch((e) => {
     reply.status(500);
     reply.json({
       message: e.toString()
@@ -71,11 +71,11 @@ function getAllImages(req, reply) {
 
 function getAllImagesWithDetails(req, reply) {
   return getImages()
-  .then(function(images) {
+  .then((images) => {
 
-    var promises = images.map(function(image) {
+    var promises = images.map((image) => {
       return lxd.getImage(image.getFingerprint())
-        .then(function(imageData) {
+        .then((imageData) => {
           if (!imageData.error) {
             image.setData(imageData.metadata);
           }
@@ -84,12 +84,12 @@ function getAllImagesWithDetails(req, reply) {
     });
     return Promise.all(promises);
   })
-  .then(function(images) {
+  .then((images) => {
     reply.json({
       images: images
     });
   })
-  .catch(function(e) {
+  .catch((e) => {
     reply.status(500);
     reply.json({
       message: e.toString()
@@ -100,10 +100,10 @@ function getAllImagesWithDetails(req, reply) {
 function createImage(req, reply) {
   var imageData = req.body;
 
-  return lxd.createImage(imageData).then(function(res) {
+  return lxd.createImage(imageData).then((res) => {
     if (res.error) { throw res; }
     return lxd.waitOperation(res)
-    .then(function(operation) {
+    .then((operation) => {
       var metadata = JSON.parse(operation).metadata;
       if (metadata.status_code !== 200) {
         throw {
@@ -113,12 +113,12 @@ function createImage(req, reply) {
       return metadata;
     });
   })
-  .then(function(metadata) {
+  .then((metadata) => {
     reply.json({
       message: 'Success'
     });
   })
-  .catch(function(e) {
+  .catch((e) => {
     reply.status(e.error_code);
     reply.json({
       message: e.error || 'Unknown error'
@@ -130,7 +130,7 @@ function createImageAlias(req, reply) {
   var json = req.body;
 
   return lxd.createImageAlias(json)
-  .then(function(res) {
+  .then((res) => {
     if (res.error) {
       reply.status(res.error_code);
       return reply.json({
@@ -141,7 +141,7 @@ function createImageAlias(req, reply) {
       message: 'Success'
     });
   })
-  .catch(function(e) {
+  .catch((e) => {
     reply.status(500);
     reply.json({
       message: e.toString()
@@ -155,7 +155,7 @@ function deleteImage(req, reply) {
   var json = req.body;
 
   return lxd.deleteImage(fingerprint)
-  .then(function(res) {
+  .then((res) => {
     if (res.error) {
       reply.status(res.error_code);
       return reply.json({
@@ -166,7 +166,7 @@ function deleteImage(req, reply) {
       message: 'Success'
     });
   })
-  .catch(function(e) {
+  .catch((e) => {
     reply.status(500);
     reply.json({
       message: e.toString()
@@ -178,12 +178,12 @@ function getRemoteImages(req, reply) {
   var imageName = req.swagger.params.name.value;
 
   lxc.getRemoteImages(imageName)
-  .then(function(images) {
+  .then((images) => {
     reply.json({
       images: images
     });
   })
-  .catch(function(e) {
+  .catch((e) => {
     reply.status(500);
     reply.json({
       message: e.toString()

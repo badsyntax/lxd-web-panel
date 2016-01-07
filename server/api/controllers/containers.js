@@ -6,30 +6,30 @@ var lxdClient = helpers.lxd;
 var ContainerModel = require('../models/Container');
 
 module.exports = {
-  getAllContainers: getAllContainers,
-  getAllContainersWithDetails: getAllContainersWithDetails,
-  getContainer: getContainer,
-  updateContainer: updateContainer,
-  renameContainer: renameContainer,
-  createContainer: createContainer
+  getAllContainers,
+  getAllContainersWithDetails,
+  getContainer,
+  updateContainer,
+  renameContainer,
+  createContainer
 };
 
 var config = process.env;
 
 function getContainers() {
   return lxdClient.getContainers()
-  .then(function(containers) {
-    return containers.metadata.map(function(resource) {
+  .then((containers) => {
+    return containers.metadata.map((resource) => {
       return new ContainerModel({
         resource: resource
-      });
+      }).get();
     });
   })
 }
 
 function getAllContainers(req, res) {
   return getContainers()
-  .then(function(containers) {
+  .then((containers) => {
     res.json({
       containers: containers
     });
@@ -38,10 +38,10 @@ function getAllContainers(req, res) {
 
 function getAllContainersWithDetails(req, res) {
   return getContainers()
-  .then(function(containers) {
-    var promises = containers.map(function(container) {
+  .then((containers) => {
+    var promises = containers.map((container) => {
       return lxdClient.getContainer(container.getName())
-        .then(function(containerData) {
+        .then((containerData) => {
           if (!containerData.error) {
             container.setData(containerData.metadata);
           }
@@ -50,7 +50,7 @@ function getAllContainersWithDetails(req, res) {
     });
     return Promise.all(promises);
   })
-  .then(function(containers) {
+  .then((containers) => {
     res.json({
       containers: containers
     });
@@ -60,7 +60,7 @@ function getAllContainersWithDetails(req, res) {
 function getContainer(req, res) {
   var containerName = req.swagger.params.name.value;
   lxdClient.getContainer(containerName)
-  .then(function(container) {
+  .then((container) => {
     if (container.error) {
       res.status(500);
       return res.json({
@@ -81,7 +81,7 @@ function updateContainer(req, res) {
 
   return lxdClient.updateContainer(name, {
     config: newConfig
-  }).then(function(container) {
+  }).then((container) => {
     if (container.error) {
       res.status(container.error_code);
       return res.json({
@@ -101,10 +101,10 @@ function renameContainer(req, res) {
 
   lxdClient.renameContainer(name, {
     name: newName
-  }).then(function(res) {
+  }).then((res) => {
     return lxdClient.waitOperation(res);
   })
-  .then(function(container) {
+  .then((container) => {
     if (container.error) {
       res.status(container.error_code);
       return res.json({
@@ -122,7 +122,7 @@ function createContainer(req, res) {
   var container = new ContainerModel({
     name: containerName
   });
-  container.save().then(function() {
+  container.save().then(() => {
     res.json({
       message: 'Success'
     });

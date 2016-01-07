@@ -3,14 +3,14 @@
 var helpers = require('../helpers');
 
 module.exports = {
-  signin: signin
+  signin
 };
 
 function signin(req, reply) {
   helpers.auth.authenticate({
     username: req.body.username,
     password: req.body.password
-  }, function(err, token) {
+  }, (err, token) => {
     if (err) {
       reply.status(422);
       reply.json({

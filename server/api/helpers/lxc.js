@@ -1,32 +1,69 @@
+'use strict';
+
 var Promise = require('bluebird');
 var asciiparse = require('asciiparse');
 var spawn = require('child_process').spawn;
 
 module.exports = {
-  getRemoteImages: function(serverName) {
-    return new Promise(function(resolve, reject) {
-      getRemoteImages(serverName, resolve, reject);
-    });
-  }
+  getRemoteImages,
+  getServers
 };
 
-function getRemoteImages(serverName, resolve, reject) {
+function getServers(resolve, reject) {
 
-  var proc = spawn('lxc', [
-    'image',
-    'list',
-    serverName + ':'
-  ]);
+  const LOCAL_SERVER_NAME = 'local';
 
-  var table = '';
-
-  proc.stdout.on('data', function(data) {
-    table += data.toString();
+  return new Promise((resolve, reject) => {
+    handleProcess('lxc', [ 'remote', 'list' ])
+    .then(parseTable)
+    .then((results) => {
+      var servers = results
+      .filter((server) => {
+        return (server.NAME !== LOCAL_SERVER_NAME);
+      })
+      .map(ServerModel);
+      return servers;
+    })
+    .then(resolve)
+    .catch(reject);
   });
-  proc.stdout.on('end', parseTable);
-  proc.on('error', reject);
+}
 
-  function parseTable() {
+function getRemoteImages(serverName) {
+  return new Promise((resolve, reject) => {
+    handleProcess('lxc', [ 'image', 'list', serverName + ':' ])
+    .then(parseTable)
+    .then((results) => {
+      var images = results
+      .filter(function(image) {
+        return Boolean(image.ALIAS);
+      })
+      .map(ImageModel);
+      return images;
+    })
+    .then(resolve)
+    .catch(reject);
+  });
+}
+
+function handleProcess(command, args) {
+  return new Promise((resolve, reject) => {
+
+    var proc = spawn(command, args);
+    var table = '';
+
+    proc.stdout.on('data', (data) => {
+      table += data.toString();
+    });
+    proc.stdout.on('end', () => {
+      resolve(table);
+    });
+    proc.on('error', reject);
+  });
+}
+
+function parseTable(table) {
+  return new Promise((resolve, reject)=> {
     asciiparse.parseString(table, {
       rowSeparator: '-',
       colSeparator: '|',
@@ -34,29 +71,29 @@ function getRemoteImages(serverName, resolve, reject) {
       junction: '+',
       header: true,
       multiline: false
-    }, onTableParse);
-  }
-
-  function onTableParse(err, results) {
-    if (err) { return reject(err); }
-
-    var images = results
-    .filter(function(image) {
-      return Boolean(image.ALIAS);
+    }, (err, data) => {
+      if(err) return reject(err);
+      resolve(data);
     })
-    .map(newImageModel);
+  });
+}
 
-    resolve(images);
-  }
+function getSanitizedModel(data) {
+  var model = Object.keys(data).reduce((obj, key) => {
+    var newKey = key.toLowerCase().replace(/ /g, '_');
+    obj[newKey] = data[key];
+    return obj;
+  }, {})
+  return model;
+}
 
-  function newImageModel(image) {
-    var newImage = Object.keys(image).reduce(function(obj, key) {
-      var newKey = key.toLowerCase().replace(/ /g, '_');
-      obj[newKey] = image[key];
-      return obj;
-    }, {})
-    newImage.alias = newImage.alias.replace(/ \(.*?\)$/, '');
-    newImage.public = (newImage.public === 'yes');
-    return newImage;
-  }
+function ServerModel(server) {
+  return getSanitizedModel(server);
+}
+
+function ImageModel(image) {
+  var model = getSanitizedModel(image);
+  model.alias = model.alias.replace(/ \(.*?\)$/, '');
+  model.public = (model.public === 'yes');
+  return model;
 }

@@ -1,15 +1,11 @@
+'use strict';
+
 var BaseModel = require('./Base');
 
+class UserModel extends BaseModel {
+  static get schema() {
+    return BaseModel.schema.UserModel;
+  }
+}
+
 module.exports = UserModel;
-
-UserModel.schema = BaseModel.schema.UserModel;
-
-function UserModel(data, schema, onChange) {
-  BaseModel.call(this, data, schema || UserModel.schema, onChange);
-};
-
-UserModel.factory = function(data) {
-  return new UserModel(data);
-};
-
-UserModel.prototype = Object.create(BaseModel.prototype);

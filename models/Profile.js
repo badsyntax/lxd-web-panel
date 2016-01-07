@@ -1,29 +1,26 @@
+'use strict';
+
 var BaseModel = require('./Base');
 
-module.exports = ProfileModel;
+class ProfileModel extends BaseModel {
 
-ProfileModel.schema = BaseModel.schema.ProfileModel;
-
-function ProfileModel(data, schema, onChange) {
-  BaseModel.call(this, data, schema || ProfileModel.schema, onChange);
-};
-
-ProfileModel.factory = function(data) {
-  return new ProfileModel(data);
-};
-
-ProfileModel.prototype = Object.create(BaseModel.prototype);
-
-ProfileModel.prototype.getName = function() {
-  if (!this.resource) {
-    throw new Error('resource required to get name');
+  static get schema() {
+    return BaseModel.schema.ProfileModel;
   }
-  return this.resource.replace('/1.0/profiles/', '');
+
+  get name() {
+    if (!this.resource) {
+      throw new Error('resource required to get name');
+    }
+    return this.resource.replace('/1.0/profiles/', '');
+  }
+
+  get friendlyDevices() {
+    return Object.keys(this.devices).map((key) => {
+      var device = this.devices[key];
+      return [ key, device.parent, device.nictype ].join(' - ');
+    }, this).join(' | ');
+  }
 };
 
-ProfileModel.prototype.getFriendlyDevices = function() {
-  return Object.keys(this.devices).map(function(key) {
-    var device = this.devices[key];
-    return [ key, device.parent, device.nictype ].join(' - ');
-  }, this).join(' | ');
-};
+module.exports = ProfileModel;

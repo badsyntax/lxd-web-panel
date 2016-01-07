@@ -6,26 +6,26 @@ var lxdClient = helpers.lxd;
 var ProfileModel = require('../models/Profile');
 
 module.exports = {
-  getAllProfiles: getAllProfiles,
-  getAllProfilesWithDetails: getAllProfilesWithDetails
+  getAllProfiles,
+  getAllProfilesWithDetails
 };
 
 var config = process.env;
 
 function getProfiles() {
   return lxdClient.getProfiles()
-  .then(function(profiles) {
-    return profiles.metadata.map(function(resource) {
+  .then((profiles) => {
+    return profiles.metadata.map((resource) => {
       return new ProfileModel({
         resource: resource
-      });
+      }).get();
     });
   })
 }
 
 function getAllProfiles(req, reply) {
   getProfiles()
-  .then(function(profiles) {
+  .then((profiles) => {
     reply.json({
       profiles: profiles
     });
@@ -34,11 +34,11 @@ function getAllProfiles(req, reply) {
 
 function getAllProfilesWithDetails(req, reply) {
   return getProfiles()
-  .then(function(profiles) {
+  .then((profiles) => {
 
-    var promises = profiles.map(function(profile) {
+    var promises = profiles.map((profile) => {
       return lxdClient.getProfile(profile.getName())
-        .then(function(profileData) {
+        .then((profileData) => {
           if (!profileData.error) {
             profile.setData(profileData.metadata);
           }
@@ -47,7 +47,7 @@ function getAllProfilesWithDetails(req, reply) {
     });
     return Promise.all(promises);
   })
-  .then(function(profiles) {
+  .then((profiles) => {
     reply.json({
       profiles: profiles
     });

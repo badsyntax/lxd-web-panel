@@ -1,23 +1,19 @@
+'use strict';
+
 var BaseModel = require('./Base');
 
-module.exports = ImageAliasModel;
+class ImageAliasModel extends BaseModel {
 
-ImageAliasModel.schema = BaseModel.schema.ImageAliasModel;
-
-function ImageAliasModel(data, schema, onChange) {
-  BaseModel.call(this, data, schema || ImageAliasModel.schema, onChange);
-};
-
-ImageAliasModel.factory = function(data) {
-  return new ImageAliasModel(data);
-};
-
-ImageAliasModel.prototype = Object.create(BaseModel.prototype);
-
-ImageAliasModel.prototype.getAlias = function() {
-  if (!this.resource) {
-    throw new Error('resource required to get alias');
+  static get schema() {
+    return BaseModel.schema.ImageAliasModel;
   }
-  return this.resource.replace('/1.0/images/aliases/', '');
+
+  get alias() {
+    if (!this.resource) {
+      throw new Error('resource required to get alias');
+    }
+    return this.resource.replace('/1.0/images/aliases/', '');
+  }
 };
 
+module.exports = ImageAliasModel;

@@ -2,13 +2,9 @@ swagger: "2.0"
 info:
   version: "0.0.1"
   title: Authenticated LXD REST API
-# during dev, should point to your local machine
 host: 192.168.50.4:9000
-# basePath prefixes all resource paths 
 basePath: /v1
-# 
 schemes:
-  # tip: remove http to make production-grade
   - http
   - https
 securityDefinitions:
@@ -17,10 +13,8 @@ securityDefinitions:
     type: apiKey
     name: token
     in: query
-# format of bodies a client can send (Content-Type)
 consumes:
   - application/json
-# format of the responses to the client (Accepts)
 produces:
   - application/json
 paths:
@@ -40,9 +34,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/AuthResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -53,19 +45,16 @@ paths:
       security:
         - token: []
       description: Returns server information
-      # used as the method name of the controller
       operationId: getServerInfo
       responses:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/ServerInfoResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"            
+            $ref: "#/definitions/ErrorResponse"
   /containers/{name}:
     x-swagger-router-controller: containers
     post:
@@ -89,9 +78,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/CreateResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -117,9 +104,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/CreateResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -139,9 +124,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/ContainerResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -150,7 +133,6 @@ paths:
     x-swagger-router-controller: containers
     get:
       description: Returns a list of containers
-      # used as the method name of the controller
       operationId: getAllContainers
       security:
         - token: []
@@ -158,16 +140,13 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/ContainersResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
       description: Creates a new container
-      # used as the method name of the controller
       operationId: createContainer
       security:
         - token: []
@@ -182,9 +161,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/CreateResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -193,7 +170,6 @@ paths:
     x-swagger-router-controller: containers
     get:
       description: Returns a list of containers with extra information
-      # used as the method name of the controller
       operationId: getAllContainersWithDetails
       security:
         - token: []
@@ -201,9 +177,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/ContainersResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -212,7 +186,6 @@ paths:
     x-swagger-router-controller: profiles
     get:
       description: Returns a list of profiles
-      # used as the method name of the controller
       operationId: getAllProfiles
       security:
         - token: []
@@ -220,9 +193,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/ProfilesResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -231,7 +202,6 @@ paths:
     x-swagger-router-controller: profiles
     get:
       description: Returns a list of profiles with extra information.
-      # used as the method name of the controller
       operationId: getAllProfilesWithDetails
       security:
         - token: []
@@ -239,9 +209,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/ProfilesResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -250,7 +218,6 @@ paths:
     x-swagger-router-controller: images
     get:
       description: Returns a list of images.
-      # used as the method name of the controller
       operationId: getAllImages
       security:
         - token: []
@@ -258,14 +225,12 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/ImagesResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    post: 
+    post:
       description: Create a new image
       operationId: createImage
       security:
@@ -281,9 +246,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/CreateResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -313,8 +276,7 @@ paths:
   /images/remote/{name}:
     x-swagger-router-controller: images
     get:
-      description: Returns a list of remote images.
-      # used as the method name of the controller
+      description: Returns a list of remote images for a given server.
       operationId: getRemoteImages
       security:
         - token: []
@@ -328,9 +290,23 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/RemoteImagesResponse"
-        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /remote:
+    x-swagger-router-controller: servers
+    get:
+      description: Returns a list of remote image servers.
+      operationId: getServers
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ServersResponse"
         default:
           description: Error
           schema:
@@ -339,7 +315,6 @@ paths:
     x-swagger-router-controller: images
     get:
       description: Returns a list of images with extra information.
-      # used as the method name of the controller
       operationId: getAllImagesWithDetails
       security:
         - token: []
@@ -347,16 +322,14 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/ImagesResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
   /images/aliases:
     x-swagger-router-controller: images
-    post: 
+    post:
       description: Create a new alias
       operationId: createImageAlias
       security:
@@ -372,16 +345,13 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/CreateResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
     get:
       description: Returns a list of image aliases.
-      # used as the method name of the controller
       operationId: getAllImageAliases
       security:
         - token: []
@@ -389,16 +359,13 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/ImageAliasesResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"          
+            $ref: "#/definitions/ErrorResponse"
   /swagger.json:
     x-swagger-pipe: swagger_raw
-# complex objects have schema definitions
 definitions:
   UserModel:
     required:
@@ -425,7 +392,7 @@ definitions:
       target:
         type: string
         minLength: 1
-      name: 
+      name:
         type: string
         minLength: 1
   ContainerModel:
@@ -489,6 +456,12 @@ definitions:
       value:
         type: string
       label:
+        type: string
+  ServerModel:
+    required:
+      - name
+    properties:
+      name:
         type: string
   ImageCreateModel:
     required:
@@ -599,6 +572,14 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/RemoteImageModel"
+  ServersResponse:
+    required:
+      - servers
+    properties:
+      servers:
+        type: array
+        items:
+          $ref: "#/definitions/ServerModel"
   ImageAliasesResponse:
     required:
       - aliases

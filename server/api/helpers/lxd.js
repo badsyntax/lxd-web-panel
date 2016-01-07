@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 var lxd = require('lxd');
 var config = process.env;

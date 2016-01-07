@@ -131,6 +131,16 @@
       }
     }
   },
+  "ServerModel": {
+    "required": [
+      "name"
+    ],
+    "properties": {
+      "name": {
+        "type": "string"
+      }
+    }
+  },
   "ImageCreateModel": {
     "required": [
       "public",
