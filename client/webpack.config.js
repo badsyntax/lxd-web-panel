@@ -37,7 +37,10 @@ var config = {
       ],
       include: [
         modelsPath
-      ]
+      ],
+      query: {
+        presets: ['es2015']
+      }
     }, {
       test: /\.jsx?$/,
       loader: 'babel',
