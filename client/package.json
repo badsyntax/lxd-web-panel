@@ -16,8 +16,8 @@
     "dev": "npm run dev-server",
     "dev-server": "webpack-dev-server --devtool source-map --progress --inline --colors --hot --debug --display-error-details",
     "lint": "eslint --ext .js --ext .jsx ./src && echo No linting errors.",
+    "predev": "cd ../ && npm run generate-model-schema && cd client/",
     "prestart": "npm install",
-    "presync-models": "cd ../ && npm run generate-model-schema && cd client",
     "start": "NODE_ENV=development API_HOST=$npm_package_config_defaultAPIHost API_PORT=$npm_package_config_defaultAPIPort npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
