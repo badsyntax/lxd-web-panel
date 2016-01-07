@@ -4,19 +4,19 @@ import classNames from 'classnames';
 import { LOGSERVER_ENDPOINT } from '../../constants/AppConstants';
 
 const MAX_MESSAGES = 100;
-const SCROLL_LENIANCY = 10;
 const STATE_OPEN = true;
 const STATE_CLOSED = false;
+// const SCROLL_LENIANCY = 10;
 
 export default class LogViewer extends React.Component {
 
   state = {
     openState: STATE_CLOSED,
     messages: []
-  }
+  };
 
   constructor(...props) {
-    super(...props)
+    super(...props);
     this.shouldScrollList = true;
     this.initWebSocketConnection();
   }
@@ -65,21 +65,21 @@ export default class LogViewer extends React.Component {
         });
       }, Promise.resolve());
     });
-  }
+  };
 
-  onListScroll = (e) => {
+  onListScroll = () => {
     /*var list = this.refs.list;
     this.shouldScrollList = (
       list.scrollTop + list.clientHeight + SCROLL_LENIANCY >=
       list.scrollHeight
     );*/
-  }
+  };
 
-  onToggleButtonClick = (e) => {
+  onToggleButtonClick = () => {
     this.setState({
       openState: !this.state.openState
     });
-  }
+  };
 
   render() {
     let containerClassName = classNames({

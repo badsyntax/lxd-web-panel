@@ -49,7 +49,7 @@ export default class ContainerCreateForm extends React.Component {
     this.setState({
       formModel: formModel
     });
-  }
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ export default class ContainerCreateForm extends React.Component {
       showError: true
     });
     console.log('FORM MODEL', this.state.formModel);
-  }
+  };
 
   render() {
     return (

@@ -19,7 +19,7 @@ export default class Field extends React.Component {
 
   static contextTypes = {
     formModel: React.PropTypes.object.isRequired
-  }
+  };
 
   static defaultProps = {
     Input,

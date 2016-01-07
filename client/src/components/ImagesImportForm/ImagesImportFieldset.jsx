@@ -12,7 +12,7 @@ export default class ImagesImportFieldset extends React.Component {
 
   static contextTypes = {
     formModel: React.PropTypes.object.isRequired
-  }
+  };
 
   render() {
     return (

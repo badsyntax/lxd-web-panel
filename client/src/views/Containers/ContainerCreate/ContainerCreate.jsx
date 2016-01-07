@@ -14,8 +14,6 @@ import {
 
 export default class ContainerCreate extends React.Component {
 
-  static foo = 'bar';
-
   constructor(...props) {
     super(...props);
 
@@ -54,17 +52,17 @@ export default class ContainerCreate extends React.Component {
         break;
       default:
     }
-  }
+  };
 
   onProfilesStoreChange = () => {
     var profiles = ProfilesStore.getAll();
     this.setState({ profiles });
-  }
+  };
 
   onImagesStoreChange = () => {
     var images = ImagesStore.getAll();
     this.setState({ images });
-  }
+  };
 
   render() {
     return (

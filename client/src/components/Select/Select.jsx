@@ -11,18 +11,18 @@ export default class Select extends React.Component {
 
   static contextTypes = {
     formModel: React.PropTypes.object.isRequired
-  }
+  };
 
   hasOption = (option) => {
     return (this.props.value === option);
-  }
+  };
 
   onChange = (e) => {
     let value = e.target.value;
     let formModel = this.context.formModel;
     formModel.update(this.props.name, value);
     this.props.onChange(e);
-  }
+  };
 
   render() {
     try {

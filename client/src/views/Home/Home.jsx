@@ -2,9 +2,11 @@ import React from 'react';
 import WebAPI from '../../util/WebAPI';
 
 export default class Home extends React.Component {
+
   state = {
     serverinfo: {}
-  }
+  };
+
   componentWillMount() {
     WebAPI.getServerInfo()
     .then(function(response) {
@@ -17,6 +19,7 @@ export default class Home extends React.Component {
       }
     }.bind(this));
   }
+
   render() {
     return (
       <div className={'home'}>

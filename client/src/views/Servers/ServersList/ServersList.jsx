@@ -21,7 +21,7 @@ function getState() {
 
 export default class Servers extends React.Component {
 
-  state = getState()
+  state = getState();
 
   componentDidMount() {
     try {
@@ -66,15 +66,15 @@ export default class Servers extends React.Component {
         break;
       default:
     }
-  }
+  };
 
   onServersStoreChange = () => {
     this.setState(getState());
-  }
+  };
 
-  onDeleteButtonClick = (server, e) => {
+  onDeleteButtonClick = (server) => {
     server.delete();
-  }
+  };
 
   render() {
     try {
@@ -114,11 +114,11 @@ export default class Servers extends React.Component {
                     <tr key={'server-' + index}>
                       <td>{ server.getAlias() }</td>
                       <td>{ server.properties.description }</td>
-                      <td>{ server.sizeFriendly() }</td>
-                      <td>{ server.createdAtFriendly() }</td>
+                      <td>{ server.sizeFriendly }</td>
+                      <td>{ server.createdAtFriendly }</td>
                       <td>
                         <button className="btn btn-default btn-xs">Edit</button>
-                        <button className="btn btn-default btn-xs" onClick={this.onDeleteButtonClick.bind(this, image)}>Delete</button>
+                        <button className="btn btn-default btn-xs" onClick={this.onDeleteButtonClick.bind(this, server)}>Delete</button>
                       </td>
                     </tr>
                   );

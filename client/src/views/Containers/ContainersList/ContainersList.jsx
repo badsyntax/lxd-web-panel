@@ -13,7 +13,7 @@ function getState() {
 
 export default class ContainersList extends React.Component {
 
-  state = getState()
+  state = getState();
 
   componentDidMount() {
     ContainersStore.addChangeListener(this.onStoreChange);
@@ -26,7 +26,7 @@ export default class ContainersList extends React.Component {
 
   onStoreChange = () => {
     this.setState(getState());
-  }
+  };
 
   render() {
     let { containers } = this.state;

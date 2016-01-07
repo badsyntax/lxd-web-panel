@@ -25,18 +25,18 @@
   },
   "dependencies": {
     "bluebird": "^3.1.1",
-    "express": "^4.12.3",
-    "jsonwebtoken": "^5.4.1",
+    "express": "^4.13.3",
+    "jsonwebtoken": "^5.5.4",
     "lxd": "git://github.com/badsyntax/node-lxd.git#develop",
     "nodejs-websocket": "^1.4.1",
-    "swagger-express-mw": "^0.1.0"
+    "swagger-express-mw": "^0.6.0"
   },
   "devDependencies": {
     "asciiparse": "^0.1.1",
     "concurrently": "^1.0.0",
     "eslint": "^1.10.3",
-    "should": "^7.1.0",
-    "supertest": "^1.0.0",
+    "should": "^8.0.2",
+    "supertest": "^1.1.0",
     "sync-files": "^1.0.3"
   }
 }

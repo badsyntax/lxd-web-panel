@@ -6,11 +6,11 @@ export default class Form extends React.Component {
 
   static propTypes = {
     formModel: PropTypes.object.isRequired
-  }
+  };
 
   static childContextTypes = {
     formModel: PropTypes.object.isRequired
-  }
+  };
 
   getChildContext() {
     return {

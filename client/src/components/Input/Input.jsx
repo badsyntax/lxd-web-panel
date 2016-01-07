@@ -11,18 +11,18 @@ export default class Input extends React.Component {
   static defaultProps = {
     type: 'text',
     className: 'form-control'
-  }
+  };
 
   static contextTypes = {
     formModel: React.PropTypes.object.isRequired
-  }
+  };
 
   onChange = (e) => {
     let value = e.target.value;
     let formModel = this.context.formModel;
     formModel.update(this.props.name, value);
     this.props.onChange(e);
-  }
+  };
 
   render() {
 

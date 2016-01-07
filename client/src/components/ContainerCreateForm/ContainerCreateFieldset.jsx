@@ -13,7 +13,7 @@ export default class ContainerCreateFieldset extends React.Component {
 
   static contextTypes = {
     formModel: React.PropTypes.object.isRequired
-  }
+  };
 
   render() {
     return (

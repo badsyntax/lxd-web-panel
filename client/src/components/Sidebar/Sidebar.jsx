@@ -7,7 +7,7 @@ export default class Navbar extends React.Component {
 
   static propTypes = {
     pages: React.PropTypes.array.isRequired
-  }
+  };
 
   render() {
     return (

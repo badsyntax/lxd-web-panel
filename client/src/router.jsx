@@ -27,7 +27,7 @@ import Home from './views/Home/Home';
 
 import AuthStore from './stores/AuthStore';
 
-export default (props) => {
+export default () => {
   return (
     <Router>
       <Route component={App} path="/">

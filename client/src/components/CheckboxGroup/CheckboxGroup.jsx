@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 export default class CheckboxGroup extends React.Component {
 
+  state = {};
+
   static propTypes = {
     name: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired
@@ -11,13 +13,11 @@ export default class CheckboxGroup extends React.Component {
 
   static defaultProps = {
     className: 'form-control'
-  }
+  };
 
   static contextTypes = {
     formModel: React.PropTypes.object.isRequired
-  }
-
-  state = {}
+  };
 
   onChange = (e) => {
 
@@ -38,7 +38,7 @@ export default class CheckboxGroup extends React.Component {
     formModel.update(this.props.name, modelOptions);
 
     this.forceUpdate();
-  }
+  };
 
   hasOption(option) {
     let options = this.context.formModel[this.props.name];

@@ -6,7 +6,7 @@ export default class SignIFieldset extends React.Component {
   static propTypes = {
     disabled: PropTypes.bool,
     showErrors: PropTypes.bool
-  }
+  };
 
   render() {
     return (

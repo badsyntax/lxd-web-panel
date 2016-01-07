@@ -25,6 +25,7 @@ var config = {
   entry: entries,
   output: {
     path: path.resolve(pkg.config.buildPath),
+    pathinfo: true,
     filename: '[name].js',
     publicPath: '/'
   },

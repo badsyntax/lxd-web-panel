@@ -29,7 +29,7 @@ export default class Profiles extends React.Component {
   onChange = () => {
     var state = getState();
     this.setState(state);
-  }
+  };
 
   render() {
     let { profiles } = this.state;

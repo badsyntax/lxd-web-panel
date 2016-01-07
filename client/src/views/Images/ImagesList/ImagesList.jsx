@@ -21,7 +21,7 @@ function getState() {
 
 export default class ImagesList extends React.Component {
 
-  state = getState()
+  state = getState();
 
   componentDidMount() {
     try {
@@ -62,15 +62,15 @@ export default class ImagesList extends React.Component {
         break;
       default:
     }
-  }
+  };
 
   onImageStoreChange = () => {
     this.setState(getState());
-  }
+  };
 
-  onDeleteButtonClick = (image, e) => {
+  onDeleteButtonClick = (image) => {
     image.delete();
-  }
+  };
 
   render() {
     try {

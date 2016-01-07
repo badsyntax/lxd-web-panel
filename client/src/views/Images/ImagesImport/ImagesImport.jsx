@@ -50,12 +50,12 @@ export default class ImagesImport extends React.Component {
         break;
       default:
     }
-  }
+  };
 
   onRemoteImagesStoreChange = () => {
     var remoteImages = RemoteImagesStore.getAll();
     this.setState({ remoteImages });
-  }
+  };
 
   render() {
     return (

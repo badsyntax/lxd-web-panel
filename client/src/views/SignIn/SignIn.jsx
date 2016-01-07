@@ -15,7 +15,7 @@ import {
 
 export default class SignIn extends React.Component {
 
-  state = {}
+  state = {};
 
   static contextTypes = {
     location: PropTypes.object,
@@ -56,7 +56,7 @@ export default class SignIn extends React.Component {
         break;
       default:
     }
-  }
+  };
 
   onSubmit = (e, formModel) => {
     e.preventDefault();
@@ -70,7 +70,7 @@ export default class SignIn extends React.Component {
         hasError: true
       });
     }
-  }
+  };
 
   render() {
     return (

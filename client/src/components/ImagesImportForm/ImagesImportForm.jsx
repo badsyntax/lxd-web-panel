@@ -77,13 +77,13 @@ export default class ImagesImportForm extends React.Component {
         break;
       default:
     }
-  }
+  };
 
   onFormModelChange = (formModel) => {
     this.setState({
       formModel: formModel
     });
-  }
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -97,7 +97,7 @@ export default class ImagesImportForm extends React.Component {
     if (formModel.isValid()) {
       AppActions.importImage(formModel);
     }
-  }
+  };
 
   onImageChange = (e) => {
     var alias = e.target.value;
@@ -108,7 +108,7 @@ export default class ImagesImportForm extends React.Component {
     this.setState({
       formModel: formModel
     });
-  }
+  };
 
   render() {
     try {

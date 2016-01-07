@@ -14,7 +14,7 @@ export default class SignInForm extends React.Component {
     disabled: PropTypes.bool,
     error: PropTypes.bool,
     onSubmit: PropTypes.func
-  }
+  };
 
   constructor(...props) {
     super(...props);
@@ -35,11 +35,11 @@ export default class SignInForm extends React.Component {
     this.setState({
       formModel: formModel
     });
-  }
+  };
 
   onSubmit = (e) => {
     this.props.onSubmit(e, this.state.formModel);
-  }
+  };
 
   render() {
     let error = this.props.error ? (
