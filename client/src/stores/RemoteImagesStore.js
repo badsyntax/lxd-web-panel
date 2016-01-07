@@ -1,25 +1,25 @@
 
 import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import RemoteImageModel from '../../../models/RemoteImage';
+import RemoteImageModel from '../models/RemoteImageModel';
 
 import {
-  REMOTE_IMAGES__UPDATED,
-  REMOTE_IMAGES__GET_SUCCESS
+  REMOTE_SERVERS__UPDATED,
+  REMOTE_SERVERS__GET_SUCCESS
 } from '../constants/AppConstants';
 
 class RemoteImagesStore extends BaseStore {
 
   emitChange() {
-    this.emit(REMOTE_IMAGES__UPDATED);
+    this.emit(REMOTE_SERVERS__UPDATED);
   }
 
   addChangeListener(callback) {
-    this.on(REMOTE_IMAGES__UPDATED, callback);
+    this.on(REMOTE_SERVERS__UPDATED, callback);
   }
 
   removeChangeListener(callback) {
-    this.removeListener(REMOTE_IMAGES__UPDATED, callback);
+    this.removeListener(REMOTE_SERVERS__UPDATED, callback);
   }
 
   set(image) {
@@ -35,7 +35,7 @@ let store = new RemoteImagesStore();
 
 AppDispatcher.register((action) => {
   switch(action.actionType) {
-    case REMOTE_IMAGES__GET_SUCCESS:
+    case REMOTE_SERVERS__GET_SUCCESS:
       store.setAll(action.images);
       break;
     default:

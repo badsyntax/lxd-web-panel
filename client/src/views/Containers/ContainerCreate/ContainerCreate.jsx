@@ -1,16 +1,16 @@
 import './ContainerCreate.scss';
 import React from 'react';
-import ProfilesStore from '../../stores/ProfilesStore';
-import ImagesStore from '../../stores/ImagesStore';
-import AppActions from '../../actions/AppActions';
-import AppDispatcher from '../../dispatcher/AppDispatcher';
+import ProfilesStore from '../../../stores/ProfilesStore';
+import ImagesStore from '../../../stores/ImagesStore';
+import AppActions from '../../../actions/AppActions';
+import AppDispatcher from '../../../dispatcher/AppDispatcher';
 
-import Alert from '../../components/Alert/Alert';
-import ContainerCreateForm from '../../components/ContainerCreateForm/ContainerCreateForm';
+import Alert from '../../../components/Alert/Alert';
+import ContainerCreateForm from '../../../components/ContainerCreateForm/ContainerCreateForm';
 
 import {
   IMAGES__GET_END
-} from '../../constants/AppConstants';
+} from '../../../constants/AppConstants';
 
 export default class ContainerCreate extends React.Component {
 

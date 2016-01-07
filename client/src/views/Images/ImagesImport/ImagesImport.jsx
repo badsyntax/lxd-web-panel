@@ -1,14 +1,14 @@
 import './ImagesImport.scss';
 import React from 'react';
-import RemoteImagesStore from '../../stores/RemoteImagesStore';
-import AppActions from '../../actions/AppActions';
-import AppDispatcher from '../../dispatcher/AppDispatcher';
+import RemoteImagesStore from '../../../stores/RemoteImagesStore';
+import AppActions from '../../../actions/AppActions';
+import AppDispatcher from '../../../dispatcher/AppDispatcher';
 
-import ImagesImportForm from '../../components/ImagesImportForm/ImagesImportForm';
+import ImagesImportForm from '../../../components/ImagesImportForm/ImagesImportForm';
 
 import {
   IMAGES__GET_END
-} from '../../constants/AppConstants';
+} from '../../../constants/AppConstants';
 
 export default class ImagesImport extends React.Component {
 

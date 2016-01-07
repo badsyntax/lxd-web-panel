@@ -35,6 +35,11 @@ import {
   REMOTE_IMAGES__GET_SUCCESS,
   REMOTE_IMAGES__GET_ERROR,
 
+  SERVERS__GET_START,
+  SERVERS__GET_END,
+  SERVERS__GET_SUCCESS,
+  SERVERS__GET_ERROR,
+
   AUTHENTICATE__SUCCESS,
   AUTHENTICATE__ERROR,
   AUTHENTICATE__START,
@@ -123,6 +128,20 @@ export default {
       dispatchAction(REMOTE_IMAGES__GET_ERROR, { error: e });
     })
     .finally(() => dispatchAction(REMOTE_IMAGES__GET_END));
+  },
+
+  getServers() {
+    dispatchAction(SERVERS__GET_START);
+    WebAPI.getServers()
+    .then((response) => {
+      if (response.servers) {
+        dispatchAction(SERVERS__GET_SUCCESS, response);
+      }
+    })
+    .catch((e) => {
+      dispatchAction(SERVERS__GET_ERROR, { error: e });
+    })
+    .finally(() => dispatchAction(SERVERS__GET_END));
   },
 
   createImage(imageCreateModel) {

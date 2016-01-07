@@ -24,7 +24,7 @@ export default class SignInForm extends React.Component {
       password: 'foo'
     };
 
-    var formModel = new UserModel(initialData, null, this.onChange);
+    let formModel = new UserModel(initialData, null, this.onChange);
     formModel.setRequired('username', true);
     formModel.setRequired('password', true);
 
@@ -42,7 +42,7 @@ export default class SignInForm extends React.Component {
   }
 
   render() {
-    var error = this.props.error ? (
+    let error = this.props.error ? (
       <Alert
         message="Sorry, there was an error signing you in. Please try again."
         type="danger"

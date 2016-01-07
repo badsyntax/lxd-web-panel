@@ -1,17 +1,17 @@
 import './ImagesList.scss';
 import React from 'react';
 import { Link } from 'react-router';
-import ImagesStore from '../../stores/ImagesStore';
-import AppActions from '../../actions/AppActions';
-import AppDispatcher from '../../dispatcher/AppDispatcher';
-import Alert from '../../components/Alert/Alert';
+import ImagesStore from '../../../stores/ImagesStore';
+import AppActions from '../../../actions/AppActions';
+import AppDispatcher from '../../../dispatcher/AppDispatcher';
+import Alert from '../../../components/Alert/Alert';
 
 import {
   IMAGE_DELETE__START,
   IMAGE_DELETE__END,
   IMAGE_DELETE__SUCCESS,
   IMAGE_DELETE__ERROR
-} from '../../constants/AppConstants';
+} from '../../../constants/AppConstants';
 
 function getState() {
   return {
@@ -19,7 +19,7 @@ function getState() {
   };
 }
 
-export default class Images extends React.Component {
+export default class ImagesList extends React.Component {
 
   state = getState()
 

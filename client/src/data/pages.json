@@ -16,8 +16,8 @@
     "label": "Images"
   },
   {
-    "path": "remote-servers",
-    "label": "Remote Servers"
+    "path": "servers",
+    "label": "Servers"
   },
   {
     "path": "config",

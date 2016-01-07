@@ -50,6 +50,12 @@ class API {
     });
   }
 
+  getServers() {
+    return getJson({
+      action: 'remote'
+    });
+  }
+
   createImage(data) {
     return postJson({
       action: 'images'
