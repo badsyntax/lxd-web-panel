@@ -16,7 +16,7 @@
   "scripts": {
     "edit": "swagger project edit .",
     "lint": "eslint --ext .js . && echo No linting errors.",
-    "prestart-dev-server": "cd ../ && npm run generate-model-schema && cd server/api && ln -sf ../../models/",
+    "prestart-dev-server": "cd ../ && npm run generate-model-schema && cd server/api",
     "start": "sudo ./start-dev-server.sh",
     "start-dev-server": "PORT=$npm_package_config_devPort HOST=$npm_package_config_devHost node ./app",
     "start-log-server": "PORT=$npm_package_config_logServerPort HOST=$npm_package_config_logServerHost node logserver",

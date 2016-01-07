@@ -3,6 +3,7 @@
 var Promise = require('bluebird');
 var helpers = require('../helpers');
 var lxdClient = helpers.lxd;
+
 var ProfileModel = require('../models/Profile');
 
 module.exports = {
