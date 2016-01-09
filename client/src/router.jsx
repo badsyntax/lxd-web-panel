@@ -7,19 +7,23 @@ import {
 } from 'react-router';
 
 import App from './views/App/App';
+
 import Containers from './views/Containers/Containers';
 import ContainerCreate from './views/Containers/ContainerCreate/ContainerCreate';
 import ContainersList from './views/Containers/ContainersList/ContainersList';
+
 import Profiles from './views/Profiles/Profiles';
 import ProfilesList from './views/Profiles/ProfilesList/ProfilesList';
+
 import Images from './views/Images/Images';
 import ImagesList from './views/Images/ImagesList/ImagesList';
 import ImagesImport from './views/Images/ImagesImport/ImagesImport';
 
-import Config from './views/Config/Config';
-import Users from './views/Users/Users';
 import Servers from './views/Servers/Servers';
 import ServersList from './views/Servers/ServersList/ServersList';
+
+import Config from './views/Config/Config';
+import Users from './views/Users/Users';
 import UserInterface from './views/UserInterface/UserInterface';
 import SignIn from './views/SignIn/SignIn';
 import SignOut from './views/SignOut/SignOut';

@@ -33,13 +33,6 @@ class RemoteImagesStore extends BaseStore {
 
 let store = new RemoteImagesStore();
 
-AppDispatcher.register((action) => {
-  switch(action.actionType) {
-    case REMOTE_SERVERS__GET_SUCCESS:
-      store.setAll(action.images);
-      break;
-    default:
-  }
-});
+AppDispatcher.on(REMOTE_SERVERS__GET_SUCCESS, (action) => store.setAll(action.images));
 
 export default store;

@@ -19,7 +19,8 @@ export default class Profiles extends React.Component {
 
   componentDidMount() {
     ProfilesStore.addChangeListener(this.onChange);
-    AppActions.getProfiles();
+
+    AppActions.async([AppActions.getProfiles]);
   }
 
   componentWillUnmount() {
@@ -33,11 +34,15 @@ export default class Profiles extends React.Component {
 
   render() {
     let { profiles } = this.state;
+    try {
     return (
       <div className={'profiles-list'}>
         { profiles.length ? getTable(profiles) : getAlert() }
       </div>
     );
+  } catch(e) {
+    alert(e);
+  }
 
     function getTable(profiles) {
       return (
@@ -56,7 +61,7 @@ export default class Profiles extends React.Component {
                 return (
                   <tr key={'profile-' + index}>
                     <td>{ profile.name }</td>
-                    <td>{ profile.getFriendlyDevices() }</td>
+                    <td>{ profile.friendlyDevices }</td>
                     <td>
                       <button className="btn btn-default btn-xs">Edit</button>
                       <button className="btn btn-default btn-xs">Delete</button>

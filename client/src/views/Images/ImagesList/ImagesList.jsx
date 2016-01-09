@@ -25,7 +25,15 @@ export default class ImagesList extends React.Component {
 
   componentDidMount() {
     try {
-      this.actionHandler = AppDispatcher.register(this.onAction);
+
+      this.actionHandlers = {
+        IMAGE_DELETE__END:     this.onImageDeleteEnd,
+        IMAGE_DELETE__ERROR:   this.onImageDeleteError,
+        IMAGE_DELETE__START:   this.onImageDeleteStart,
+        IMAGE_DELETE__SUCCESS: this.onImageDeleteSuccess,
+      };
+
+      AppDispatcher.on(this.actionHandlers);
       ImagesStore.addChangeListener(this.onImageStoreChange);
       AppActions.async([AppActions.getImages]);
     } catch(e) {
@@ -35,33 +43,31 @@ export default class ImagesList extends React.Component {
 
   componentWillUnmount() {
     ImagesStore.removeChangeListener(this.onImageStoreChange);
-    AppDispatcher.unregister(this.actionHandler);
-  }
+    AppDispatcher.off(this.actionHandlers);
+  };
 
-  onAction = (action) => {
-    switch(action.actionType) {
-      case IMAGE_DELETE__ERROR:
-        this.setState({
-          hasError: true
-        });
-        alert('Error deleting the image');
-        break;
-      case IMAGE_DELETE__SUCCESS:
-        AppActions.async([AppActions.getImages]);
-        break;
-      case IMAGE_DELETE__START:
-        this.setState({
-          hasError: false,
-          isImageDeleting: true
-        });
-        break;
-      case IMAGE_DELETE__END:
-        this.setState({
-          isImageDeleting: false
-        });
-        break;
-      default:
-    }
+  onImageDeleteError = () => {
+    this.setState({
+      hasError: true
+    });
+    alert('Error deleting the image');
+  };
+
+  onImageDeleteSuccess = () => {
+    AppActions.async([AppActions.getImages]);
+  };
+
+  onImageDeleteStart = () => {
+    this.setState({
+      hasError: false,
+      isImageDeleting: true
+    });
+  };
+
+  onImageDeleteEnd = () => {
+    this.setState({
+      isImageDeleting: false
+    });
   };
 
   onImageStoreChange = () => {

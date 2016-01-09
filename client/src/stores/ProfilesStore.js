@@ -32,14 +32,6 @@ class ProfilesStore extends BaseStore {
 
 let store = new ProfilesStore();
 
-AppDispatcher.register((action) => {
-  switch(action.actionType) {
-    case PROFILES__GET_SUCCESS:
-      store.setAll(action.profiles);
-      break;
-    default:
-      break;
-  }
-});
+AppDispatcher.on(PROFILES__GET_SUCCESS, (action) => store.setAll(action.profiles));
 
 export default store;

@@ -41,13 +41,6 @@ class AuthStore extends BaseStore {
 
 let store = new AuthStore();
 
-AppDispatcher.register((action) => {
-  switch(action.actionType) {
-    case AUTHENTICATE__SUCCESS:
-      store.setToken(action.token);
-      break;
-    default:
-  }
-});
+AppDispatcher.on(AUTHENTICATE__SUCCESS, (action) => store.setToken(action.token));
 
 export default store;

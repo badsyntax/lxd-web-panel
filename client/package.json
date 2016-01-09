@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "npm run dev-server",
-    "dev-server": "webpack-dev-server --devtool eval --progress --inline --colors --hot --profile --json",
+    "dev-server": "webpack-dev-server --devtool eval --progress --inline --colors --hot",
     "lint": "eslint --ext .js --ext .jsx ./src && echo No linting errors.",
     "predev": "cd ../ && npm run generate-model-schema && cd client/",
     "prestart": "npm install",

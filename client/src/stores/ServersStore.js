@@ -33,13 +33,6 @@ class ServersStore extends BaseStore {
 
 let store = new ServersStore();
 
-AppDispatcher.register((action) => {
-  switch(action.actionType) {
-    case SERVERS__GET_SUCCESS:
-      store.setAll(action.images);
-      break;
-    default:
-  }
-});
+AppDispatcher.on(SERVERS__GET_SUCCESS, (action) => store.setAll(action.images));
 
 export default store;

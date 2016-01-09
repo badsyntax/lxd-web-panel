@@ -32,13 +32,6 @@ class ImagesStore extends BaseStore {
 
 let store = new ImagesStore();
 
-AppDispatcher.register((action) => {
-  switch(action.actionType) {
-    case IMAGES__GET_SUCCESS:
-      store.setAll(action.images);
-      break;
-    default:
-  }
-});
+AppDispatcher.on(IMAGES__GET_SUCCESS, (action) => store.setAll(action.images));
 
 export default store;

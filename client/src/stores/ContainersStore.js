@@ -32,13 +32,6 @@ class ContainerStore extends BaseStore {
 
 let store = new ContainerStore();
 
-AppDispatcher.register((action) => {
-  switch(action.actionType) {
-    case CONTAINERS__GET_SUCCESS:
-      store.setAll(action.containers);
-      break;
-    default:
-  }
-});
+AppDispatcher.on(CONTAINERS__GET_SUCCESS, (action) => store.setAll(action.containers));
 
 export default store;
