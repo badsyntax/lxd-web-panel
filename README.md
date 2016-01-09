@@ -1,9 +1,16 @@
 # lxd-web-panel
 A web panel for LXD
 
-## Starting the API server
+## Running the app for development
 
-Ensure you have Vagrant installed.
+### Overview
+
+* Run the API server in a Vagrant/VirtualBox virtual machine
+* Run the client on your host machine (OSX)
+
+### Starting the API server
+
+Ensure you have Vagrant and VirtualBox installed.
 
 On your development machine:
 
@@ -11,11 +18,11 @@ On your development machine:
 cd ./server
 vagrant up
 vagrant ssh
-cd /vagrant
+cd /vagrant/server
 sudo npm start
 ```
 
-Navigate to http://192.168.50.4:9000
+The API server will be running at: http://192.168.50.4:9000
 
 ## Start the API client:
 
@@ -26,8 +33,4 @@ cd ./client
 npm start
 ```
 
-Navigate to http://localhost:3000
-
-## TODO
-
-Codegen swagger models
+Navigate to http://localhost:3000/bundle
