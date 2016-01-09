@@ -8,6 +8,8 @@ export const LOGSERVER_ENDPOINT = 'ws://192.168.50.4:8080/';
 export const DEBUG = (process.env.NODE_ENV !== 'production');
 export const APP__TITLE = pkg.name;
 
+export const DEFAULT_SERVER_URL = 'images.linuxcontainers.org';
+
 export const AUTHENTICATE__ERROR = 'AUTHENTICATE__ERROR';
 export const AUTHENTICATE__START = 'AUTHENTICATE__START';
 export const AUTHENTICATE__END = 'AUTHENTICATE__END';
@@ -61,6 +63,11 @@ export const SERVERS__GET_END = 'SERVERS__GET_END';
 export const SERVERS__GET_SUCCESS = 'SERVERS__GET_SUCCESS';
 export const SERVERS__GET_ERROR = 'SERVERS__GET_ERROR';
 export const SERVERS__UPDATED = 'SERVERS__UPDATED';
+
+export const SERVER_ADD__ERROR = 'SERVER_ADD__ERROR';
+export const SERVER_ADD__START = 'SERVER_ADD__START';
+export const SERVER_ADD__END = 'SERVER_ADD__END';
+export const SERVER_ADD__SUCCESS = 'SERVER_ADD__SUCCESS';
 
 export const REMOTE_IMAGES__GET_START = 'REMOTE_IMAGES__GET_START';
 export const REMOTE_IMAGES__GET_END = 'REMOTE_IMAGES__GET_END';

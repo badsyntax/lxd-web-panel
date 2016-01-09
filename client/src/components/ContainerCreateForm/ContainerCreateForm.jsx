@@ -36,7 +36,6 @@ export default class ContainerCreateForm extends React.Component {
 
     let formModel = new ContainerModel(
       initialData,
-      null,
       this.onFormModelChange
     );
 

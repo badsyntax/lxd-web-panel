@@ -23,6 +23,7 @@ import ImagesImport from './views/Images/ImagesImport/ImagesImport';
 
 import Servers from './views/Servers/Servers';
 import ServersList from './views/Servers/ServersList/ServersList';
+import ServersAdd from './views/Servers/ServersAdd/ServersAdd';
 
 import Config from './views/Config/Config';
 import Users from './views/Users/Users';
@@ -56,6 +57,7 @@ export default () => {
         <Route component={Servers} onEnter={requireAuth} path="/servers">
           <IndexRoute component={ServersList} />
           <Route component={ServersList} path="/servers/list" />
+          <Route component={ServersAdd} path="/servers/add" />
         </Route>
         <Route component={Config} onEnter={requireAuth} path="/config" />
         <Route component={Users} onEnter={requireAuth} path="/users" />

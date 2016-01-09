@@ -12,6 +12,7 @@ import {
 class ServersStore extends BaseStore {
 
   emitChange() {
+    console.log('EMIT CHANGe');
     this.emit(SERVERS__UPDATED);
   }
 
@@ -23,17 +24,17 @@ class ServersStore extends BaseStore {
     this.removeListener(SERVERS__UPDATED, callback);
   }
 
-  set(image) {
-    super.set(new ServerModel(image));
+  set(server) {
+    super.set(new ServerModel(server));
   }
 
-  setAll(images) {
-    super.setAll(images.map((image) => new ServerModel(image)));
+  setAll(servers) {
+    super.setAll(servers.map((server) => new ServerModel(server)));
   }
 }
 
 let store = new ServersStore();
 
-AppDispatcher.on(SERVERS__GET_SUCCESS, (action) => store.setAll(action.images));
+AppDispatcher.on(SERVERS__GET_SUCCESS, (action) => store.setAll(action.servers));
 
 export default store;

@@ -156,11 +156,21 @@
   },
   "ServerModel": {
     "required": [
-      "name"
+      "name",
+      "url",
+      "public"
     ],
     "properties": {
       "name": {
-        "type": "string"
+        "type": "string",
+        "minLength": 1
+      },
+      "url": {
+        "type": "string",
+        "minLength": 1
+      },
+      "public": {
+        "type": "boolean"
       }
     }
   },

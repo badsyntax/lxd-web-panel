@@ -1,30 +1,30 @@
 'use strict';
 
-import './ImagesImportForm.scss';
+import './ServersAddForm.scss';
 import React, { PropTypes } from 'react';
-import ImagesImportFieldset from './ImagesImportFieldset';
+import ServersAddFieldset from './ServersAddFieldset';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
 import AppActions from '../../actions/AppActions';
+import { DEFAULT_SERVER_URL } from '../../constants/AppConstants';
 
-import ImageImportModel from '../../models/ImageImportModel';
+import ServerModel from '../../models/ServerModel';
 
 import Alert from '../Alert/Alert';
 import Form from '../Form/Form';
 
 import {
-  IMAGE_IMPORT__SUCCESS,
-  IMAGE_IMPORT__ERROR,
-  IMAGE_IMPORT__START,
-  IMAGE_IMPORT__END
+  SERVER_ADD__SUCCESS,
+  SERVER_ADD__ERROR,
+  SERVER_ADD__START,
+  SERVER_ADD__END
 } from '../../constants/AppConstants';
 
-export default class ImagesImportForm extends React.Component {
+export default class ServersAddForm extends React.Component {
 
   static propTypes = {
     disabled: PropTypes.bool,
     error: PropTypes.bool,
-    onSubmit: PropTypes.func,
-    remoteImages: PropTypes.array.isRequired,
+    onSubmit: PropTypes.func
   };
 
   static contextTypes = {
@@ -36,20 +36,18 @@ export default class ImagesImportForm extends React.Component {
     super(...props);
 
     this.dispatchToken = AppDispatcher.register(this.onAction);
+  }
+
+  componentWillMount() {
 
     var initialData = {
-      public: false,
-      localAlias: '',
-      remoteAlias: '',
-      description: '',
-      server: 'https://images.linuxcontainers.org'
+      name: 'images',
+      url: DEFAULT_SERVER_URL
     };
 
-    var formModel = new ImageImportModel(initialData, this.onFormModelChange);
+    var formModel = new ServerModel(initialData, this.onFormModelChange);
 
-    this.state = {
-      formModel
-    };
+    this.setState({ formModel });
   }
 
   componentWillUnmount() {
@@ -58,21 +56,21 @@ export default class ImagesImportForm extends React.Component {
 
   onAction = (action) => {
     switch(action.actionType) {
-      case IMAGE_IMPORT__ERROR:
+      case SERVER_ADD__ERROR:
         this.setState({
           hasError: true
         });
         break;
-      case IMAGE_IMPORT__SUCCESS:
-        this.context.history.pushState(null, '/images');
+      case SERVER_ADD__SUCCESS:
+        this.context.history.pushState(null, '/servers');
         break;
-      case IMAGE_IMPORT__START:
+      case SERVER_ADD__START:
         this.setState({
           hasError: false,
           isFormLoading: true
         });
         break;
-      case IMAGE_IMPORT__END:
+      case SERVER_ADD__END:
         this.setState({
           isFormLoading: false
         });
@@ -97,26 +95,15 @@ export default class ImagesImportForm extends React.Component {
     });
 
     if (formModel.isValid()) {
-      AppActions.importImage(formModel);
+      AppActions.addServer(formModel);
     }
-  };
-
-  onImageChange = (e) => {
-    var alias = e.target.value;
-    var description = e.target.options[e.target.selectedIndex].innerHTML.trim();
-    var formModel = this.state.formModel;
-    formModel.update('localAlias', alias);
-    formModel.update('description', description);
-    this.setState({
-      formModel: formModel
-    });
   };
 
   render() {
     try {
       return (
         <div className="images-import-form">
-          { this.state.showError ? (
+          { this.state.hasError ? (
             <Alert
               message="There was an error submitting the form. Please correct the errors below."
               type="danger"
@@ -128,11 +115,9 @@ export default class ImagesImportForm extends React.Component {
             formModel={this.state.formModel}
             onSubmit={this.onSubmit}
           >
-            <ImagesImportFieldset
-              remoteImages={this.props.remoteImages}
+            <ServersAddFieldset
               disabled={this.props.disabled}
               showErrors={this.state.hasError}
-              onImageChange={this.onImageChange}
             />
           </Form>
         </div>

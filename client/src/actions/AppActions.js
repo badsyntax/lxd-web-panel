@@ -40,6 +40,11 @@ import {
   SERVERS__GET_SUCCESS,
   SERVERS__GET_ERROR,
 
+  SERVER_ADD__START,
+  SERVER_ADD__END,
+  SERVER_ADD__SUCCESS,
+  SERVER_ADD__ERROR,
+
   AUTHENTICATE__SUCCESS,
   AUTHENTICATE__ERROR,
   AUTHENTICATE__START,
@@ -191,5 +196,22 @@ export default {
       dispatchAction(IMAGE_IMPORT__ERROR, { error: e });
     })
     .finally(() => dispatchAction(IMAGE_IMPORT__END));
+  },
+
+  addServer(serverModel) {
+
+    let data = serverModel.get();
+
+    dispatchAction(SERVER_ADD__START);
+    WebAPI.addServer(data)
+    .then((response) => {
+      if (response.message) {
+        dispatchAction(SERVER_ADD__SUCCESS, response);
+      }
+    })
+    .catch((e) => {
+      dispatchAction(SERVER_ADD__ERROR, { error: e });
+    })
+    .finally(() => dispatchAction(SERVER_ADD__END));
   }
 };

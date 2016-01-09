@@ -1,10 +1,18 @@
 /* forms.scss */
 
+@import "toolkit";
+
 legend {
   &.control-label {
     @extend label;
     border: 0;
     font-size: inherit;
+  }
+}
+
+form {
+  .help-block {
+    @include fadeIn(0.5s);
   }
 }
 

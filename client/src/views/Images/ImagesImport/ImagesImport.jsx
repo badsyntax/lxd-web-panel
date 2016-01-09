@@ -61,7 +61,7 @@ export default class ImagesImport extends React.Component {
 
   render() {
     return (
-      <div className={'container-creae'}>
+      <div className={'images-import'}>
         <h2 className="sub-header">
           Import image
         </h2>

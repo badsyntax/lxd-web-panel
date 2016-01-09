@@ -12,6 +12,10 @@ import SignInFieldset from './SignInFieldset';
 
 export default class SignInForm extends React.Component {
 
+  state = {
+    formModel: null
+  };
+
   static propTypes = {
     disabled: PropTypes.bool,
     error: PropTypes.bool,
@@ -20,17 +24,6 @@ export default class SignInForm extends React.Component {
 
   constructor(...props) {
     super(...props);
-
-    let initialData = {
-      username: 'rich',
-      password: 'foo'
-    };
-
-    let formModel = new UserModel(initialData, null, this.onChange);
-    formModel.setRequired('username', true);
-    formModel.setRequired('password', true);
-
-    this.state = { formModel };
   }
 
   onChange = (formModel) => {
@@ -42,6 +35,20 @@ export default class SignInForm extends React.Component {
   onSubmit = (e) => {
     this.props.onSubmit(e, this.state.formModel);
   };
+
+  componentWillMount() {
+
+    let initialData = {
+      username: 'rich',
+      password: 'foo'
+    };
+
+    let formModel = new UserModel(initialData, this.onChange);
+    formModel.setRequired('username', true);
+    formModel.setRequired('password', true);
+
+    this.setState({ formModel });
+  }
 
   render() {
     let error = this.props.error ? (

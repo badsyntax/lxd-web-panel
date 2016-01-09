@@ -5,13 +5,10 @@
     "es6": true
   },
   "ecmaFeatures": {
-    "modules": true,
-    "jsx": true
+    "modules": true
   },
-  "globals": {
-  },
-  "plugins": [
-  ],
+  "globals": {},
+  "plugins": [],
   "rules": {
     "strict": [
       1,
@@ -20,16 +17,27 @@
     "indent": [
       2,
       2,
-      {"SwitchCase": 1}
+      {
+        "SwitchCase": 1
+      }
     ],
     "quotes": [
       2,
       "single"
     ],
-    "semi": [2, "always"],
+    "semi": [
+      2,
+      "always"
+    ],
     "no-alert": 0,
     "no-undef": 2,
     "no-underscore-dangle": 0,
-    "no-unused-vars": [2, {"vars": "all", "args": "after-used"}]
+    "no-unused-vars": [
+      2,
+      {
+        "vars": "all",
+        "args": "after-used"
+      }
+    ]
   }
 }

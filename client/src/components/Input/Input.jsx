@@ -22,8 +22,7 @@ export default class Input extends React.Component {
   onChange = (e) => {
     let value = e.target.value;
     let formModel = this.context.formModel;
-    formModel.update(this.props.name, value);
-    this.props.onChange(e);
+    formModel.set(this.props.name, value);
   };
 
   render() {
@@ -41,6 +40,7 @@ export default class Input extends React.Component {
       <input
         className={props.className}
         type={props.type}
+        placeholder={props.placeholder}
         value={value}
         onChange={this.onChange}
       />

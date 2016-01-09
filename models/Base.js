@@ -26,21 +26,37 @@ class BaseModel {
     );
 
     this.onChange = onChange || _noop;
+    this.createDefaultData();
     this.setData(data || {});
   }
 
-  setData(data) {
-    Object.keys(data).forEach((key) => {
-      this.set(key, data[key]);
+  createDefaultData() {
+    Array.from(_keys.get(this)).forEach((key) => {
+      if (key in this) { return; }
+      let keyDef = _schema.get(this).properties[key];
+      switch(keyDef.type) {
+        case 'string':  this.set(key, ''); break;
+        case 'object':  this.set(key, {}); break;
+        case 'boolean': this.set(key, null); break;
+      }
     });
+  }
+
+  setData(data) {
+    Object.keys(data).forEach((key) => this.set(key, data[key]));
     this.validate();
   }
 
   set(key, value) {
-    if (!_keys.get(this).has(key)) {
+
+    if (typeof key === 'object') {
+      this.setData(key);
+    } else if (!_keys.get(this).has(key)) {
       throw new Error('Trying to set a property that has not been defined in schema (' + key + ')');
+    } else {
+      this[key] = value;
     }
-    this[key] = value;
+
     this.validate();
     this.onChange(this);
   }

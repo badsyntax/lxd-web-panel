@@ -6,7 +6,8 @@ var spawn = require('child_process').spawn;
 
 module.exports = {
   getRemoteImages,
-  getServers
+  getServers,
+  addServer
 };
 
 function getServers(resolve, reject) {
@@ -44,6 +45,14 @@ function getRemoteImages(serverName) {
     .then(resolve)
     .catch(reject);
   });
+}
+
+function addServer(data) {
+  return new Promise((resolve, reject) => {
+    handleProcess('lxc', [ 'remote', 'add', data.name, data.url ])
+    .then(resolve)
+    .catch(reject);
+  })
 }
 
 function handleProcess(command, args) {
@@ -87,13 +96,19 @@ function getSanitizedModel(data) {
   return model;
 }
 
+function makeBool(field) {
+  return ((field || '').toLowerCase() === 'yes');
+}
+
 function ServerModel(server) {
-  return getSanitizedModel(server);
+  var model = getSanitizedModel(server);
+  model.public = makeBool(module.public);
+  return model;
 }
 
 function ImageModel(image) {
   var model = getSanitizedModel(image);
   model.alias = model.alias.replace(/ \(.*?\)$/, '');
-  model.public = (model.public === 'yes');
+  model.public = makeBool(model.public);
   return model;
 }

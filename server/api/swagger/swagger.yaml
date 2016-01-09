@@ -311,6 +311,27 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Adds a new remote server.
+      operationId: addServer
+      security:
+        - token: []
+      parameters:
+        - name: server
+          in: body
+          description: Server data
+          required: true
+          schema:
+            $ref: '#/definitions/ServerModel'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CreateResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /images/detailed:
     x-swagger-router-controller: images
     get:
@@ -478,9 +499,17 @@ definitions:
   ServerModel:
     required:
       - name
+      - url
+      - public
     properties:
       name:
         type: string
+        minLength: 1
+      url:
+        type: string
+        minLength: 1
+      public:
+        type: boolean
   ImageCreateModel:
     required:
       - public

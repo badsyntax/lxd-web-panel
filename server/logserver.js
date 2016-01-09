@@ -4,8 +4,8 @@ var ws = require('nodejs-websocket');
 var proc = spawn('tail', ['-f', '/var/log/lxd/lxd.log']);
 
 var config = {
-  port : process.env.PORT || 8080,
-  host : process.env.HOST || '0.0.0.0'
+  port: process.env.PORT || 8080,
+  host: process.env.HOST || '0.0.0.0'
 };
 
 var server = ws

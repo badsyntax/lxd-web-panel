@@ -8,8 +8,7 @@
     "modules": true,
     "jsx": true
   },
-  "globals": {
-  },
+  "globals": {},
   "parser": "babel-eslint",
   "plugins": [
     "react"
@@ -22,17 +21,28 @@
     "indent": [
       2,
       2,
-      {"SwitchCase": 1}
+      {
+        "SwitchCase": 1
+      }
     ],
     "quotes": [
       2,
       "single"
     ],
-    "semi": [2, "always"],
+    "semi": [
+      2,
+      "always"
+    ],
     "no-alert": 0,
     "no-undef": 2,
     "no-underscore-dangle": 0,
-    "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
+    "no-unused-vars": [
+      2,
+      {
+        "vars": "all",
+        "args": "after-used"
+      }
+    ],
     "jsx-quotes": 1,
     "react/display-name": 0,
     "react/jsx-no-undef": 1,

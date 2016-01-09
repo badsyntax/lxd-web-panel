@@ -27,7 +27,6 @@ export default class Servers extends React.Component {
 
   componentDidMount() {
     try {
-      this.actionHandler = AppDispatcher.register(this.onAction);
       ServersStore.addChangeListener(this.onServersStoreChange);
       this.loadServers();
     } catch(e) {
@@ -37,40 +36,14 @@ export default class Servers extends React.Component {
 
   componentWillUnmount() {
     ServersStore.removeChangeListener(this.onServersStoreChange);
-    AppDispatcher.unregister(this.actionHandler);
   }
 
   loadServers() {
     AppActions.async([AppActions.getServers]);
   }
 
-  onAction = (action) => {
-    switch(action.actionType) {
-      case SERVER_DELETE__ERROR:
-        this.setState({
-          hasError: true
-        });
-        alert('Error deleting the image');
-        break;
-      case SERVER_DELETE__SUCCESS:
-        this.loadServers();
-        break;
-      case SERVER_DELETE__START:
-        this.setState({
-          hasError: false,
-          isImageDeleting: true
-        });
-        break;
-      case SERVER_DELETE__END:
-        this.setState({
-          isImageDeleting: false
-        });
-        break;
-      default:
-    }
-  };
-
   onServersStoreChange = () => {
+    console.log('server store change');
     this.setState(getState());
   };
 
@@ -102,11 +75,9 @@ export default class Servers extends React.Component {
             <table className="table table-striped">
               <thead>
                 <tr>
-                  <th>Alias</th>
-                  <th>Description</th>
-                  <th>Size</th>
-                  <th>Created</th>
-                  <th>Actions</th>
+                  <th>Name</th>
+                  <th>URL</th>
+                  <th>Public</th>
                 </tr>
               </thead>
               <tbody>
@@ -114,10 +85,9 @@ export default class Servers extends React.Component {
                 servers.map((server, index) => {
                   return (
                     <tr key={'server-' + index}>
-                      <td>{ server.getAlias() }</td>
-                      <td>{ server.properties.description }</td>
-                      <td>{ server.sizeFriendly }</td>
-                      <td>{ server.createdAtFriendly }</td>
+                      <td>{ server.name }</td>
+                      <td>{ server.url }</td>
+                      <td>{ server.public ? 'Yes' : 'No' }</td>
                       <td>
                         <button className="btn btn-default btn-xs">Edit</button>
                         <button className="btn btn-default btn-xs" onClick={this.onDeleteButtonClick.bind(this, server)}>Delete</button>

@@ -1,10 +1,10 @@
 {
-  "name": "lxd-panel",
+  "name": "lxd-web-panel-server",
   "version": "0.0.1",
   "private": true,
   "description": "A secure HTTP REST API for LXD Web Panel",
   "keywords": [],
-  "author": "",
+  "author": "Richard Willis",
   "license": "",
   "main": "app.js",
   "config": {

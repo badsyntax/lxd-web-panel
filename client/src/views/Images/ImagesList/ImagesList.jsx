@@ -94,11 +94,11 @@ export default class ImagesList extends React.Component {
               Import image
             </Link>
           </h2>
-          { images.length ? getTable(images) : getAlert() }
+          { images.length ? renderTable(images) : renderAlert() }
         </div>
       );
 
-      function getTable(images) {
+      function renderTable(images) {
         return (
           <div className="table-responsive">
             <table className="table table-striped">
@@ -116,13 +116,18 @@ export default class ImagesList extends React.Component {
                 images.map((image, index) => {
                   return (
                     <tr key={'image-' + index}>
-                      <td>{ image.getAlias() }</td>
+                      <td>{ image.alias }</td>
                       <td>{ image.properties.description }</td>
-                      <td>{ image.sizeFriendly() }</td>
-                      <td>{ image.createdAtFriendly() }</td>
+                      <td>{ image.sizeFriendly }</td>
+                      <td>{ image.createdAtFriendly }</td>
                       <td>
                         <button className="btn btn-default btn-xs">Edit</button>
-                        <button className="btn btn-default btn-xs" onClick={this.onDeleteButtonClick.bind(this, image)}>Delete</button>
+                        <button
+                          className="btn btn-default btn-xs"
+                          onClick={this.onDeleteButtonClick.bind(this, image)}
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   );
@@ -134,7 +139,7 @@ export default class ImagesList extends React.Component {
         );
       }
 
-      function getAlert() {
+      function renderAlert() {
         return (
           <Alert
             heading="No images"
