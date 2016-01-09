@@ -14,8 +14,7 @@ function getServers(resolve, reject) {
 
   const LOCAL_SERVER_NAME = 'local';
 
-  return new Promise((resolve, reject) => {
-    handleProcess('lxc', [ 'remote', 'list' ])
+  return handleProcess('lxc', [ 'remote', 'list' ])
     .then(parseTable)
     .then((results) => {
       var servers = results
@@ -24,15 +23,11 @@ function getServers(resolve, reject) {
       })
       .map(ServerModel);
       return servers;
-    })
-    .then(resolve)
-    .catch(reject);
-  });
+    });
 }
 
 function getRemoteImages(serverName) {
-  return new Promise((resolve, reject) => {
-    handleProcess('lxc', [ 'image', 'list', serverName + ':' ])
+  return handleProcess('lxc', [ 'image', 'list', serverName + ':' ])
     .then(parseTable)
     .then((results) => {
       var images = results
@@ -41,33 +36,31 @@ function getRemoteImages(serverName) {
       })
       .map(ImageModel);
       return images;
-    })
-    .then(resolve)
-    .catch(reject);
-  });
+    });
 }
 
 function addServer(data) {
-  return new Promise((resolve, reject) => {
-    handleProcess('lxc', [ 'remote', 'add', data.name, data.url ])
-    .then(resolve)
-    .catch(reject);
-  })
+  return handleProcess('lxc', [ 'remote', 'add', data.name, data.url ]);
 }
 
 function handleProcess(command, args) {
   return new Promise((resolve, reject) => {
 
     var proc = spawn(command, args);
-    var table = '';
+    var stdout = '';
+    var stderr = '';
 
     proc.stdout.on('data', (data) => {
-      table += data.toString();
+      stdout += data.toString();
     });
     proc.stdout.on('end', () => {
-      resolve(table);
+      resolve(stdout);
     });
-    proc.on('error', reject);
+    proc.stderr.on('data', (data) => {
+      stderr += data.toString();
+      reject(new Error(stderr));
+    });
+    proc.on('error', (err) => reject(new Error(err)));
   });
 }
 
@@ -96,19 +89,19 @@ function getSanitizedModel(data) {
   return model;
 }
 
-function makeBool(field) {
+function makeFieldBoolean(field) {
   return ((field || '').toLowerCase() === 'yes');
 }
 
 function ServerModel(server) {
   var model = getSanitizedModel(server);
-  model.public = makeBool(module.public);
+  model.public = makeFieldBoolean(module.public);
   return model;
 }
 
 function ImageModel(image) {
   var model = getSanitizedModel(image);
   model.alias = model.alias.replace(/ \(.*?\)$/, '');
-  model.public = makeBool(model.public);
+  model.public = makeFieldBoolean(model.public);
   return model;
 }

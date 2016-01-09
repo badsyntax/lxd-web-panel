@@ -7,7 +7,7 @@ import AppDispatcher from '../../dispatcher/AppDispatcher';
 import AppActions from '../../actions/AppActions';
 import { DEFAULT_SERVER_URL } from '../../constants/AppConstants';
 
-import ServerModel from '../../models/ServerModel';
+import ServerAddModel from '../../models/ServerAddModel';
 
 import Alert from '../Alert/Alert';
 import Form from '../Form/Form';
@@ -45,7 +45,7 @@ export default class ServersAddForm extends React.Component {
       url: DEFAULT_SERVER_URL
     };
 
-    var formModel = new ServerModel(initialData, this.onFormModelChange);
+    var formModel = new ServerAddModel(initialData, this.onFormModelChange);
 
     this.setState({ formModel });
   }

@@ -22,9 +22,7 @@ export default class ImagesImportForm extends React.Component {
 
   static propTypes = {
     disabled: PropTypes.bool,
-    error: PropTypes.bool,
-    onSubmit: PropTypes.func,
-    remoteImages: PropTypes.array.isRequired,
+    onSubmit: PropTypes.func
   };
 
   static contextTypes = {
@@ -38,11 +36,7 @@ export default class ImagesImportForm extends React.Component {
     this.dispatchToken = AppDispatcher.register(this.onAction);
 
     var initialData = {
-      public: false,
-      localAlias: '',
-      remoteAlias: '',
-      description: '',
-      server: 'https://images.linuxcontainers.org'
+      public: false
     };
 
     var formModel = new ImageImportModel(initialData, this.onFormModelChange);
@@ -101,17 +95,6 @@ export default class ImagesImportForm extends React.Component {
     }
   };
 
-  onImageChange = (e) => {
-    var alias = e.target.value;
-    var description = e.target.options[e.target.selectedIndex].innerHTML.trim();
-    var formModel = this.state.formModel;
-    formModel.update('localAlias', alias);
-    formModel.update('description', description);
-    this.setState({
-      formModel: formModel
-    });
-  };
-
   render() {
     try {
       return (
@@ -129,7 +112,6 @@ export default class ImagesImportForm extends React.Component {
             onSubmit={this.onSubmit}
           >
             <ImagesImportFieldset
-              remoteImages={this.props.remoteImages}
               disabled={this.props.disabled}
               showErrors={this.state.hasError}
               onImageChange={this.onImageChange}

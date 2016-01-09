@@ -12,7 +12,6 @@ import {
 class ServersStore extends BaseStore {
 
   emitChange() {
-    console.log('EMIT CHANGe');
     this.emit(SERVERS__UPDATED);
   }
 

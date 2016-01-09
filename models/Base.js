@@ -26,28 +26,29 @@ class BaseModel {
     );
 
     this.onChange = onChange || _noop;
-    this.createDefaultData();
-    this.setData(data || {});
+    this.reset();
+
+    this.setData(Object.assign(
+      this.constructor.defaultProps || {},
+      data || {}
+    ), true);
   }
 
-  createDefaultData() {
-    Array.from(_keys.get(this)).forEach((key) => {
-      if (key in this) { return; }
-      let keyDef = _schema.get(this).properties[key];
-      switch(keyDef.type) {
-        case 'string':  this.set(key, ''); break;
-        case 'object':  this.set(key, {}); break;
-        case 'boolean': this.set(key, null); break;
-      }
-    });
+  reset() {
+    this.createNullProps();
   }
 
-  setData(data) {
-    Object.keys(data).forEach((key) => this.set(key, data[key]));
+  createNullProps() {
+    Array.from(_keys.get(this)).forEach((key) => this.set(key, null, true));
+  }
+
+  setData(data, preventOnChange) {
+    Object.keys(data).forEach((key) => this.set(key, data[key], true));
     this.validate();
+    if (!preventOnChange) { this.onChange(this); }
   }
 
-  set(key, value) {
+  set(key, value, preventOnChange) {
 
     if (typeof key === 'object') {
       this.setData(key);
@@ -58,7 +59,7 @@ class BaseModel {
     }
 
     this.validate();
-    this.onChange(this);
+    if (!preventOnChange) { this.onChange(this); }
   }
 
   update(key, value) {

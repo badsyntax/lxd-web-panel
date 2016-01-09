@@ -12,40 +12,28 @@ module.exports = {
 var config = process.env;
 
 function getServers(req, reply) {
-
   lxc.getServers()
   .then((servers) => {
     reply.json({
       servers: servers
     });
   })
-  .catch((e) => {
-    reply.status(500);
-    reply.json({
-      message: e.toString()
-    });
-  });
+  .catch((e) => handleError(e, reply));
 }
 
 function addServer(req, reply) {
-  var json = req.body;
-
-  return lxc.addServer(json)
+  return lxc.addServer(req.body)
   .then((res) => {
-    if (res.error) {
-      reply.status(res.error_code);
-      return reply.json({
-        message: res.error
-      });
-    }
     reply.json({
       message: 'Success'
     });
   })
-  .catch((e) => {
-    reply.status(500);
-    reply.json({
-      message: e.toString()
-    });
+  .catch((e) => handleError(e, reply));
+}
+
+function handleError(e, reply) {
+  reply.status(500);
+  reply.json({
+    message: e.toString()
   });
 }
