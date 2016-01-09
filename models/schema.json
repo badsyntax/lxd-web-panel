@@ -194,6 +194,7 @@
       "remoteAlias",
       "localAlias",
       "server",
+      "serverUrl",
       "description"
     ],
     "properties": {
@@ -209,6 +210,10 @@
         "minLength": 1
       },
       "server": {
+        "type": "string",
+        "minLength": 1
+      },
+      "serverUrl": {
         "type": "string",
         "minLength": 1
       },

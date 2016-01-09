@@ -14,6 +14,7 @@ module.exports = {
   getRemoteImages,
   createImageAlias,
   createImage,
+  importImage,
   deleteImage
 };
 
@@ -106,14 +107,66 @@ function createImage(req, reply) {
     .then((operation) => {
       var metadata = JSON.parse(operation).metadata;
       if (metadata.status_code !== 200) {
-        throw {
+        throw new Error({
           error_code: metadata.status_code
-        };
+        });
+      }
+      reply.json({
+        message: 'Success'
+      });
+    });
+  })
+  .catch((e) => {
+    reply.status(e.error_code);
+    reply.json({
+      message: e.error || 'Unknown error'
+    });
+  });
+}
+
+function importImage(req, reply) {
+
+  var imageData = req.body;
+
+  var createImageData = {
+    'public': imageData.public,
+    source: {
+      type: 'image',
+      mode: 'pull',
+      server: imageData.serverUrl,
+      alias: imageData.remoteAlias
+    }
+  };
+
+  return lxd.createImage(createImageData).then((res) => {
+    console.log('RES', res);
+    if (res.error) { throw res; }
+    return lxd.waitOperation(res)
+    .then((operation) => {
+      var metadata = JSON.parse(operation).metadata;
+      if (metadata.status_code !== 200) {
+        throw new Error({
+          error_code: metadata.status_code
+        });
       }
       return metadata;
     });
   })
   .then((metadata) => {
+    var imageAliasData = {
+      target: metadata.metadata.fingerprint,
+      name: imageData.localAlias,
+      description: imageData.description
+    };
+    return lxd.createImageAlias(imageAliasData);
+  })
+  .then((res) => {
+    if (res.error) {
+      reply.status(res.error_code);
+      return reply.json({
+        message: res.error
+      });
+    }
     reply.json({
       message: 'Success'
     });

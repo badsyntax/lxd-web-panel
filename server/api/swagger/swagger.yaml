@@ -251,6 +251,29 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /images/import:
+    x-swagger-router-controller: images
+    post:
+      description: Imports a image
+      operationId: importImage
+      security:
+        - token: []
+      parameters:
+        - name: body
+          in: body
+          description: Image data
+          required: true
+          schema:
+            $ref: '#/definitions/ImageImportModel'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CreateResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /images/{fingerprint}:
     x-swagger-router-controller: images
     delete:
@@ -291,43 +314,6 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/RemoteImagesResponse"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  /remote:
-    x-swagger-router-controller: servers
-    get:
-      description: Returns a list of remote image servers.
-      operationId: getServers
-      security:
-        - token: []
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/ServersResponse"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-    post:
-      description: Adds a new remote server.
-      operationId: addServer
-      security:
-        - token: []
-      parameters:
-        - name: server
-          in: body
-          description: Server data
-          required: true
-          schema:
-            $ref: '#/definitions/ServerModel'
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/CreateResponse"
         default:
           description: Error
           schema:
@@ -381,6 +367,43 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/ImageAliasesResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /remote:
+    x-swagger-router-controller: servers
+    get:
+      description: Returns a list of remote image servers.
+      operationId: getServers
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ServersResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Adds a new remote server.
+      operationId: addServer
+      security:
+        - token: []
+      parameters:
+        - name: server
+          in: body
+          description: Server data
+          required: true
+          schema:
+            $ref: '#/definitions/ServerModel'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CreateResponse"
         default:
           description: Error
           schema:
@@ -525,6 +548,7 @@ definitions:
       - remoteAlias
       - localAlias
       - server
+      - serverUrl
       - description
     properties:
       public:
@@ -536,6 +560,9 @@ definitions:
         type: string
         minLength: 1
       server:
+        type: string
+        minLength: 1
+      serverUrl:
         type: string
         minLength: 1
       description:

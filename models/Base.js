@@ -28,6 +28,10 @@ class BaseModel {
     this.onChange = onChange || _noop;
     this.reset();
 
+    if (this.constructor.defaultProps) {
+      // debugger;
+    }
+
     this.setData(Object.assign(
       this.constructor.defaultProps || {},
       data || {}
@@ -87,6 +91,10 @@ class BaseModel {
 
   validate() {
     _validation.set(this, revalidator.validate(this.get(), _schema.get(this)));
+  }
+
+  validation() {
+    return _validation.get(this);
   }
 
   isPropValid(prop) {

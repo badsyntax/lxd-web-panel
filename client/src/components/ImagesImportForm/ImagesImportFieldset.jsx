@@ -44,7 +44,7 @@ export default class ImagesImportFieldset extends React.Component {
   componentWillUnmount() {
     RemoteImagesStore.removeChangeListener(this.onRemoteImagesStoreChange);
     ServersStore.removeChangeListener(this.onServersStoreChange);
-    AppDispatcher.off(REMOTE_IMAGES__GET_END, this.onImagesGetEnd);
+    AppDispatcher.off(REMOTE_IMAGES__GET_END, this.onRemoteImagesGetEnd);
   }
 
   onRemoteImagesStoreChange = () => {
@@ -65,10 +65,19 @@ export default class ImagesImportFieldset extends React.Component {
 
   onServerChange = (e) => {
     let name = e.target.value;
+    let server = this.state.servers.filter((server) => {
+      return server.name === name;
+    })[0];
+
+    console.log(server);
+    // debugger;
 
     var formModel = this.context.formModel;
-    formModel.reset();
-    formModel.set('server', name);
+    formModel.set({
+      'localAlias': null,
+      'description': null,
+      'serverUrl': server.url
+    });
 
     this.setState({
       isLoading: true
@@ -100,7 +109,7 @@ export default class ImagesImportFieldset extends React.Component {
             Input={Select}
             options={this.state.remoteImages}
             name="remoteAlias"
-            label="Image"
+            label="Remote Image"
             labelLayoutClassName="col-sm-2"
             inputLayoutClassName="col-sm-5"
             showError={this.props.showErrors}
@@ -111,7 +120,7 @@ export default class ImagesImportFieldset extends React.Component {
             disabled={this.props.disabled}
             horizontal={true}
             name="localAlias"
-            label="Alias"
+            label="Local alias"
             labelLayoutClassName="col-sm-2"
             inputLayoutClassName="col-sm-5"
             placeholder="Name"
@@ -154,7 +163,7 @@ export default class ImagesImportFieldset extends React.Component {
           Input={Select}
           options={this.state.servers}
           name="server"
-          label="Server"
+          label="Remote server"
           labelLayoutClassName="col-sm-2"
           inputLayoutClassName="col-sm-5"
           showError={this.props.showErrors}

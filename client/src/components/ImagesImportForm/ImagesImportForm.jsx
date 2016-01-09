@@ -35,11 +35,7 @@ export default class ImagesImportForm extends React.Component {
 
     this.dispatchToken = AppDispatcher.register(this.onAction);
 
-    var initialData = {
-      public: false
-    };
-
-    var formModel = new ImageImportModel(initialData, this.onFormModelChange);
+    var formModel = new ImageImportModel(null, this.onFormModelChange);
 
     this.state = {
       formModel
@@ -99,7 +95,7 @@ export default class ImagesImportForm extends React.Component {
     try {
       return (
         <div className="images-import-form">
-          { this.state.showError ? (
+          { this.state.hasError ? (
             <Alert
               message="There was an error submitting the form. Please correct the errors below."
               type="danger"

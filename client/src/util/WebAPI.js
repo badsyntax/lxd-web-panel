@@ -69,6 +69,12 @@ class API {
       action: 'images'
     }, data);
   }
+
+  importImage(data) {
+    return postJson({
+      action: 'images/import'
+    }, data);
+  }
 }
 
 export default new API();

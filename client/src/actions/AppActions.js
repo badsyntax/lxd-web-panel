@@ -182,11 +182,11 @@ export default {
   },
 
   importImage(imageImportModel) {
-    let imageCreateModel = imageImportModel.getCreateModel();
-    let data = imageCreateModel.get();
+
+    let data = imageImportModel.get();
 
     dispatchAction(IMAGE_IMPORT__START);
-    WebAPI.createImage(data)
+    WebAPI.importImage(data)
     .then((response) => {
       if (response.message) {
         dispatchAction(IMAGE_IMPORT__SUCCESS, response);
