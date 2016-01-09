@@ -24,9 +24,9 @@ paths:
       description: Authenticate a user session and return the auth token
       operationId: signin
       parameters:
-        - name: user
-          in: body
-          description: User
+        - in: body
+          name: body
+          description: Pet object that needs to be added to the store
           required: true
           schema:
             $ref: '#/definitions/UserModel'
@@ -397,10 +397,14 @@ definitions:
         minLength: 1
   ContainerModel:
     required:
+      - resource
       - name
       - profiles
     properties:
       name:
+        type: string
+        minLength: 1
+      resource:
         type: string
         minLength: 1
       profiles:
@@ -414,9 +418,20 @@ definitions:
   ProfileModel:
     required:
       - name
+      - resource
+      - config
+      - devices
     properties:
       name:
         type: string
+        minLength: 1
+      resource:
+        type: string
+        minLength: 1
+      config:
+        type: object
+      devices:
+        type: object
   ImageAliasModel:
     required:
       - alias
@@ -426,8 +441,11 @@ definitions:
   ImageModel:
     required:
       - fingerprint
+      - resource
     properties:
       fingerprint:
+        type: string
+      resource:
         type: string
   RemoteImageModel:
     required:

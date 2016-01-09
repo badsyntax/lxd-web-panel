@@ -3,38 +3,41 @@
 var util = require('util');
 var revalidator = require('revalidator');
 
-const schema = require('./schema.json');
-const privateKeys = new WeakMap();
-const privateSchema = new WeakMap();
-const privateValidation = new WeakMap();
-const noop = () => {};
+const allModelsSchema = require('./schema.json');
+
+const _keys = new WeakMap();
+const _schema = new WeakMap();
+const _validation = new WeakMap();
+const _noop = () => {};
 
 class BaseModel {
 
   static get schema() {
-    return schema;
+    return allModelsSchema;
   }
 
   constructor(data, onChange) {
 
     var schema = this.constructor.schema || {};
-    privateSchema.set(this, Object.assign({}, schema));
+    _schema.set(this, Object.assign({}, schema));
 
-    privateKeys.set(this, new Set(
-      Object.keys(privateSchema.get(this).properties))
+    _keys.set(this, new Set(
+      Object.keys(_schema.get(this).properties))
     );
 
+    this.onChange = onChange || _noop;
     this.setData(data || {});
-    this.onChange = onChange || noop;
   }
 
   setData(data) {
-    Object.assign(this, data);
+    Object.keys(data).forEach((key) => {
+      this.set(key, data[key]);
+    });
     this.validate();
   }
 
   set(key, value) {
-    if (!privateKeys.get(this).has(key)) {
+    if (!_keys.get(this).has(key)) {
       throw new Error('Trying to set a property that has not been defined in schema (' + key + ')');
     }
     this[key] = value;
@@ -50,7 +53,7 @@ class BaseModel {
     if (!key) {
       return this.getData();
     }
-    if (!privateKeys.get(this).has(key)) {
+    if (!_keys.get(this).has(key)) {
       throw new Error('Trying to get a property that has not been defined in schema (' + key + ')');
     }
     return this[key];
@@ -58,7 +61,7 @@ class BaseModel {
 
   getData() {
     return Array
-    .from(privateKeys.get(this))
+    .from(_keys.get(this))
     .reduce((data, key) => {
       data[key] = this[key];
       return data;
@@ -66,23 +69,23 @@ class BaseModel {
   }
 
   validate() {
-    privateValidation.set(this, revalidator.validate(this.get(), privateSchema.get(this)));
+    _validation.set(this, revalidator.validate(this.get(), _schema.get(this)));
   }
 
   isPropValid(prop) {
     this.validate();
-    var propHasError = privateValidation.get(this).errors.reduce((hasError, error) => {
+    var propHasError = _validation.get(this).errors.reduce((hasError, error) => {
       return hasError || error.property === prop;
     }, false);
     return !propHasError;
   }
 
   isValid() {
-    return privateValidation.get(this).valid;
+    return _validation.get(this).valid;
   }
 
   getPropValidationError(prop) {
-    return privateValidation.get(this).errors.filter((error) => {
+    return _validation.get(this).errors.filter((error) => {
       return error.property === prop;
     })[0] || {};
   }
@@ -97,10 +100,10 @@ class BaseModel {
   }
 
   updateSchema(key, data) {
-    if (!privateSchema.get(this).properties[key]) {
-      throw new Error('Unable to update schema for key "' + key + '", not defined in privateSchema.');
+    if (!_schema.get(this).properties[key]) {
+      throw new Error('Unable to update schema for key "' + key + '", not defined in schema.');
     }
-    Object.assign(privateSchema.get(this).properties[key], data);
+    Object.assign(_schema.get(this).properties[key], data);
     this.validate();
   }
 };

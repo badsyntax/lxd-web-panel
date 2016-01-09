@@ -37,13 +37,14 @@ function getAllProfilesWithDetails(req, reply) {
   return getProfiles()
   .then((profiles) => {
 
-    var promises = profiles.map((profile) => {
-      return lxdClient.getProfile(profile.getName())
-        .then((profileData) => {
-          if (!profileData.error) {
-            profile.setData(profileData.metadata);
+    var promises = profiles.map((profileData) => {
+      let profile = new ProfileModel(profileData);
+      return lxdClient.getProfile(profile.name)
+        .then((res) => {
+          if (!res.error) {
+            profile.setData(res.metadata);
           }
-          return profile;
+          return profile.get();
         });
     });
     return Promise.all(promises);

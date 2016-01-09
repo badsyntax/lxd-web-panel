@@ -9,10 +9,18 @@ class ProfileModel extends BaseModel {
   }
 
   get name() {
+    if (this._name) {
+      return this._name;
+    }
     if (!this.resource) {
       throw new Error('resource required to get name');
     }
-    return this.resource.replace('/1.0/profiles/', '');
+    this._name = this.resource.replace('/1.0/profiles/', '');
+    return this._name;
+  }
+
+  set name(name) {
+    this._name = name;
   }
 
   get friendlyDevices() {

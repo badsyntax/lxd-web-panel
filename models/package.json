@@ -3,18 +3,15 @@
   "version": "0.0.1",
   "description": "LXD Web Panel data models",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-core": "^6.3.26",
+    "babel-core": "^6.4.0",
     "babel-loader": "^6.2.1",
     "dateformat": "^1.0.12",
-    "filesize": "^3.1.4",
+    "filesize": "^3.1.5",
     "json-loader": "^0.5.4",
     "revalidator": "^0.3.1",
-    "webpack": "^1.12.9"
+    "webpack": "^1.12.10"
   }
 }
