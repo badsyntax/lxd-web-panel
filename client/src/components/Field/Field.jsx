@@ -1,3 +1,5 @@
+'use strict';
+
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';
 import Input from '../Input/Input';

@@ -1,3 +1,5 @@
+'use strict';
+
 import pkg from '../../package';
 
 export const API__ENDPOINT = 'http://192.168.50.4:9000/v1';

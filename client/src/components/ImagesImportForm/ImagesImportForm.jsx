@@ -1,3 +1,5 @@
+'use strict';
+
 import './ImagesImportForm.scss';
 import React, { PropTypes } from 'react';
 import ImagesImportFieldset from './ImagesImportFieldset';

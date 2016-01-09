@@ -1,3 +1,5 @@
+'use strict';
+
 import React, { PropTypes } from 'react';
 
 export default class Select extends React.Component {

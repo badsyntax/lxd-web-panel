@@ -1,3 +1,5 @@
+'use strict';
+
 import './Config.scss';
 import React from 'react';
 

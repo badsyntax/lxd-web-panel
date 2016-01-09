@@ -1,3 +1,5 @@
+'use strict';
+
 import Flux from 'flux';
 import { EventEmitter } from 'events';
 

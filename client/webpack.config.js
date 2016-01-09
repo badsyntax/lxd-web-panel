@@ -1,3 +1,5 @@
+'use strict';
+
 // import dependencies
 var path = require('path');
 var util = require('util');

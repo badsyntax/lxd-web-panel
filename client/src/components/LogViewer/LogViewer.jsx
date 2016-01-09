@@ -1,3 +1,5 @@
+'use strict';
+
 import './LogViewer.scss';
 import React from 'react';
 import classNames from 'classnames';

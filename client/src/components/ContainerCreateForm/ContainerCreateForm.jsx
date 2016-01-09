@@ -1,3 +1,5 @@
+'use strict';
+
 import './ContainerCreateForm.scss';
 import React, { PropTypes } from 'react';
 import ContainerCreateFieldset from './ContainerCreateFieldset';

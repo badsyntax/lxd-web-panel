@@ -1,3 +1,5 @@
+'use strict';
+
 import './CheckboxGroup.scss';
 import React, {PropTypes} from 'react';
 import classNames from 'classnames';

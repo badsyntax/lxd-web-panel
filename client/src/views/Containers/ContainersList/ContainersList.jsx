@@ -1,4 +1,4 @@
-import './ContainersList.scss';
+  import './ContainersList.scss';
 import React from 'react';
 import { Link } from 'react-router';
 import ContainersStore from '../../../stores/ContainersStore';
@@ -41,11 +41,11 @@ export default class ContainersList extends React.Component {
             New container
           </Link>
         </h2>
-        { containers.length ? getTable(containers) : getAlert() }
+        { containers.length ? renderTable(containers) : renderAlert() }
       </div>
     );
 
-    function getProfiles(container) {
+    function renderProfiles(container) {
       return container.profiles.map(function(profile) {
         return (
           <Link key={'profile-'+profile} to={'profile'}>{profile}</Link>
@@ -53,15 +53,15 @@ export default class ContainersList extends React.Component {
       });
     }
 
-    function getContainerRow(container) {
-      console.log(container);
+    function renderContainerRow(container) {
+
       return (
         <tr key={'row-' + container.name}>
           <td>{ container.name }</td>
           <td>{ container.status.status.toUpperCase() }</td>
           <td>{ container.getAddress('IPV4', 'eth0') }</td>
           <td>{ container.getAddress('IPV6', 'eth0') }</td>
-          <td>{ getProfiles(container) }</td>
+          <td>{ renderProfiles(container) }</td>
           <td>
             <button className="btn btn-default btn-xs">Edit</button>
             <button className="btn btn-default btn-xs">Delete</button>
@@ -72,7 +72,7 @@ export default class ContainersList extends React.Component {
       );
     }
 
-    function getTable(containers) {
+    function renderTable(containers) {
       return (
         <div className="table-responsive">
           <table className="table table-striped">
@@ -88,7 +88,7 @@ export default class ContainersList extends React.Component {
             </thead>
             <tbody>
             {
-              containers.map(getContainerRow)
+              containers.map(renderContainerRow)
             }
             </tbody>
           </table>
@@ -96,7 +96,7 @@ export default class ContainersList extends React.Component {
       );
     }
 
-    function getAlert() {
+    function renderAlert() {
       return (
         <Alert
           heading="No containers"

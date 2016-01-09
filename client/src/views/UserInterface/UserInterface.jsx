@@ -1,3 +1,5 @@
+'use strict';
+
 import './UserInterface.scss';
 import React from 'react';
 

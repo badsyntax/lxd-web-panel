@@ -1,3 +1,5 @@
+'use strict';
+
 import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ContainerModel from '../../../models/Container';

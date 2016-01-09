@@ -1,3 +1,5 @@
+'use strict';
+
 import './SignIn.scss';
 import React, {PropTypes} from 'react';
 

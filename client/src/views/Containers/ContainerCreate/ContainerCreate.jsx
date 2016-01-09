@@ -1,3 +1,5 @@
+'use strict';
+
 import './ContainerCreate.scss';
 import React from 'react';
 import ProfilesStore from '../../../stores/ProfilesStore';

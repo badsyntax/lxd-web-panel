@@ -1,3 +1,5 @@
+'use strict';
+
 import './ServersList.scss';
 import React from 'react';
 import { Link } from 'react-router';

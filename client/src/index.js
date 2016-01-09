@@ -1,3 +1,5 @@
+'use strict';
+
 import './index.scss';
 import 'promise.prototype.finally';
 

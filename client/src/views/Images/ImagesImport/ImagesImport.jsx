@@ -1,3 +1,5 @@
+'use strict';
+
 import './ImagesImport.scss';
 import React from 'react';
 import RemoteImagesStore from '../../../stores/RemoteImagesStore';
