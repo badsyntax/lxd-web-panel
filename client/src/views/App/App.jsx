@@ -4,6 +4,7 @@ import React from 'react';
 import Navbar from '../../components/Navbar/Navbar.jsx';
 import Sidebar from '../../components/Sidebar/Sidebar.jsx';
 import LogViewer from '../../components/LogViewer/LogViewer.jsx';
+import Modal from '../../components/Modal/Modal';
 
 import sidebarPages from '../../data/pages';
 
@@ -23,6 +24,7 @@ export default class App extends React.Component {
           </div>
         </div>
         <LogViewer />
+        <Modal />
       </div>
     );
   }

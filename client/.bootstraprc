@@ -61,31 +61,32 @@ styles:
   input-groups: true
   navs: true
   navbar: true
-  breadcrumbs: true
-  pagination: true
-  pager: true
+  breadcrumbs: false
+  pagination: false
+  pager: false
   labels: true
-  badges: true
-  jumbotron: true
+  badges: false
+  jumbotron: false
   thumbnails: true
   alerts: true
-  progress-bars: true
-  media: true
+  progress-bars: false
+  media: false
   list-group: true
-  panels: true
+  panels: false
   wells: true
   responsive-embed: true
   close: true
 
   # Components w/ JavaScript
   modals: true
-  tooltip: true
-  popovers: true
-  carousel: true
+  tooltip: false
+  popovers: false
+  carousel: false
 
   # Utility classes
   utilities: true
   responsive-utilities: true
 
 ### Bootstrap scripts
-scripts: false
+scripts:
+  modal: true
