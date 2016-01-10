@@ -10,6 +10,34 @@ const _schema = new WeakMap();
 const _validation = new WeakMap();
 const _noop = () => {};
 
+function _set(model, key, value) {
+  if (key && typeof key === 'object') {
+    Object.keys(key).forEach((k) => _set(model, k, key[k]));
+  } else if (!_keys.get(model).has(key)) {
+    throw new Error('Trying to set a property that has not been defined in schema (' + key + ')');
+  } else {
+    model[key] = value;
+  }
+}
+
+function _get(model, key) {
+  if (!key) {
+    return _getAll(model);
+  } else if (!_keys.get(model).has(key)) {
+    throw new Error('Trying to get a property that has not been defined in schema (' + key + ')');
+  }
+  return model[key];
+}
+
+function _getAll(model) {
+  return Array
+  .from(_keys.get(model))
+  .reduce((data, key) => {
+    data[key] = model[key];
+    return data;
+  }, {});
+}
+
 class BaseModel {
 
   static get schema() {
@@ -28,73 +56,28 @@ class BaseModel {
     this.onChange = onChange || _noop;
     this.reset();
 
-    if (this.constructor.defaultProps) {
-      // debugger;
-    }
-
-    this.setData(Object.assign(
+    _set(this, Object.assign(
       this.constructor.defaultProps || {},
       data || {}
-    ), true);
+    ));
   }
 
   reset() {
-    this.createNullProps();
+    Array.from(_keys.get(this)).forEach((key) => _set(this, key, null));
   }
 
-  createNullProps() {
-    Array.from(_keys.get(this)).forEach((key) => this.set(key, null, true));
-  }
-
-  setData(data, preventOnChange) {
-    Object.keys(data).forEach((key) => this.set(key, data[key], true));
+  set(key, value) {
+    _set(this, key, value);
     this.validate();
-    if (!preventOnChange) { this.onChange(this); }
-  }
-
-  set(key, value, preventOnChange) {
-
-    if (typeof key === 'object') {
-      this.setData(key);
-    } else if (!_keys.get(this).has(key)) {
-      throw new Error('Trying to set a property that has not been defined in schema (' + key + ')');
-    } else {
-      this[key] = value;
-    }
-
-    this.validate();
-    if (!preventOnChange) { this.onChange(this); }
-  }
-
-  update(key, value) {
-    this.set(key, value);
+    this.onChange(this);
   }
 
   get(key) {
-    if (!key) {
-      return this.getData();
-    }
-    if (!_keys.get(this).has(key)) {
-      throw new Error('Trying to get a property that has not been defined in schema (' + key + ')');
-    }
-    return this[key];
-  }
-
-  getData() {
-    return Array
-    .from(_keys.get(this))
-    .reduce((data, key) => {
-      data[key] = this[key];
-      return data;
-    }, {});
+    return _get(this, key);
   }
 
   validate() {
     _validation.set(this, revalidator.validate(this.get(), _schema.get(this)));
-  }
-
-  validation() {
-    return _validation.get(this);
   }
 
   isPropValid(prop) {

@@ -15,6 +15,8 @@ class ContainerModel extends BaseModel {
     return this.resource.replace('/1.0/containers/', '');
   }
 
+  set name(name) {}
+
   getAddress(protocol, intface) {
     var ip = this.status.ips.filter((ip) => {
       return ip.protocol === protocol && ip.interface === intface;

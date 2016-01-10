@@ -11,9 +11,6 @@ class ImageModel extends BaseModel {
   }
 
   get fingerprint() {
-    if (this._fingerprint) {
-      return this._fingerprint;
-    }
     if (!this.resource) {
       throw new Error('resource required to get fingerprint');
     }
@@ -21,7 +18,6 @@ class ImageModel extends BaseModel {
   }
 
   set fingerprint(fingerprint) {
-    this._fingerprint = fingerprint;
   }
 
   get createdAtFriendly() {
