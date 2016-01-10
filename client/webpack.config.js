@@ -28,46 +28,45 @@ var config = {
     publicPath: '/'
   },
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      loader: 'babel',
-      exclude: [
-        nodeModulesPath,
-      ],
-      include: [
-        modelsPath
-      ],
-      query: {
-        presets: ['es2015']
-      }
-    }, {
-      test: /\.jsx?$/,
-      loader: 'babel',
-      exclude: [
-        nodeModulesPath,
-        modelsPath
-      ]
-    }, {
-      test: /\.scss$/,
-      loader: 'style!css?sourceMap!sass?' + [
-      'sourceMap',
-      'outputStyle=expanded',
-      'includePaths[]=' + path.resolve(__dirname, './src/scss'),
-      'includePaths[]=' + nodeModulesPath
-      ].join('&')
-    }, {
-      test: /bootstrap-sass\/assets\/javascripts\//,
-      loader: 'imports?jQuery=jquery'
-    }, {
-      test: /\.json$/,
-      loader: 'json'
-    }, {
-      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url-loader?limit=10000&minetype=application/font-woff'
-    }, {
-      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'file-loader'
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel',
+        exclude: [
+          nodeModulesPath,
+        ],
+        include: [
+          modelsPath
+        ],
+        query: {
+          presets: ['es2015']
+        }
+      },
+      {
+        test: /\.jsx?$/,
+        loader: 'babel',
+        exclude: [
+          nodeModulesPath,
+          modelsPath
+        ]
+      },
+      {
+        test: /\.scss$/,
+        loader: 'style!css?sourceMap!sass?' + [
+          'sourceMap',
+          'outputStyle=expanded',
+          'includePaths[]=' + path.resolve(__dirname, './src/scss'),
+          'includePaths[]=' + nodeModulesPath
+        ].join('&')
+      },
+      {
+        test: /bootstrap-sass\/assets\/javascripts\//,
+        loader: 'imports?jQuery=jquery'
+      },
+      { test: /\.json$/, loader: 'json' },
+      { test: /\.(woff2?|svg)$/, loader: 'url?limit=10000' },
+      { test: /\.(ttf|eot)$/, loader: 'file' }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
