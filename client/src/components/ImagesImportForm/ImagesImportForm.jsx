@@ -7,6 +7,7 @@ import AppDispatcher from '../../dispatcher/AppDispatcher';
 import AppActions from '../../actions/AppActions';
 
 import ImageImportModel from '../../models/ImageImportModel';
+import ImageModel from '../../models/ImageModel';
 
 import Alert from '../Alert/Alert';
 import Form from '../Form/Form';

@@ -37,7 +37,7 @@ export default class CheckboxGroup extends React.Component {
       modelOptions.splice(modelOptionIndex, 1);
     }
 
-    formModel.update(this.props.name, modelOptions);
+    formModel.set(this.props.name, modelOptions);
 
     this.forceUpdate();
   };

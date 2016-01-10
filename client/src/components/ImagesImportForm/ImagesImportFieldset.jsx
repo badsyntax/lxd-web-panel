@@ -91,8 +91,8 @@ export default class ImagesImportFieldset extends React.Component {
     var alias = e.target.value;
     var description = e.target.options[e.target.selectedIndex].innerHTML.trim();
     var formModel = this.context.formModel;
-    formModel.update('localAlias', alias);
-    formModel.update('description', description);
+    formModel.set('localAlias', alias);
+    formModel.set('description', description);
     this.setState({
       formModel: formModel
     });
