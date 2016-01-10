@@ -74,13 +74,14 @@ function getAllImagesWithDetails(req, reply) {
   return getImages()
   .then((images) => {
 
+
     var promises = images.map((image) => {
-      return lxd.getImage(image.getFingerprint())
+      return lxd.getImage(image.fingerprint)
         .then((imageData) => {
           if (!imageData.error) {
-            image.setData(imageData.metadata);
+            image.set(imageData.metadata);
           }
-          return image;
+          return image.get();
         });
     });
     return Promise.all(promises);
@@ -139,7 +140,6 @@ function importImage(req, reply) {
   };
 
   return lxd.createImage(createImageData).then((res) => {
-    console.log('RES', res);
     if (res.error) { throw res; }
     return lxd.waitOperation(res)
     .then((operation) => {

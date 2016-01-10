@@ -43,7 +43,7 @@ function getAllContainersWithDetails(req, res) {
       return lxdClient.getContainer(container.getName())
         .then((containerData) => {
           if (!containerData.error) {
-            container.setData(containerData.metadata);
+            container.set(containerData.metadata);
           }
           return container;
         });

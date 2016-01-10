@@ -42,7 +42,7 @@ function getAllProfilesWithDetails(req, reply) {
       return lxdClient.getProfile(profile.name)
         .then((res) => {
           if (!res.error) {
-            profile.setData(res.metadata);
+            profile.set(res.metadata);
           }
           return profile.get();
         });

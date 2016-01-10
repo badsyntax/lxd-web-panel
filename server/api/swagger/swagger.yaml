@@ -478,10 +478,15 @@ definitions:
         type: object
   ImageAliasModel:
     required:
-      - alias
+      - description
+      - target
     properties:
-      alias:
+      description:
         type: string
+        minLength: 1
+      target:
+        type: string
+        minLength: 1
   ImageModel:
     required:
       - fingerprint
@@ -491,6 +496,26 @@ definitions:
         type: string
       resource:
         type: string
+      aliases:
+        type: array
+        items:
+          $ref: "#/definitions/ImageAliasModel"
+      architecture:
+        type: integer
+      filename:
+        type: string
+      properties:
+        type: object
+      public:
+        type: number
+      size:
+        type: number
+      created_at:
+        type: number
+      expires_at:
+        type: number
+      uploaded_at:
+        type: number
   RemoteImageModel:
     required:
       - alias

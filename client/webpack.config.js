@@ -6,7 +6,6 @@ var util = require('util');
 var webpack = require('webpack');
 var pkg = require('./package.json');
 
-
 // paths
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var modelsPath = path.resolve(__dirname, '..', 'models');
@@ -15,16 +14,13 @@ var modelsPath = path.resolve(__dirname, '..', 'models');
 var DEVELOPMENT = process.env.NODE_ENV === 'development';
 var PRODUCTION = process.env.NODE_ENV === 'production';
 
-// get entries
-var entries = {
-  bundle: [
-    path.resolve(pkg.config.srcPath, 'index.js')
-  ]
-};
-
 // webpack configuration
 var config = {
-  entry: entries,
+  entry: {
+    bundle: [
+      path.resolve(pkg.config.srcPath, 'index.js')
+    ]
+  },
   output: {
     path: path.resolve(pkg.config.buildPath),
     pathinfo: true,
@@ -50,17 +46,18 @@ var config = {
       exclude: [
         nodeModulesPath,
         modelsPath
-      ],
-      query: {
-        presets: ['es2015', 'stage-0', 'react']
-      }
+      ]
     }, {
       test: /\.scss$/,
-      loader: 'style!css!sass?' + [
+      loader: 'style!css?sourceMap!sass?' + [
+      'sourceMap',
       'outputStyle=expanded',
       'includePaths[]=' + path.resolve(__dirname, './src/scss'),
       'includePaths[]=' + nodeModulesPath
       ].join('&')
+    }, {
+      test: /bootstrap-sass\/assets\/javascripts\//,
+      loader: 'imports?jQuery=jquery'
     }, {
       test: /\.json$/,
       loader: 'json'
