@@ -31,13 +31,7 @@ export default class Input extends React.Component {
   render() {
 
     let { context, props } = this;
-    let value = null;
-
-    try {
-      value = context.formModel.get(props.name) || props.defaultValue;
-    } catch(e) {
-      window.alert(e);
-    }
+    let value = context.formModel.get(props.name) || props.defaultValue;
 
     return (
       <input

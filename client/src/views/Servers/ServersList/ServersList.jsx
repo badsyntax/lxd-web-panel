@@ -26,12 +26,8 @@ export default class Servers extends React.Component {
   state = getState();
 
   componentDidMount() {
-    try {
-      ServersStore.addChangeListener(this.onServersStoreChange);
-      this.loadServers();
-    } catch(e) {
-      alert(e);
-    }
+    ServersStore.addChangeListener(this.onServersStoreChange);
+    this.loadServers();
   }
 
   componentWillUnmount() {
@@ -52,65 +48,63 @@ export default class Servers extends React.Component {
   };
 
   render() {
-    try {
-      let { servers } = this.state;
+    let { servers } = this.state;
+    return (
+      <div className={'remote-servers-list'}>
+        <h2 className="sub-header">
+          Remote Servers
+          <Link
+            className={'btn btn-primary btn-new-container'}
+            to={'servers/add'}
+          >
+            Add server
+          </Link>
+        </h2>
+        { servers.length ? renderTable(servers) : renderAlert() }
+      </div>
+    );
+
+    function renderTable(servers) {
       return (
-        <div className={'remote-servers-list'}>
-          <h2 className="sub-header">
-            Remote Servers
-            <Link
-              className={'btn btn-primary btn-new-container'}
-              to={'servers/add'}
-            >
-              Add server
-            </Link>
-          </h2>
-          { servers.length ? getTable(servers) : getAlert() }
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Public</th>
+              </tr>
+            </thead>
+            <tbody>
+            {
+              servers.map((server, index) => {
+                return (
+                  <tr key={'server-' + index}>
+                    <td>{ server.name }</td>
+                    <td>{ server.url }</td>
+                    <td>{ server.public ? 'Yes' : 'No' }</td>
+                    <td>
+                      <button className="btn btn-default btn-xs">Edit</button>
+                      <button className="btn btn-default btn-xs" onClick={this.onDeleteButtonClick.bind(this, server)}>Delete</button>
+                    </td>
+                  </tr>
+                );
+              })
+            }
+            </tbody>
+          </table>
         </div>
       );
+    }
 
-      function getTable(servers) {
-        return (
-          <div className="table-responsive">
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>URL</th>
-                  <th>Public</th>
-                </tr>
-              </thead>
-              <tbody>
-              {
-                servers.map((server, index) => {
-                  return (
-                    <tr key={'server-' + index}>
-                      <td>{ server.name }</td>
-                      <td>{ server.url }</td>
-                      <td>{ server.public ? 'Yes' : 'No' }</td>
-                      <td>
-                        <button className="btn btn-default btn-xs">Edit</button>
-                        <button className="btn btn-default btn-xs" onClick={this.onDeleteButtonClick.bind(this, server)}>Delete</button>
-                      </td>
-                    </tr>
-                  );
-                })
-              }
-              </tbody>
-            </table>
-          </div>
-        );
-      }
-
-      function getAlert() {
-        return (
-          <Alert
-            heading="No remote servers"
-            type="warning"
-            icon="info-sign"
-          />
-        );
-      }
-    } catch(e) { alert(e); }
+    function renderAlert() {
+      return (
+        <Alert
+          heading="No remote servers"
+          type="warning"
+          icon="info-sign"
+        />
+      );
+    }
   }
 }

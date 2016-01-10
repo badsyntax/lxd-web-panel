@@ -36,17 +36,14 @@ export default class Profiles extends React.Component {
 
   render() {
     let { profiles } = this.state;
-    try {
+
     return (
       <div className={'profiles-list'}>
-        { profiles.length ? getTable(profiles) : getAlert() }
+        { profiles.length ? renderTable(profiles) : renderAlert() }
       </div>
     );
-  } catch(e) {
-    alert(e);
-  }
 
-    function getTable(profiles) {
+    function renderTable(profiles) {
       return (
         <div className="table-responsive">
           <table className="table table-striped">

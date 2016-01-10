@@ -100,30 +100,26 @@ export default class ServersAddForm extends React.Component {
   };
 
   render() {
-    try {
-      return (
-        <div className="images-import-form">
-          { this.state.hasError ? (
-            <Alert
-              message="There was an error submitting the form. Please correct the errors below."
-              type="danger"
-              icon="info-sign"
-            />
-          ) : '' }
-          <Form
-            className={'form-horizontal'}
-            formModel={this.state.formModel}
-            onSubmit={this.onSubmit}
-          >
-            <ServersAddFieldset
-              disabled={this.props.disabled}
-              showErrors={this.state.hasError}
-            />
-          </Form>
-        </div>
-      );
-    } catch(e) {
-      alert(e);
-    }
+    return (
+      <div className="images-import-form">
+        { this.state.hasError ? (
+          <Alert
+            message="There was an error submitting the form. Please correct the errors below."
+            type="danger"
+            icon="info-sign"
+          />
+        ) : '' }
+        <Form
+          className={'form-horizontal'}
+          formModel={this.state.formModel}
+          onSubmit={this.onSubmit}
+        >
+          <ServersAddFieldset
+            disabled={this.props.disabled}
+            showErrors={this.state.hasError}
+          />
+        </Form>
+      </div>
+    );
   }
 }
