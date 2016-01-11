@@ -34,49 +34,49 @@ export default class Profiles extends React.Component {
     this.setState(state);
   };
 
+  renderTable(profiles) {
+    return (
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Devices</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            profiles.map((profile, index) => {
+              return (
+                <tr key={'profile-' + index}>
+                  <td>{ profile.name }</td>
+                  <td>{ profile.friendlyDevices }</td>
+                  <td>
+                    <button className="btn btn-default btn-xs">Edit</button>
+                    <button className="btn btn-default btn-xs">Delete</button>
+                  </td>
+                </tr>
+              );
+            })
+          }
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  renderAlert() {
+    return <Alert heading="No profiles" type="warning" />;
+  }
+
   render() {
     let { profiles } = this.state;
 
     return (
       <div className={'profiles-list'}>
-        { profiles.length ? renderTable(profiles) : renderAlert() }
+        { profiles.length ? this.renderTable(profiles) : this.renderAlert() }
       </div>
     );
-
-    function renderTable(profiles) {
-      return (
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Devices</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-            {
-              profiles.map((profile, index) => {
-                return (
-                  <tr key={'profile-' + index}>
-                    <td>{ profile.name }</td>
-                    <td>{ profile.friendlyDevices }</td>
-                    <td>
-                      <button className="btn btn-default btn-xs">Edit</button>
-                      <button className="btn btn-default btn-xs">Delete</button>
-                    </td>
-                  </tr>
-                );
-              })
-            }
-            </tbody>
-          </table>
-        </div>
-      );
-    }
-
-    function getAlert() {
-      return <Alert heading="No profiles" type="warning" />;
-    }
   }
 }

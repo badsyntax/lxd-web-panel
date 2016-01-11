@@ -72,8 +72,71 @@ export default class ImagesList extends React.Component {
   };
 
   onDeleteButtonClick = (image) => {
-    image.delete();
+    AppActions.async([function() {
+      AppActions.confirm({
+        message: 'Are you sure you want to delete this image?',
+        onConfirmYes: () => {
+          alert('confirm yes');
+          // image.delete();
+        },
+        onConfirmNo: () => {
+          alert('confirm no');
+        }
+      });
+    }]);
   };
+
+  renderTable(images) {
+    console.log(images);
+    return (
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Aliases</th>
+              <th>Description</th>
+              <th>Size</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            images.map((image, index) => {
+              return (
+                <tr key={'image-' + index}>
+                  <td>{ image.friendlyAliases }</td>
+                  <td>{ image.properties.description }</td>
+                  <td>{ image.sizeFriendly }</td>
+                  <td>{ image.createdAtFriendly }</td>
+                  <td>
+                    <button className="btn btn-default btn-xs">Edit</button>
+                    <button
+                      className="btn btn-default btn-xs"
+                      onClick={this.onDeleteButtonClick.bind(this, image)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
+          }
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  renderAlert() {
+    return (
+      <Alert
+        heading="No images"
+        type="warning"
+        icon="info-sign"
+      />
+    );
+  }
 
   render() {
     let { images } = this.state;
@@ -88,59 +151,8 @@ export default class ImagesList extends React.Component {
             Import image
           </Link>
         </h2>
-        { images.length ? renderTable(images) : renderAlert() }
+        { images.length ? this.renderTable(images) : this.renderAlert() }
       </div>
     );
-
-    function renderTable(images) {
-      return (
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Alias</th>
-                <th>Description</th>
-                <th>Size</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-            {
-              images.map((image, index) => {
-                return (
-                  <tr key={'image-' + index}>
-                    <td>{ image.alias }</td>
-                    <td>{ image.properties.description }</td>
-                    <td>{ image.sizeFriendly }</td>
-                    <td>{ image.createdAtFriendly }</td>
-                    <td>
-                      <button className="btn btn-default btn-xs">Edit</button>
-                      <button
-                        className="btn btn-default btn-xs"
-                        onClick={this.onDeleteButtonClick.bind(this, image)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })
-            }
-            </tbody>
-          </table>
-        </div>
-      );
-    }
-
-    function renderAlert() {
-      return (
-        <Alert
-          heading="No images"
-          type="warning"
-          icon="info-sign"
-        />
-      );
-    }
   }
 }

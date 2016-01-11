@@ -48,7 +48,9 @@ import {
   AUTHENTICATE__SUCCESS,
   AUTHENTICATE__ERROR,
   AUTHENTICATE__START,
-  AUTHENTICATE__END
+  AUTHENTICATE__END,
+
+  MODAL__SHOW
 } from '../constants/AppConstants';
 
 function dispatchAction(actionType, data) {
@@ -63,6 +65,10 @@ export default {
     funcs.forEach((func) => {
       window.setTimeout(func);
     });
+  },
+
+  confirm(options) {
+    dispatchAction(MODAL__SHOW, options);
   },
 
   authenticate(credentials) {
