@@ -4,8 +4,11 @@
   "private": true,
   "description": "A web panel for LXD",
   "main": "index.js",
+  "engines": {
+    "node": "5"
+  },
   "config": {
-    "buildPath": "./dist",
+    "buildPath": "./build",
     "defaultAPIHost": "192.168.50.4",
     "defaultAPIPort": 9000,
     "devHost": "localhost",
@@ -13,9 +16,12 @@
     "srcPath": "./src"
   },
   "scripts": {
+    "build": "NODE_ENV=production webpack --config webpack.prod.config.js --progress --colors",
+    "clean": "rimraf $npm_package_config_buildPath && mkdir $npm_package_config_buildPath",
     "dev": "npm run dev-server",
-    "dev-server": "webpack-dev-server --devtool cheap-module-source-map --progress --inline --colors --hot",
+    "dev-server": "webpack-dev-server --devtool cheap-module-source-map --progress --inline --colors --hot --config webpack.dev.config.js",
     "lint": "eslint --ext .js --ext .jsx ./src && echo No linting errors.",
+    "prebuild": "npm install && npm run clean",
     "predev": "cd ../ && npm run generate-model-schema && cd client/",
     "prestart": "npm install",
     "start": "NODE_ENV=development API_HOST=$npm_package_config_defaultAPIHost API_PORT=$npm_package_config_defaultAPIPort npm run dev",
@@ -38,6 +44,7 @@
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
+    "autoprefixer": "^6.2.3",
     "babel-core": "^6.4.0",
     "babel-eslint": "^5.0.0-beta6",
     "babel-loader": "^6.2.1",
@@ -51,11 +58,14 @@
     "css-loader": "^0.23.1",
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^1.7.0",
     "imports-loader": "^0.6.5",
     "json-loader": "^0.5.4",
     "node-sass": "^3.4.2",
     "opn-cli": "^1.0.0",
+    "postcss-loader": "^0.8.0",
     "react-transform-catch-errors": "^1.0.1",
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.2.0",

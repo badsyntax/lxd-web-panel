@@ -9,7 +9,7 @@ import { MODAL__SHOW } from '../../constants/AppConstants';
 export default class Modal extends React.Component {
 
   state = {
-    message: null
+    action: {}
   };
 
   static propTypes = {
@@ -49,19 +49,37 @@ export default class Modal extends React.Component {
     AppDispatcher.off(MODAL__SHOW, this.onAppModalShow);
   }
 
-  onAppModalShow = (options) => {
+  onAppModalShow = (action) => {
     this.setState({
-      message: options.message
+      action: action
     });
     this.showModal();
   };
 
   onHidden = () => {
-    console.log('on hidden');
+    this.setState({
+      action: {}
+    });
   };
 
   onShown = () => {
     console.log('on shown');
+  };
+
+  onCancelButtonClick = () => {
+    this.modal.hide();
+    let action = this.state.action;
+    if (action.onConfirmNo) {
+      action.onConfirmNo();
+    }
+  };
+
+  onOkayButtonClick = () => {
+    this.modal.hide();
+    let action = this.state.action;
+    if (action.onConfirmYes) {
+      action.onConfirmYes();
+    }
   };
 
   showModal(data) {
@@ -93,7 +111,7 @@ export default class Modal extends React.Component {
             </div>
 
             <div className="modal-body">
-              <p>{this.state.message}</p>
+              <p>{this.state.action.message}</p>
               <p className="debug-url"></p>
             </div>
 
@@ -101,14 +119,14 @@ export default class Modal extends React.Component {
               <button
                 type="button"
                 className="btn btn-default"
-                data-dismiss="modal"
+                onClick={this.onCancelButtonClick}
               >
                 Cancel
               </button>
               <button
                 type="button"
                 className="btn btn-primary"
-                data-dismiss="modal"
+                onClick={this.onOkayButtonClick}
               >
                 Okay
               </button>

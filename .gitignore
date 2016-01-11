@@ -2,3 +2,4 @@
 node_modules
 npm-debug.log
 lxd-web-panel.sublime-workspace
+client/build

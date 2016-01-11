@@ -13,7 +13,7 @@ class AppDispatcher extends Flux.Dispatcher {
 
   on(eventName, handler) {
     if (typeof eventName === 'object') {
-      Object.keys(eventName, (key) => this.emitter.on(key, eventName[key]));
+      Object.keys(eventName).forEach((key) => this.emitter.on(key, eventName[key]));
     } else {
       this.emitter.on(eventName, handler);
     }
@@ -21,7 +21,7 @@ class AppDispatcher extends Flux.Dispatcher {
 
   off(eventName, handler) {
     if (typeof eventName === 'object') {
-      Object.keys(eventName, (key) => this.emitter.removeListener(key, eventName[key]));
+      Object.keys(eventName).forEach((key) => this.emitter.removeListener(key, eventName[key]));
     } else {
       this.emitter.removeListener(eventName, handler);
     }

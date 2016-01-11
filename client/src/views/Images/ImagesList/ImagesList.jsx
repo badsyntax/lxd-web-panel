@@ -76,8 +76,7 @@ export default class ImagesList extends React.Component {
       AppActions.confirm({
         message: 'Are you sure you want to delete this image?',
         onConfirmYes: () => {
-          alert('confirm yes');
-          // image.delete();
+          image.delete();
         },
         onConfirmNo: () => {
           alert('confirm no');

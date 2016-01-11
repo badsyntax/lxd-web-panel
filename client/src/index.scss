@@ -1,6 +1,7 @@
-// $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-// @import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "themes/bootstrap-admin";
-
 @import "app";
 
+
+body {
+  display: flex;
+}

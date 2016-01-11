@@ -4,6 +4,7 @@
 var path = require('path');
 var util = require('util');
 var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
 var pkg = require('./package.json');
 
 // paths
@@ -11,21 +12,20 @@ var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var modelsPath = path.resolve(__dirname, '..', 'models');
 
 // setup environment flags
-var DEVELOPMENT = process.env.NODE_ENV === 'development';
-var PRODUCTION = process.env.NODE_ENV === 'production';
+const DEVELOPMENT = process.env.NODE_ENV === 'development';
+const PRODUCTION = process.env.NODE_ENV === 'production';
 
 // webpack configuration
 var config = {
   entry: {
-    bundle: [
+    app: [
       path.resolve(pkg.config.srcPath, 'index.js')
     ]
   },
   output: {
-    path: path.resolve(pkg.config.buildPath),
     pathinfo: true,
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: util.format('http://0.0.0.0:%d/', pkg.config.devPort)
   },
   module: {
     loaders: [
@@ -51,8 +51,8 @@ var config = {
         ]
       },
       {
-        test: /\.scss$/,
-        loader: 'style!css?sourceMap!sass?' + [
+        test: /\.s?css$/,
+        loader: 'style?sourceMap!css?sourceMap!postcss?sourceMap!sass?' + [
           'sourceMap',
           'outputStyle=expanded',
           'includePaths[]=' + path.resolve(__dirname, './src/scss'),
@@ -64,8 +64,8 @@ var config = {
         loader: 'imports?jQuery=jquery'
       },
       { test: /\.json$/, loader: 'json' },
-      { test: /\.(woff2?|svg)$/, loader: 'url?limit=10000' },
-      { test: /\.(ttf|eot)$/, loader: 'file' }
+      { test: /\.(woff2?|svg)$/, loader: 'url?limit=10000&name=[path][name].[ext]' },
+      { test: /\.(ttf|eot|gif|png|ico|jpe?g)$/, loader: 'file?name=[path][name].[ext]' }
     ]
   },
   plugins: [
@@ -75,7 +75,9 @@ var config = {
         'API_HOST': JSON.stringify(process.env.API_HOST),
         'API_PORT': JSON.stringify(process.env.API_PORT)
       }
-    })
+    }),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
   ],
   resolve: {
     root: path.resolve(__dirname),
@@ -83,6 +85,9 @@ var config = {
   },
   devServer: {
     port: pkg.config.devPort
+  },
+  postcss: function () {
+    return [autoprefixer];
   }
 };
 

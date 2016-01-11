@@ -1,14 +1,16 @@
 ---
 # Output debugging info
-# loglevel: debug
+loglevel: debug
 
 # Major version of Bootstrap: 3 or 4
 bootstrapVersion: 3
 
 # Webpack loaders, order matters
 styleLoaders:
-  - style
+  - style?sourceMap
   - css?sourceMap
+  - postcss?sourceMap
+  - resolve-url?sourceMap
   - sass?sourceMap
 
 # Extract styles to stand-alone css file
@@ -16,23 +18,32 @@ styleLoaders:
 # It depends on value of NODE_ENV environment variable
 # This param can also be set in webpack config:
 #   entry: 'bootstrap-loader/extractStyles'
-extractStyles: false
-# env:
-#   development:
-#     extractStyles: false
-#   production:
-#     extractStyles: true
+env:
+  development:
+    extractStyles: false
+  production:
+    extractStyles: true
+
 
 # Customize Bootstrap variables that get imported before the original Bootstrap variables.
-# Thus original Bootstrap variables can depend on values from here.
+# Thus, derived Bootstrap variables can depend on values from here.
+# See the Bootstrap _variables.scss file for examples of derived Bootstrap variables.
+#
 preBootstrapCustomizations: ./src/scss/bootstrap/pre-customizations.scss
 
+
 # This gets loaded after bootstrap/variables is loaded
-# So you can refer to bootstrap variables
+# Thus, you may customize Bootstrap variables
+# based on the values established in the Bootstrap _variables.scss file
+#
 bootstrapCustomizations: ./src/scss/bootstrap/customizations.scss
 
-# With CSS Modules we load all application styles directly in React components
-# appStyles: ./app/styles/app.scss
+
+# Import your custom styles here
+# Usually this endpoint-file contains list of @imports of your application styles
+#
+# appStyles: ./path/to/your/app/styles/endpoint.scss
+
 
 ### Bootstrap styles
 styles:
@@ -56,7 +67,7 @@ styles:
 
   # Components
   component-animations: true
-  dropdowns: true
+  dropdowns: false
   button-groups: true
   input-groups: true
   navs: true
@@ -89,4 +100,15 @@ styles:
 
 ### Bootstrap scripts
 scripts:
+  transition: true
+  alert: false
+  button: false
+  carousel: false
+  collapse: false
+  dropdown: false
   modal: true
+  tooltip: false
+  popover: false
+  scrollspy: false
+  tab: false
+  affix: false

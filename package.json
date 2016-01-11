@@ -4,6 +4,9 @@
   "private": true,
   "description": "A web panel for LXD",
   "main": "index.js",
+  "engines": {
+    "node": "5"
+  },
   "config": {
     "srcPath": "./src",
     "buildPath": "./dist",
