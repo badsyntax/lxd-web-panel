@@ -27,10 +27,6 @@ class ImageModel extends BaseModel {
   get sizeFriendly() {
     return filesize(this.size);
   }
-
-  alias() {
-    return (this.aliases && this.aliases.length && this.aliases[0].target) || null;
-  }
 }
 
 module.exports = ImageModel;
