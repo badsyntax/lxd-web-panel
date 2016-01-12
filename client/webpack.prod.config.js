@@ -13,10 +13,6 @@ var pkg = require('./package.json');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var modelsPath = path.resolve(__dirname, '..', 'models');
 
-// setup environment flags
-const DEVELOPMENT = process.env.NODE_ENV === 'development';
-const PRODUCTION = process.env.NODE_ENV === 'production';
-
 // webpack configuration
 var config = {
   entry: {
@@ -73,7 +69,7 @@ var config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'NODE_ENV': JSON.stringify('production'),
         'API_HOST': JSON.stringify(process.env.API_HOST),
         'API_PORT': JSON.stringify(process.env.API_PORT)
       }
