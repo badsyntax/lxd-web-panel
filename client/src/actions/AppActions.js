@@ -50,7 +50,9 @@ import {
   AUTHENTICATE__START,
   AUTHENTICATE__END,
 
-  MODAL__SHOW
+  MODAL__SHOW,
+  MODAL__HIDE,
+  MODAL__CONFIRM
 } from '../constants/AppConstants';
 
 function dispatchAction(actionType, data) {
@@ -68,7 +70,15 @@ export default {
   },
 
   confirm(options) {
+    dispatchAction(MODAL__CONFIRM, options);
+  },
+
+  modalShow(options) {
     dispatchAction(MODAL__SHOW, options);
+  },
+
+  modalHide(options) {
+    dispatchAction(MODAL__HIDE, options);
   },
 
   authenticate(credentials) {

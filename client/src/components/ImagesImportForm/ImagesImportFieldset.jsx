@@ -11,12 +11,31 @@ import Select from '../Select/Select';
 
 import { REMOTE_IMAGES__GET_END } from '../../constants/AppConstants';
 
+function getRemoteImages() {
+  var remoteImages = RemoteImagesStore.getAll();
+  return remoteImages.length ? [
+    {
+      label: 'Please select...',
+      value: null
+    }
+  ].concat(remoteImages) : [];
+}
+
+function getServers() {
+  return [
+    {
+      label: 'Please select...',
+      value: null
+    }
+  ].concat(ServersStore.getAll());
+}
+
 export default class ImagesImportFieldset extends React.Component {
 
   state = {
     isLoading: false,
-    remoteImages: RemoteImagesStore.getAll(),
-    servers: ServersStore.getAll()
+    remoteImages: getRemoteImages(),
+    servers: getServers()
   };
 
   static propTypes = {
@@ -48,12 +67,12 @@ export default class ImagesImportFieldset extends React.Component {
   }
 
   onRemoteImagesStoreChange = () => {
-    let remoteImages = RemoteImagesStore.getAll();
+    let remoteImages = getRemoteImages();
     this.setState({ remoteImages });
   };
 
   onServersStoreChange = () => {
-    let servers = ServersStore.getAll();
+    let servers = getServers();
     this.setState({ servers });
   };
 
@@ -61,6 +80,9 @@ export default class ImagesImportFieldset extends React.Component {
     this.setState({
       isLoading: false
     });
+    AppActions.async([
+      AppActions.modalHide
+    ]);
   };
 
   onServerChange = (e) => {
@@ -69,20 +91,26 @@ export default class ImagesImportFieldset extends React.Component {
       return server.name === name;
     })[0];
 
-    console.log(server);
-    // debugger;
-
     var formModel = this.context.formModel;
     formModel.set({
       'localAlias': null,
       'description': null,
-      'serverUrl': server.url
+      'serverUrl': server ? server.url : null
     });
+
+    if (!server) { return; }
 
     this.setState({
       isLoading: true
     });
     AppActions.async([
+      AppActions.modalShow.bind(null, {
+        message: 'Loading...',
+        className: '-loading',
+        options: {
+          close: false
+        }
+      }),
       AppActions.getRemoteImages.bind(null, name)
     ]);
   };
@@ -99,61 +127,9 @@ export default class ImagesImportFieldset extends React.Component {
   };
 
   render() {
-    let renderImageFields = () => {
-      return (
-        <div className="images-import-fieldset__image-fields">
-          <Field
-            className="form-group"
-            disabled={this.props.disabled}
-            horizontal={true}
-            Input={Select}
-            options={this.state.remoteImages}
-            name="remoteAlias"
-            label="Remote Image"
-            labelLayoutClassName="col-sm-2"
-            inputLayoutClassName="col-sm-5"
-            showError={this.props.showErrors}
-            onChange={this.onImageChange}
-          />
-          <Field
-            className="form-group"
-            disabled={this.props.disabled}
-            horizontal={true}
-            name="localAlias"
-            label="Local alias"
-            labelLayoutClassName="col-sm-2"
-            inputLayoutClassName="col-sm-5"
-            placeholder="Name"
-            showError={this.props.showErrors}
-          />
-          <Field
-            className="form-group"
-            disabled={this.props.disabled}
-            horizontal={true}
-            name="description"
-            label="Description"
-            labelLayoutClassName="col-sm-2"
-            inputLayoutClassName="col-sm-5"
-            placeholder="Description"
-            showError={this.props.showErrors}
-          />
-          <div className="form-group">
-            <div className="col-sm-offset-2 col-sm-2">
-              <button type="submit" className="btn btn-med btn-primary btn-block">Submit</button>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    let renderLoadingMessage = () => {
-      return (
-        <div>
-          Loading...
-        </div>
-      );
-    };
-
+    let hasServer = Boolean(this.context.formModel.server);
+    let areImageFieldsDisabled = (this.props.disabled || !hasServer || this.state.isLoading);
+    let remoteImages = this.state.remoteImages;
     return (
       <fieldset className="images-import-fieldset">
         <Field
@@ -169,8 +145,49 @@ export default class ImagesImportFieldset extends React.Component {
           showError={this.props.showErrors}
           onChange={this.onServerChange}
         />
-        { this.state.isLoading ? renderLoadingMessage() : '' }
-        { this.context.formModel.server && !this.state.isLoading ? renderImageFields() : '' }
+        <div className="images-import-fieldset__image-fields">
+          <Field
+            className="form-group"
+            disabled={areImageFieldsDisabled}
+            horizontal={true}
+            Input={Select}
+            defaultValue={remoteImages.length ? remoteImages[0].value : null}
+            options={remoteImages}
+            name="remoteAlias"
+            label="Remote Image"
+            labelLayoutClassName="col-sm-2"
+            inputLayoutClassName="col-sm-5"
+            showError={this.props.showErrors}
+            onChange={this.onImageChange}
+          />
+          <Field
+            className="form-group"
+            disabled={areImageFieldsDisabled}
+            horizontal={true}
+            name="localAlias"
+            label="Local alias"
+            labelLayoutClassName="col-sm-2"
+            inputLayoutClassName="col-sm-5"
+            placeholder="Name"
+            showError={this.props.showErrors}
+          />
+          <Field
+            className="form-group"
+            disabled={areImageFieldsDisabled}
+            horizontal={true}
+            name="description"
+            label="Description"
+            labelLayoutClassName="col-sm-2"
+            inputLayoutClassName="col-sm-5"
+            placeholder="Description"
+            showError={this.props.showErrors}
+          />
+          <div className="form-group">
+            <div className="col-sm-offset-2 col-sm-2">
+              <button type="submit" className="btn btn-med btn-primary btn-block">Submit</button>
+            </div>
+          </div>
+        </div>
       </fieldset>
     );
   }

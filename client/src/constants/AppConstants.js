@@ -76,3 +76,5 @@ export const REMOTE_IMAGES__GET_ERROR = 'REMOTE_IMAGES__GET_ERROR';
 export const REMOTE_IMAGES__UPDATED = 'REMOTE_IMAGES__UPDATED';
 
 export const MODAL__SHOW = 'MODAL__SHOW';
+export const MODAL__HIDE = 'MODAL__HIDE';
+export const MODAL__CONFIRM = 'MODAL__CONFIRM';

@@ -4,7 +4,60 @@ import './Modal.scss';
 import React from 'react';
 import $ from 'jquery';
 import AppDispatcher from '../../dispatcher/AppDispatcher';
-import { MODAL__SHOW } from '../../constants/AppConstants';
+import classNames from 'classnames';
+
+import {
+  MODAL__SHOW,
+  MODAL__HIDE,
+  MODAL__CONFIRM
+} from '../../constants/AppConstants';
+
+const DEFAULT_CONFIRM_TITLE = 'Confirm';
+
+class ConfirmFooter extends React.Component {
+
+  static propTypes = {
+    action: React.PropTypes.object.isRequired,
+    hideModal: React.PropTypes.func.isRequired
+  };
+
+  onCancelButtonClick = () => {
+    let { action } = this.props;
+    this.props.hideModal();
+    if (action.onConfirmNo) {
+      action.onConfirmNo();
+    }
+  };
+
+  onOkayButtonClick = () => {
+    let { action } = this.prop;
+    this.props.hideModal();
+    if (action.onConfirmYes) {
+      action.onConfirmYes();
+    }
+  };
+
+  render() {
+    return (
+      <div className="modal-footer">
+        <button
+          className="btn btn-default"
+          type="button"
+          onClick={this.onCancelButtonClick.bind(this)}
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={this.onOkayButtonClick.bind(this)}
+        >
+          Okay
+        </button>
+      </div>
+    );
+  }
+}
 
 export default class Modal extends React.Component {
 
@@ -13,14 +66,21 @@ export default class Modal extends React.Component {
   };
 
   static propTypes = {
-    options: React.PropTypes.object
+    options: React.PropTypes.object,
+    defaultAction: React.PropTypes.object
   };
 
   static defaultProps = {
     options: {
       backdrop: true,
       keyboard: true,
-      show: false
+      show: false,
+      backdrop: true
+    },
+    defaultAction: {
+      title: null,
+      confirm: false,
+      close: true
     }
   };
 
@@ -28,6 +88,8 @@ export default class Modal extends React.Component {
     super(...arguments);
 
     AppDispatcher.on(MODAL__SHOW, this.onAppModalShow);
+    AppDispatcher.on(MODAL__HIDE, this.onAppModalHide);
+    AppDispatcher.on(MODAL__CONFIRM, this.onAppModalConfirm);
 
     this.modalEvents = {
       'hidden.bs.modal': this.onHidden,
@@ -38,7 +100,7 @@ export default class Modal extends React.Component {
   componentDidMount() {
 
     this.modal = $(this.refs.modal)
-      .modal(this.props.options)
+      .modal(this.getOptions())
       .data('bs.modal');
 
     $(this.refs.modal).on(this.modalEvents);
@@ -47,13 +109,38 @@ export default class Modal extends React.Component {
   componentWillUnount() {
     $(this.refs.modal).off(this.modalEvents);
     AppDispatcher.off(MODAL__SHOW, this.onAppModalShow);
+    AppDispatcher.off(MODAL__HIDE, this.onAppModalHide);
+    AppDispatcher.off(MODAL__CONFIRM, this.onAppModalConfirm);
   }
 
-  onAppModalShow = (action) => {
-    this.setState({
-      action: action
-    });
+  onAppModalConfirm = (action) => {
+
+    action = Object.assign({}, this.props.defaultAction, {
+      title: DEFAULT_CONFIRM_TITLE,
+      confirm: true
+    }, action);
+
+    this.setState({ action });
     this.showModal();
+  };
+
+  onAppModalShow = (action) => {
+
+    action = Object.assign({}, this.props.defaultAction, {
+      close: false
+    }, action);
+
+    action.options = Object.assign({
+      backdrop: 'static',
+      keyboard: false
+    }, action.options || {});
+
+    this.setState({ action: action });
+    this.showModal();
+  };
+
+  onAppModalHide = (action) => {
+    this.hideModal();
   };
 
   onHidden = () => {
@@ -63,74 +150,53 @@ export default class Modal extends React.Component {
   };
 
   onShown = () => {
-    console.log('on shown');
   };
 
-  onCancelButtonClick = () => {
-    this.modal.hide();
-    let action = this.state.action;
-    if (action.onConfirmNo) {
-      action.onConfirmNo();
-    }
-  };
-
-  onOkayButtonClick = () => {
-    this.modal.hide();
-    let action = this.state.action;
-    if (action.onConfirmYes) {
-      action.onConfirmYes();
-    }
-  };
-
-  showModal(data) {
+  showModal() {
+    this.modal.options = this.getOptions();
     this.modal.show();
   }
 
+  getOptions() {
+    return Object.assign({}, this.props.options, this.state.action.options || {});
+  }
+
+  hideModal() {
+    this.modal.hide();
+  }
+
   render() {
+    let { action } = this.state;
+    let className = classNames(
+      'modal fade',
+      this.state.action.className || null
+    );
     return (
       <div
-        ref="modal"
-        className="modal fade"
-        id="confirm-delete"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="myModalLabel"
         aria-hidden="true"
+        className={className}
+        ref="modal"
+        role="dialog"
+        tabIndex="-1"
       >
         <div className="modal-dialog">
           <div className="modal-content">
 
-            <div className="modal-header">
-              <button
-                type="button"
+            { (action.close || action.title) ? <div className="modal-header">
+              { action.close ? <button
+                aria-hidden="true"
                 className="close"
                 data-dismiss="modal"
-                aria-hidden="true"
-              >&times;</button>
-              <h4 className="modal-title" id="myModalLabel">Confirm</h4>
-            </div>
+                type="button"
+              >&times;</button> : '' }
+              { action.title ? <h4 className="modal-title">{ action.title }</h4> : '' }
+            </div> : '' }
 
             <div className="modal-body">
-              <p>{this.state.action.message}</p>
-              <p className="debug-url"></p>
+              <p>{action.message}</p>
             </div>
 
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-default"
-                onClick={this.onCancelButtonClick}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={this.onOkayButtonClick}
-              >
-                Okay
-              </button>
-            </div>
+            { action.confirm ? <ConfirmFooter action={action} hideModal={this.hideModal.bind(this)} /> : '' }
           </div>
         </div>
       </div>

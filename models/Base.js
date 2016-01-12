@@ -66,6 +66,10 @@ class BaseModel {
     Array.from(_keys.get(this)).forEach((key) => _set(this, key, null));
   }
 
+  destroy() {
+
+  }
+
   set(key, value) {
     _set(this, key, value);
     this.validate();

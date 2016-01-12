@@ -6,7 +6,6 @@ export default class Select extends React.Component {
 
   static propTypes = {
     defaultValue: PropTypes.any,
-    value: PropTypes.any,
     name: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired
   };
@@ -32,14 +31,15 @@ export default class Select extends React.Component {
       <select
         className={'form-control'}
         onChange={this.onChange}
-        defaultValue={this.props.value}
+        defaultValue={this.props.defaultValue}
+        disabled={this.props.disabled}
       >
-        <option value="">Please select...</option>
         { this.props.options.map((option, i) => {
           return (
             <option
               key={'option-' + this.props.name + '-' + i}
               value={option.value}
+              disabled={option.disabled}
             >
               {option.label}
             </option>

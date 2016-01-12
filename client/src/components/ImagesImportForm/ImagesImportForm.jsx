@@ -34,6 +34,8 @@ export default class ImagesImportForm extends React.Component {
   constructor(...props) {
     super(...props);
 
+    console.log('INIT FORM');
+
     this.dispatchToken = AppDispatcher.register(this.onAction);
 
     var formModel = new ImageImportModel(null, this.onFormModelChange);
@@ -45,6 +47,7 @@ export default class ImagesImportForm extends React.Component {
 
   componentWillUnmount() {
     AppDispatcher.unregister(this.dispatchToken);
+    this.state.formModel.destroy();
   }
 
   onAction = (action) => {
