@@ -54,10 +54,8 @@ export default class ImagesImportFieldset extends React.Component {
   componentDidMount() {
     RemoteImagesStore.addChangeListener(this.onRemoteImagesStoreChange);
     ServersStore.addChangeListener(this.onServersStoreChange);
-    AppActions.async([
-      AppActions.getServers
-    ]);
     AppDispatcher.on(REMOTE_IMAGES__GET_END, this.onRemoteImagesGetEnd);
+    AppActions.async([AppActions.getServers]);
   }
 
   componentWillUnmount() {
@@ -103,16 +101,17 @@ export default class ImagesImportFieldset extends React.Component {
     this.setState({
       isLoading: true
     });
-    AppActions.async([
-      AppActions.modalShow.bind(null, {
-        message: 'Loading...',
+
+    AppActions.async([() => {
+      AppActions.modalShow({
+        message: 'Loading, please wait...',
         className: '-loading',
         options: {
           close: false
-        }
-      }),
-      AppActions.getRemoteImages.bind(null, name)
-    ]);
+        },
+        onShown: () => AppActions.getRemoteImages(name)
+      });
+    }]);
   };
 
   onImageChange = (e) => {

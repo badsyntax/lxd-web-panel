@@ -34,8 +34,6 @@ export default class ImagesImportForm extends React.Component {
   constructor(...props) {
     super(...props);
 
-    console.log('INIT FORM');
-
     this.dispatchToken = AppDispatcher.register(this.onAction);
 
     var formModel = new ImageImportModel(null, this.onFormModelChange);
@@ -53,8 +51,14 @@ export default class ImagesImportForm extends React.Component {
   onAction = (action) => {
     switch(action.actionType) {
       case IMAGE_IMPORT__ERROR:
-        this.setState({
-          hasError: true
+        action.error.response.json().then((json) => {
+          AppActions.modalShow({
+            message: 'Sorry, there was an error importing the image: ' + json.message,
+            className: '-error',
+            options: {
+              close: true
+            }
+          });
         });
         break;
       case IMAGE_IMPORT__SUCCESS:

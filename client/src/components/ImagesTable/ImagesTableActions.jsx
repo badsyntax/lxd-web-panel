@@ -6,7 +6,7 @@ export default (props) => {
   let { image } = props;
 
   function onDeleteButtonClick(image) {
-    AppActions.async([function() {
+    AppActions.async([() => {
       AppActions.confirm({
         message: 'Are you sure you want to delete this image?',
         onConfirmYes: () => image.delete()

@@ -57,13 +57,27 @@ export default class ContainerCreate extends React.Component {
   };
 
   onProfilesStoreChange = () => {
-    var profiles = ProfilesStore.getAll();
+    let profiles = ProfilesStore.getAll();
     this.setState({ profiles });
   };
 
   onImagesStoreChange = () => {
-    var images = ImagesStore.getAll();
-    this.setState({ images });
+
+    let defaultOptions = [{
+      value: '',
+      label: 'Please select...'
+    }];
+
+    let images = ImagesStore.getAll().reduce(function(aliases, image) {
+      return aliases.concat(image.aliases.map(function(alias) {
+        return {
+          value: image.fingerprint,
+          label: alias.target + ' - ' + image.properties.description
+        };
+      }));
+    }, []);
+
+    this.setState({ images: defaultOptions.concat(images) });
   };
 
   render() {
@@ -72,7 +86,7 @@ export default class ContainerCreate extends React.Component {
         <h2 className="sub-header">
           Create container
         </h2>
-        { true || this.state.hasLoaded && this.state.images.length ? (
+        { this.state.hasLoaded && this.state.images.length ? (
           <ContainerCreateForm
             className={'form-horizontal'}
             images={this.state.images}

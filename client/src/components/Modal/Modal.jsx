@@ -30,7 +30,7 @@ class ConfirmFooter extends React.Component {
   };
 
   onOkayButtonClick = () => {
-    let { action } = this.prop;
+    let { action } = this.props;
     this.props.hideModal();
     if (action.onConfirmYes) {
       action.onConfirmYes();
@@ -139,7 +139,7 @@ export default class Modal extends React.Component {
     this.showModal();
   };
 
-  onAppModalHide = (action) => {
+  onAppModalHide = () => {
     this.hideModal();
   };
 
@@ -150,6 +150,9 @@ export default class Modal extends React.Component {
   };
 
   onShown = () => {
+    if (this.state.action.onShown) {
+      this.state.action.onShown();
+    }
   };
 
   showModal() {

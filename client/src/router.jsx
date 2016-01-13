@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { hashHistory } from 'react-router';
+
 import {
   Router,
   Route,
@@ -36,7 +38,7 @@ import AuthStore from './stores/AuthStore';
 
 export default () => {
   return (
-    <Router>
+    <Router history={hashHistory}>
       <Route component={App} path="/">
         <IndexRoute component={Home} onEnter={requireAuth} />
         <Route component={Home} onEnter={requireAuth} path="/overview" />

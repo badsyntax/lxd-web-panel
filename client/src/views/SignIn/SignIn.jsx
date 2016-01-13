@@ -20,8 +20,11 @@ export default class SignIn extends React.Component {
   state = {};
 
   static contextTypes = {
-    location: PropTypes.object,
-    history: PropTypes.object
+    router: PropTypes.object.isRequired
+  };
+
+  static childContextTypes = {
+    location: React.PropTypes.object
   };
 
   constructor(...props) {
@@ -41,9 +44,9 @@ export default class SignIn extends React.Component {
         });
         break;
       case AUTHENTICATE__SUCCESS:
-        var state = this.context.location.state;
+        var state = this.props.location.state;
         var pathName = state && state.nextPathname || '/';
-        this.context.history.pushState(null, pathName);
+        this.context.router.push(pathName);
         break;
       case AUTHENTICATE__START:
         this.setState({

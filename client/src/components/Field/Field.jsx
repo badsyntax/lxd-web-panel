@@ -7,7 +7,6 @@ import Input from '../Input/Input';
 export default class Field extends React.Component {
 
   static propTypes = {
-    ...React.Component.propTypes,
     horizontal: PropTypes.bool,
     Input: PropTypes.oneOfType([
       PropTypes.func,

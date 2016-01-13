@@ -20,6 +20,8 @@ export default class ContainerCreateForm extends React.Component {
   };
 
   static initialFormData = {
+    name: '',
+    resource: '',
     profiles: []
   };
 
