@@ -2,9 +2,11 @@
 
 import './ContainerCreateForm.scss';
 import React, { PropTypes } from 'react';
-import ContainerCreateFieldset from './ContainerCreateFieldset';
 
-import ContainerModel from '../../models/ContainerModel';
+import AppActions from '../../actions/AppActions';
+
+import ContainerCreateFieldset from './ContainerCreateFieldset';
+import ContainerCreateModel from '../../models/ContainerCreateModel';
 
 import Alert from '../Alert/Alert';
 import Form from '../Form/Form';
@@ -19,33 +21,21 @@ export default class ContainerCreateForm extends React.Component {
     profiles: PropTypes.array.isRequired
   };
 
-  static initialFormData = {
+  initialFormData = {
     name: '',
-    resource: '',
+    image: '',
     profiles: []
   };
 
   constructor(...props) {
     super(...props);
-    this.state = {
-      formModel: this.getFormModel()
-    };
-  }
 
-  getFormModel() {
-
-    let initialData = this.constructor.initialFormData;
-
-    let formModel = new ContainerModel(
-      initialData,
+    let formModel = new ContainerCreateModel(
+      this.initialFormData,
       this.onFormModelChange
     );
 
-    formModel.setRequired('profiles', true);
-    formModel.setRequired('name', true);
-    formModel.setRequired('image', true);
-
-    return formModel;
+    this.state = { formModel };
   }
 
   onFormModelChange = (formModel) => {
@@ -56,11 +46,35 @@ export default class ContainerCreateForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    let formModel = this.state.formModel;
+
     this.setState({
-      showError: true
+      hasError: !formModel.isValid()
     });
-    console.log('FORM MODEL', this.state.formModel);
+
+    if (formModel.isValid()) {
+      AppActions.createContainer(formModel);
+    }
   };
+
+  getImageOptions() {
+
+    let defaultOptions = [{
+      value: '',
+      label: 'Please select...'
+    }];
+
+    let images = this.props.images.reduce(function(aliases, image) {
+      return aliases.concat(image.aliases.map(function(alias) {
+        return {
+          value: alias.target,
+          label: alias.target + ' - ' + image.properties.description
+        };
+      }));
+    }, []);
+
+    return defaultOptions.concat(images);
+  }
 
   render() {
     return (
@@ -79,9 +93,10 @@ export default class ContainerCreateForm extends React.Component {
         >
           <ContainerCreateFieldset
             disabled={this.props.disabled}
-            images={this.props.images}
+            images={this.getImageOptions()}
             profiles={this.props.profiles}
-            showErrors={this.state.showError}
+            showErrors={this.state.hasError}
+            onImageSelectChange={this.onImageSelectChange}
           />
         </Form>
       </div>

@@ -66,6 +66,30 @@
       }
     }
   },
+  "ContainerCreateModel": {
+    "required": [
+      "name",
+      "image",
+      "profiles"
+    ],
+    "properties": {
+      "name": {
+        "type": "string",
+        "minLength": 1
+      },
+      "profiles": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/ProfileModel"
+        },
+        "minItems": 1
+      },
+      "image": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
   "ProfileModel": {
     "required": [
       "name",

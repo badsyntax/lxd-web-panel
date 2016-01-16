@@ -38,8 +38,8 @@ export default class ContainerCreateFieldset extends React.Component {
           horizontal={true}
           inputLayoutClassName="col-sm-5"
           label="Image"
-          labelLayoutClassName="col-sm-2"
           name="image"
+          labelLayoutClassName="col-sm-2"
           options={this.props.images}
           showError={this.props.showErrors}
         />

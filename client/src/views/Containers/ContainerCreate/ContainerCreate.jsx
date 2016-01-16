@@ -62,43 +62,30 @@ export default class ContainerCreate extends React.Component {
   };
 
   onImagesStoreChange = () => {
-
-    let defaultOptions = [{
-      value: '',
-      label: 'Please select...'
-    }];
-
-    let images = ImagesStore.getAll().reduce(function(aliases, image) {
-      return aliases.concat(image.aliases.map(function(alias) {
-        return {
-          value: image.fingerprint,
-          label: alias.target + ' - ' + image.properties.description
-        };
-      }));
-    }, []);
-
-    this.setState({ images: defaultOptions.concat(images) });
+    this.setState({ images: ImagesStore.getAll() });
   };
 
   render() {
+
+    let form = this.state.images.length ? <ContainerCreateForm
+      className={'form-horizontal'}
+      images={this.state.images}
+      profiles={this.state.profiles}
+    /> : null;
+
+    let alert = this.state.hasLoaded && !this.state.images.length ? <Alert
+      icon="info-sign"
+      message="You need to create a base image before you can create a container."
+      type="danger"
+    /> : null;
+
     return (
       <div className={'container-creae'}>
         <h2 className="sub-header">
           Create container
         </h2>
-        { this.state.hasLoaded && this.state.images.length ? (
-          <ContainerCreateForm
-            className={'form-horizontal'}
-            images={this.state.images}
-            profiles={this.state.profiles}
-          />
-          ) : (
-          <Alert
-            icon="info-sign"
-            message="You need to create a base image before you can create a container."
-            type="danger"
-          />
-        ) }
+        { form }
+        { alert }
       </div>
     );
   }

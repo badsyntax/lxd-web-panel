@@ -9,7 +9,9 @@ import classNames from 'classnames';
 import {
   MODAL__SHOW,
   MODAL__HIDE,
-  MODAL__CONFIRM
+  MODAL__CONFIRM,
+  REMOTE_IMAGES__GET_START,
+  REMOTE_IMAGES__GET_END
 } from '../../constants/AppConstants';
 
 const DEFAULT_CONFIRM_TITLE = 'Confirm';
@@ -91,6 +93,9 @@ export default class Modal extends React.Component {
     AppDispatcher.on(MODAL__HIDE, this.onAppModalHide);
     AppDispatcher.on(MODAL__CONFIRM, this.onAppModalConfirm);
 
+    AppDispatcher.on(REMOTE_IMAGES__GET_START, this.onShowIt);
+    AppDispatcher.on(REMOTE_IMAGES__GET_END, this.onHideIt);
+
     this.modalEvents = {
       'hidden.bs.modal': this.onHidden,
       'shown.bs.modal': this.onShown
@@ -112,6 +117,24 @@ export default class Modal extends React.Component {
     AppDispatcher.off(MODAL__HIDE, this.onAppModalHide);
     AppDispatcher.off(MODAL__CONFIRM, this.onAppModalConfirm);
   }
+
+  onShowIt = (action) => {
+    if (action.showLoadingModal) {
+      this.onAppModalShow({
+        message: 'Loading, please wait...',
+        className: '-loading',
+        options: {
+          close: false
+        }
+      });
+    }
+  };
+
+  onHideIt = (action) => {
+    if (action.showLoadingModal) {
+      this.hideModal();
+    }
+  };
 
   onAppModalConfirm = (action) => {
 

@@ -55,7 +55,7 @@ export default class ImagesImportFieldset extends React.Component {
     RemoteImagesStore.addChangeListener(this.onRemoteImagesStoreChange);
     ServersStore.addChangeListener(this.onServersStoreChange);
     AppDispatcher.on(REMOTE_IMAGES__GET_END, this.onRemoteImagesGetEnd);
-    AppActions.async([AppActions.getServers]);
+    AppActions.getServers();
   }
 
   componentWillUnmount() {
@@ -74,16 +74,14 @@ export default class ImagesImportFieldset extends React.Component {
     this.setState({ servers });
   };
 
-  onRemoteImagesGetEnd = (e) => {
+  onRemoteImagesGetEnd = () => {
     this.setState({
       isLoading: false
     });
-    AppActions.async([
-      AppActions.modalHide
-    ]);
   };
 
   onServerChange = (e) => {
+
     let name = e.target.value;
     let server = this.state.servers.filter((server) => {
       return server.name === name;
@@ -102,16 +100,8 @@ export default class ImagesImportFieldset extends React.Component {
       isLoading: true
     });
 
-    AppActions.async([() => {
-      AppActions.modalShow({
-        message: 'Loading, please wait...',
-        className: '-loading',
-        options: {
-          close: false
-        },
-        onShown: () => AppActions.getRemoteImages(name)
-      });
-    }]);
+    let showLoadingModal = true;
+    AppActions.getRemoteImages(name, showLoadingModal);
   };
 
   onImageChange = (e) => {

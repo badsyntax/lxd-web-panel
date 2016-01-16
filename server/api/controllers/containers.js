@@ -16,6 +16,24 @@ module.exports = {
 
 var config = process.env;
 
+function errorHandler(reply) {
+  return function(e) {
+    reply.status(e.error_code);
+    reply.json({
+      message: e.error || 'Unknown error'
+    });
+  };
+}
+
+function responseHandler(reply) {
+  return function(response) {
+    if (response.error) { throw response; }
+    reply.json({
+      message: 'Success'
+    });
+  };
+}
+
 function getContainers() {
   return lxdClient.getContainers()
   .then((containers) => {
@@ -24,7 +42,7 @@ function getContainers() {
         resource: resource
       }).get();
     });
-  })
+  });
 }
 
 function getAllContainers(req, res) {
@@ -117,14 +135,29 @@ function renameContainer(req, res) {
   });
 }
 
-function createContainer(req, res) {
+function createContainer(req, reply) {
+
   var containerName = req.body.name;
-  var container = new ContainerModel({
-    name: containerName
+  var imageAlias = req.body.image;
+  var profiles = req.body.profiles.map(function(profile) {
+    return profile.name;
   });
-  container.save().then(() => {
-    res.json({
-      message: 'Success'
-    });
-  });
+
+  var data = {
+    name: containerName,
+    profiles: profiles,
+    source: {
+      type: 'image',
+      alias: imageAlias
+    }
+  };
+
+  lxdClient.createContainer(data)
+  .then((lxdResponse) => {
+    console.log('LXD RESPONSE', lxdResponse)
+    if (lxdResponse.error) { throw lxdResponse; }
+    return lxdClient.waitOperation(lxdResponse);
+  })
+  .then(responseHandler(reply))
+  .catch(errorHandler(reply));
 }

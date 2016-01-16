@@ -35,7 +35,7 @@ export default class Servers extends React.Component {
   }
 
   loadServers() {
-    AppActions.async([AppActions.getServers]);
+    AppActions.getServers();
   }
 
   onServersStoreChange = () => {

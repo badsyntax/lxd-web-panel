@@ -21,8 +21,7 @@ export default class Profiles extends React.Component {
 
   componentDidMount() {
     ProfilesStore.addChangeListener(this.onChange);
-
-    AppActions.async([AppActions.getProfiles]);
+    AppActions.getProfiles();
   }
 
   componentWillUnmount() {

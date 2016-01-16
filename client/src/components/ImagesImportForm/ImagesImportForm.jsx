@@ -36,10 +36,8 @@ export default class ImagesImportForm extends React.Component {
 
     this.dispatchToken = AppDispatcher.register(this.onAction);
 
-    var formModel = new ImageImportModel(null, this.onFormModelChange);
-
     this.state = {
-      formModel
+      formModel: new ImageImportModel(null, this.onFormModelChange)
     };
   }
 

@@ -64,6 +64,12 @@ class API {
     }, data);
   }
 
+  createContainer(data) {
+    return postJson({
+      action: 'containers'
+    }, data);
+  }
+
   createImage(data) {
     return postJson({
       action: 'images'

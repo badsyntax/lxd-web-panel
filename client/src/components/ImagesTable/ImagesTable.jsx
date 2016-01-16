@@ -35,7 +35,7 @@ export default class ImagesTable extends React.Component {
 
     AppDispatcher.on(this.actionHandlers);
     ImagesStore.addChangeListener(this.onImageStoreChange);
-    AppActions.async([AppActions.getImages()]);
+    AppActions.getImages();
   }
 
   componentWillUnmount() {
@@ -51,7 +51,7 @@ export default class ImagesTable extends React.Component {
   };
 
   onImageDeleteSuccess = () => {
-    AppActions.async([AppActions.getImages()]);
+    AppActions.getImages();
   };
 
   onImageDeleteStart = () => {

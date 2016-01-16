@@ -46,7 +46,7 @@ export default class SignIn extends React.Component {
       case AUTHENTICATE__SUCCESS:
         var state = this.props.location.state;
         var pathName = state && state.nextPathname || '/';
-        this.context.router.push(pathName);
+        setTimeout(() => this.context.router.push(pathName));
         break;
       case AUTHENTICATE__START:
         this.setState({

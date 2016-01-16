@@ -11,7 +11,8 @@ const _validation = new WeakMap();
 const _noop = () => {};
 
 function _set(model, key, value) {
-  if (key && typeof key === 'object') {
+  if (!key) { return; }
+  if (typeof key === 'object') {
     Object.keys(key).forEach((k) => _set(model, k, key[k]));
   } else if (!_keys.get(model).has(key)) {
     throw new Error('Trying to set a property that has not been defined in schema (' + key + ')');
@@ -60,6 +61,8 @@ class BaseModel {
       this.constructor.defaultProps || {},
       data || {}
     ));
+
+    this.validate();
   }
 
   reset() {

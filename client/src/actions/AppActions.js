@@ -10,6 +10,11 @@ import {
   CONTAINERS__GET_SUCCESS,
   CONTAINERS__GET_ERROR,
 
+  CONTAINER_CREATE__START,
+  CONTAINER_CREATE__END,
+  CONTAINER_CREATE__SUCCESS,
+  CONTAINER_CREATE__ERROR,
+
   IMAGES__GET_START,
   IMAGES__GET_END,
   IMAGES__GET_SUCCESS,
@@ -56,6 +61,7 @@ import {
 } from '../constants/AppConstants';
 
 function dispatchAction(actionType, data) {
+  console.log('dispatchiing', actionType);
   AppDispatcher.dispatch(Object.assign({
     actionType: actionType
   }, data || {}));
@@ -137,8 +143,8 @@ export default {
     .finally(() => dispatchAction(IMAGES__GET_END));
   },
 
-  getRemoteImages(server) {
-    dispatchAction(REMOTE_IMAGES__GET_START);
+  getRemoteImages(server, showLoadingModal) {
+    dispatchAction(REMOTE_IMAGES__GET_START, { showLoadingModal });
     WebAPI.getRemoteImages(server)
     .then((response) => {
       if (response.images) {
@@ -148,7 +154,7 @@ export default {
     .catch((e) => {
       dispatchAction(REMOTE_IMAGES__GET_ERROR, { error: e });
     })
-    .finally(() => dispatchAction(REMOTE_IMAGES__GET_END));
+    .finally(() => dispatchAction(REMOTE_IMAGES__GET_END, { showLoadingModal }));
   },
 
   getServers() {
@@ -163,6 +169,23 @@ export default {
       dispatchAction(SERVERS__GET_ERROR, { error: e });
     })
     .finally(() => dispatchAction(SERVERS__GET_END));
+  },
+
+  createContainer(containerCreateModel) {
+    let data = containerCreateModel.get();
+    data.profiles = data.profiles.map((profile) => profile.get());
+
+    dispatchAction(CONTAINER_CREATE__START);
+    WebAPI.createContainer(data)
+    .then((response) => {
+      if (response.message) {
+        dispatchAction(CONTAINER_CREATE__SUCCESS, response);
+      }
+    })
+    .catch((e) => {
+      dispatchAction(CONTAINER_CREATE__ERROR, { error: e });
+    })
+    .finally(() => dispatchAction(CONTAINER_CREATE__END));
   },
 
   createImage(imageCreateModel) {

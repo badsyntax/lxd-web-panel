@@ -6,7 +6,7 @@ export default class Select extends React.Component {
 
   static propTypes = {
     defaultValue: PropTypes.any,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     options: PropTypes.array.isRequired
   };
 
@@ -20,7 +20,9 @@ export default class Select extends React.Component {
 
   onChange = (e) => {
     let value = e.target.value;
-    this.context.formModel.set(this.props.name, value);
+    if (this.props.name) {
+      this.context.formModel.set(this.props.name, value);
+    }
     if (this.props.onChange) {
       this.props.onChange(e);
     }
